@@ -20,7 +20,9 @@ struct ContentView: View {
 //    @Binding var rating: Int64
 //    @Binding var canEditRating: Bool
 //    var ratingEmoji: String
-    @State private var isEmojiPopoverPresented: Bool = false
+    @State private var isNewItemPopoverPresented: Bool = false
+    @State private var canEditItems: Bool = false
+
 
     var ratingEmojiSize: CGFloat = 15
     var ratingEmojiSpacing: CGFloat?
@@ -63,37 +65,43 @@ struct ContentView: View {
                                 }
                                 
                             }
+                            .disabled(!canEditItems)
                         }
                     }
                 }
                 .onDelete(perform: deleteItems)
             }
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        self.canEditItems = !self.canEditItems
+                    }) {
+                        Label("Lock Items", systemImage: canEditItems ? "lock.open" : "lock")
+                    }
+                }
 #if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     EditButton()
                 }
 #endif
-                ToolbarItem {
+                ToolbarItemGroup(placement: .bottomBar) {
                     Button(action: {
-                                    self.isEmojiPopoverPresented = true
-                           }) {
-                               Label("Add Item", systemImage: "plus")
-                           }
-                           .popover(isPresented: $isEmojiPopoverPresented) {
-                               EmojiSelectorView()
-                                   .environment(\.managedObjectContext, viewContext)
-                                   .padding()
-//                                   .frame(minWidth: 300, maxHeight: 400)
-                                   .presentationCompactAdaptation(.popover)
-                           }
-                    
-//                    Button(action: addItem) {
-//                        Label("Add Item", systemImage: "plus")
-//                    }
+                        self.isNewItemPopoverPresented = true
+                    }) {
+                        Label("Add Item", systemImage: "cart.badge.plus")
+                    }
+                    .popover(isPresented: $isNewItemPopoverPresented) {
+                        NewItemView()
+                            .environment(\.managedObjectContext, viewContext)
+                            .padding()
+                            .presentationCompactAdaptation(.popover)
+                    }
+                    Spacer()
+                    Button(action: addItem) {
+                        Label("Settings", systemImage: "gear")
+                    }
                 }
             }
-            Text("Select an item")
         }
     }
 
@@ -104,6 +112,8 @@ struct ContentView: View {
             newItem.name = "🧅"
             newItem.quantity = 5
             newItem.total = 5
+            newItem.created = Date()
+            newItem.modified = Date()
 
             do {
                 try viewContext.save()
@@ -132,7 +142,7 @@ struct ContentView: View {
     }
 }
 
-struct EmojiSelectorView: View {
+struct NewItemView: View {
 
     @Environment(\.dismiss) var dismiss
 //    @Binding var selection: Emoji?
@@ -157,7 +167,8 @@ struct EmojiSelectorView: View {
                 HStack {
                     Text("Name")
                     Spacer()
-                    TextField("Emoji of new item", text: $name)
+                    EmojiTextField(text: $name, placeholder: "Emoji of new item")
+//                    TextField("Emoji of new item", text: $name)
                         .multilineTextAlignment(.trailing)
                         .disableAutocorrection(false)
                 }
@@ -179,28 +190,33 @@ struct EmojiSelectorView: View {
             
             Divider()
             
-            Button(action: {
-                let newItem = Item(context: viewContext)
-                newItem.id = UUID()
-                newItem.created = Date()
-                newItem.modified = Date()
-                newItem.name = self.name
-                newItem.quantity = self.total
-                newItem.total = self.total
-                
-                do {
-                    try viewContext.save()
-                } catch {
-                    // Replace this implementation with code to handle the error appropriately.
-                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    let nsError = error as NSError
-                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            HStack{
+                Spacer()
+                Button(action: {
+                    let newItem = Item(context: viewContext)
+                    newItem.id = UUID()
+                    newItem.created = Date()
+                    newItem.modified = Date()
+                    newItem.name = self.name
+                    newItem.quantity = self.total
+                    newItem.total = self.total
+                    
+                    do {
+                        try viewContext.save()
+                    } catch {
+                        // Replace this implementation with code to handle the error appropriately.
+                        // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                        let nsError = error as NSError
+                        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                    }
+                    dismiss()
+                }) {
+                    Label("Save Item", systemImage: "cart.badge.plus.fill")
                 }
-                dismiss()
-            }) {
-                Label("Save Item", systemImage: "cart.badge.plus")
+                .buttonStyle(GrowingButton())
+                Spacer()
             }
-            .buttonStyle(GrowingButton())
+
             
                 
 
@@ -221,7 +237,7 @@ struct EmojiSelectorView: View {
 //                }.padding()
 //            }
         }
-        .padding(.vertical)
+        .padding()
 //        .environmentObject(context)
     }
 }
@@ -244,6 +260,66 @@ private let itemFormatter: DateFormatter = {
     formatter.timeStyle = .medium
     return formatter
 }()
+
+class UIEmojiTextField: UITextField {
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    func setEmoji() {
+        _ = self.textInputMode
+    }
+    
+    override var textInputContextIdentifier: String? {
+           return ""
+    }
+    
+    override var textInputMode: UITextInputMode? {
+        for mode in UITextInputMode.activeInputModes {
+            if mode.primaryLanguage == "emoji" {
+                self.keyboardType = .default // do not remove this
+                return mode
+            }
+        }
+        return nil
+    }
+}
+
+struct EmojiTextField: UIViewRepresentable {
+    @Binding var text: String
+    var placeholder: String = ""
+    
+    func makeUIView(context: Context) -> UIEmojiTextField {
+        let emojiTextField = UIEmojiTextField()
+        emojiTextField.placeholder = placeholder
+        emojiTextField.text = text
+        emojiTextField.delegate = context.coordinator
+        return emojiTextField
+    }
+    
+    func updateUIView(_ uiView: UIEmojiTextField, context: Context) {
+        uiView.text = text
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(parent: self)
+    }
+    
+    class Coordinator: NSObject, UITextFieldDelegate {
+        var parent: EmojiTextField
+        
+        init(parent: EmojiTextField) {
+            self.parent = parent
+        }
+        
+        func textFieldDidChangeSelection(_ textField: UITextField) {
+            DispatchQueue.main.async { [weak self] in
+                self?.parent.text = textField.text ?? ""
+            }
+        }
+    }
+}
 
 #Preview {
     ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
