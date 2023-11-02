@@ -21,7 +21,9 @@ struct ContentView: View {
 //    @Binding var canEditRating: Bool
 //    var ratingEmoji: String
     @State private var isNewItemPopoverPresented: Bool = false
+    @State private var isEditNotesPopoverPresented: Bool = false
     @State private var canEditItems: Bool = false
+    @State private var canEditNotes: Bool = false
 
 
     var ratingEmojiSize: CGFloat = 15
@@ -37,7 +39,56 @@ struct ContentView: View {
 //                        Text(item.timestamp!, formatter: itemFormatter)
 //                    }
                     NavigationLink {
-                        Text("Modified at \(item.modified!, formatter: itemFormatter)")
+                        List {
+                            Section(header: Text("Item Information").frame(maxWidth: .infinity, alignment: .center)) {
+                                HStack {
+                                    Text(item.name!)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                }
+                                HStack {
+                                    Text("\(item.quantity.description) / \(item.total.description)")
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                }
+                            }
+                            Section(header: Text("Notes").frame(maxWidth: .infinity, alignment: .center)) {
+                                HStack {
+                                    Text(item.notes ?? "")
+                                        .frame(
+                                              minWidth: 0,
+                                              maxWidth: .infinity,
+                                              minHeight: 0,
+                                              maxHeight: .infinity,
+                                              alignment: .center
+                                            )
+//                                        .frame(maxWidth: .infinity,alignment: .center)
+//                                        .padding()
+                                }
+                            }
+                            Section(header: Text("Last Modified").frame(maxWidth: .infinity, alignment: .center)) {
+                                HStack {
+                                    Text(item.modified!, formatter: itemFormatter)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                }
+                            }
+//                            .multilineTextAlignment(.leading)
+                        }
+                        .toolbar {
+                            ToolbarItem(placement: .topBarTrailing) {
+                                Button(action: {
+                                    self.canEditNotes = !self.canEditNotes
+                                    self.isEditNotesPopoverPresented = true
+                                }) {
+                                    Label("Edit Notes", systemImage: "pencil")
+                                }
+                                .popover(isPresented: $isEditNotesPopoverPresented) {
+                                    EditNotesView(item: item)
+                                        .environment(\.managedObjectContext, viewContext)
+                                        .padding()
+                                        .presentationCompactAdaptation(.sheet)
+                                }
+                            }
+                        }
+//                        Text("Modified at \(item.modified!, formatter: itemFormatter)")
                     } label: {
                         HStack {
 //                            Text(item.name!)
@@ -79,12 +130,13 @@ struct ContentView: View {
                         Label("Lock Items", systemImage: canEditItems ? "lock.open" : "lock")
                     }
                 }
-#if os(iOS)
                 ToolbarItem(placement: .topBarTrailing) {
-                    EditButton()
+                    Button(action: addItem) {
+                        Label("Settings", systemImage: "gear")
+                    }
                 }
-#endif
                 ToolbarItemGroup(placement: .bottomBar) {
+                    Spacer()
                     Button(action: {
                         self.isNewItemPopoverPresented = true
                     }) {
@@ -97,9 +149,6 @@ struct ContentView: View {
                             .presentationCompactAdaptation(.popover)
                     }
                     Spacer()
-                    Button(action: addItem) {
-                        Label("Settings", systemImage: "gear")
-                    }
                 }
             }
         }
@@ -114,6 +163,7 @@ struct ContentView: View {
             newItem.total = 5
             newItem.created = Date()
             newItem.modified = Date()
+            newItem.notes = "Some bullshit here"
 
             do {
                 try viewContext.save()
@@ -154,6 +204,7 @@ struct NewItemView: View {
     @State var name: String = ""
 //    @State var quantity: Int64?
     @State var total: Int64 = 0
+    @State var notes: String = ""
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -165,7 +216,7 @@ struct NewItemView: View {
             
             Group {
                 HStack {
-                    Text("Name")
+                    Text("Name:")
                     Spacer()
                     EmojiTextField(text: $name, placeholder: "Emoji of new item")
 //                    TextField("Emoji of new item", text: $name)
@@ -180,11 +231,18 @@ struct NewItemView: View {
 //                        .keyboardType(.decimalPad)
 //                }
                 HStack {
-                    Text("Total")
+                    Text("Total:")
                     Spacer()
                     TextField("Total of new item", value: $total, formatter: Formatter.myNumberFormat)
                         .multilineTextAlignment(.trailing)
                         .keyboardType(.decimalPad)
+                }
+                HStack {
+                    Text("Notes:")
+                    Spacer()
+                    TextEditor(text: $notes)
+                        .multilineTextAlignment(.trailing)
+                        .disableAutocorrection(false)
                 }
             }
             
@@ -200,6 +258,7 @@ struct NewItemView: View {
                     newItem.name = self.name
                     newItem.quantity = self.total
                     newItem.total = self.total
+                    newItem.notes = self.notes
                     
                     do {
                         try viewContext.save()
@@ -213,6 +272,81 @@ struct NewItemView: View {
                 }) {
                     Label("Save Item", systemImage: "cart.badge.plus.fill")
                 }
+                .padding(.top)
+                .buttonStyle(GrowingButton())
+                Spacer()
+            }
+
+            
+                
+
+//            ScrollView {
+//                LazyVGrid(columns: columns) {
+//                    ForEach(emojis) { emoji in
+//                        ZStack {
+//                            emoji == selection ? Color.blue : Color.clear
+//                            Text(emoji.emojiSting)
+//                                .font(.title)
+//                                .padding(5)
+//                                .onTapGesture {
+//                                    selection = emoji
+//                                    dismiss()
+//                                }
+//                        }
+//                    }
+//                }.padding()
+//            }
+        }
+        .padding()
+//        .environmentObject(context)
+    }
+}
+
+struct EditNotesView: View {
+
+    @Environment(\.dismiss) var dismiss
+    @Environment(\.managedObjectContext) private var viewContext
+    @State var name: String = ""
+    @ObservedObject var item: Item
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("Edit Note")
+                .font(.title3)
+                .padding(.horizontal)
+
+            Divider()
+            
+            Group {
+                HStack {
+//                    TextArea("Edit Note", text: $item.notes.toUnwrapped(defaultValue: ""))
+//                        .disableAutocorrection(false)
+                    
+                    TextEditor(text: $item.notes.toUnwrapped(defaultValue: ""))
+                        .disableAutocorrection(false)
+                }
+            }
+            
+            Divider()
+            
+            HStack{
+                Spacer()
+                Button(action: {
+//                    let newItem = Item(context: viewContext)
+//                    newItem.notes = ""
+                    
+                    do {
+                        try viewContext.save()
+                    } catch {
+                        // Replace this implementation with code to handle the error appropriately.
+                        // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                        let nsError = error as NSError
+                        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                    }
+                    dismiss()
+                }) {
+                    Label("Save Note", systemImage: "cart.badge.plus.fill")
+                }
+                .padding(.top)
                 .buttonStyle(GrowingButton())
                 Spacer()
             }
@@ -257,7 +391,7 @@ struct GrowingButton: ButtonStyle {
 private let itemFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .medium
-    formatter.timeStyle = .medium
+    formatter.timeStyle = .short
     return formatter
 }()
 

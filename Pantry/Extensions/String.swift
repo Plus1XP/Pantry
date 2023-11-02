@@ -8,6 +8,8 @@
 import UIKit
 
 extension String {
+    var isBlank: Bool { allSatisfy({ $0.isWhitespace }) }
+
     func ToImage(fontSize:CGFloat = 40, bgColor:UIColor = UIColor.clear, imageSize:CGSize? = nil) -> UIImage?
     {
         let font = UIFont.systemFont(ofSize: fontSize) // you can change your font size here

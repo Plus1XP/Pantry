@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB558EB2AF3D77F002362AB /* TextEditor.swift */; };
+		2FB81D3F2AF30CA300ECD374 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB81D3E2AF30CA300ECD374 /* Binding.swift */; };
 		2FBD25702AF2878300C26DA3 /* PantryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD256F2AF2878300C26DA3 /* PantryApp.swift */; };
 		2FBD25722AF2878300C26DA3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD25712AF2878300C26DA3 /* Persistence.swift */; };
 		2FBD25752AF2878300C26DA3 /* Pantry.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD25732AF2878300C26DA3 /* Pantry.xcdatamodeld */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2FB558EB2AF3D77F002362AB /* TextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
+		2FB81D3E2AF30CA300ECD374 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		2FBD256C2AF2878300C26DA3 /* Pantry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pantry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FBD256F2AF2878300C26DA3 /* PantryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryApp.swift; sourceTree = "<group>"; };
 		2FBD25712AF2878300C26DA3 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -41,6 +45,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F66E1552AF3F5E700A007F4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2FB81D3E2AF30CA300ECD374 /* Binding.swift */,
+				2FBD25852AF2C3A600C26DA3 /* Formatter.swift */,
+				2FBD25832AF290AE00C26DA3 /* String.swift */,
+				2FB558EB2AF3D77F002362AB /* TextEditor.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2F66E1562AF3F64400A007F4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		2FBD25632AF2878300C26DA3 = {
 			isa = PBXGroup;
 			children = (
@@ -60,15 +82,15 @@
 		2FBD256E2AF2878300C26DA3 /* Pantry */ = {
 			isa = PBXGroup;
 			children = (
+				2F66E1562AF3F64400A007F4 /* Views */,
+				2F66E1552AF3F5E700A007F4 /* Extensions */,
 				2FBD256F2AF2878300C26DA3 /* PantryApp.swift */,
 				2FBD25712AF2878300C26DA3 /* Persistence.swift */,
 				2FBD25762AF2878300C26DA3 /* ContentView.swift */,
-				2FBD25852AF2C3A600C26DA3 /* Formatter.swift */,
 				2FBD25782AF2878400C26DA3 /* Assets.xcassets */,
 				2FBD257A2AF2878400C26DA3 /* Pantry.entitlements */,
 				2FBD25732AF2878300C26DA3 /* Pantry.xcdatamodeld */,
 				2FBD257B2AF2878400C26DA3 /* Preview Content */,
-				2FBD25832AF290AE00C26DA3 /* String.swift */,
 			);
 			path = Pantry;
 			sourceTree = "<group>";
@@ -154,9 +176,11 @@
 				2FBD25862AF2C3A600C26DA3 /* Formatter.swift in Sources */,
 				2FBD25702AF2878300C26DA3 /* PantryApp.swift in Sources */,
 				2FBD25752AF2878300C26DA3 /* Pantry.xcdatamodeld in Sources */,
+				2FB81D3F2AF30CA300ECD374 /* Binding.swift in Sources */,
 				2FBD25842AF290AE00C26DA3 /* String.swift in Sources */,
 				2FBD25772AF2878300C26DA3 /* ContentView.swift in Sources */,
 				2FBD25722AF2878300C26DA3 /* Persistence.swift in Sources */,
+				2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,7 +332,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.pantry.Pantry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -346,7 +371,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.pantry.Pantry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
