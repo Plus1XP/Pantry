@@ -16,7 +16,7 @@ struct PersistenceController {
         for _ in 0..<10 {
             let newItem = Item(context: viewContext)
             newItem.id = UUID()
-            newItem.name = "💩"
+            newItem.name = "🥥"
             newItem.quantity = 3
             newItem.total = 5
             newItem.created = Date()
