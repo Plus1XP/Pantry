@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F66E15C2AF3F7DC00A007F4 /* NewItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E15B2AF3F7DC00A007F4 /* NewItemView.swift */; };
+		2F66E15E2AF3F7E600A007F4 /* EditNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E15D2AF3F7E600A007F4 /* EditNotesView.swift */; };
+		2F66E1612AF3FA2300A007F4 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */; };
+		2F66E1632AF3FA6400A007F4 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1622AF3FA6400A007F4 /* TextField.swift */; };
+		2F66E1652AF3FAB100A007F4 /* EmojiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1642AF3FAB100A007F4 /* EmojiTextField.swift */; };
+		2F66E1672AF5671C00A007F4 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1662AF5671C00A007F4 /* PersistenceController.swift */; };
 		2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB558EB2AF3D77F002362AB /* TextEditor.swift */; };
 		2FB81D3F2AF30CA300ECD374 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB81D3E2AF30CA300ECD374 /* Binding.swift */; };
 		2FBD25702AF2878300C26DA3 /* PantryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD256F2AF2878300C26DA3 /* PantryApp.swift */; };
@@ -20,6 +26,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F66E15B2AF3F7DC00A007F4 /* NewItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewItemView.swift; sourceTree = "<group>"; };
+		2F66E15D2AF3F7E600A007F4 /* EditNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNotesView.swift; sourceTree = "<group>"; };
+		2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+		2F66E1622AF3FA6400A007F4 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		2F66E1642AF3FAB100A007F4 /* EmojiTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTextField.swift; sourceTree = "<group>"; };
+		2F66E1662AF5671C00A007F4 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		2FB558EB2AF3D77F002362AB /* TextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
 		2FB81D3E2AF30CA300ECD374 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		2FBD256C2AF2878300C26DA3 /* Pantry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pantry.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,22 +57,67 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2F66E1552AF3F5E700A007F4 /* Extensions */ = {
+		2F66E1552AF3F5E700A007F4 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				2FB81D3E2AF30CA300ECD374 /* Binding.swift */,
 				2FBD25852AF2C3A600C26DA3 /* Formatter.swift */,
 				2FBD25832AF290AE00C26DA3 /* String.swift */,
-				2FB558EB2AF3D77F002362AB /* TextEditor.swift */,
+				2F66E1662AF5671C00A007F4 /* PersistenceController.swift */,
 			);
-			path = Extensions;
+			path = Extension;
 			sourceTree = "<group>";
 		};
-		2F66E1562AF3F64400A007F4 /* Views */ = {
+		2F66E1562AF3F64400A007F4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2FBD25762AF2878300C26DA3 /* ContentView.swift */,
+				2F66E15B2AF3F7DC00A007F4 /* NewItemView.swift */,
+				2F66E15D2AF3F7E600A007F4 /* EditNotesView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2F66E1572AF3F6AD00A007F4 /* ViewComponent */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Views;
+			path = ViewComponent;
+			sourceTree = "<group>";
+		};
+		2F66E1582AF3F6D200A007F4 /* ObservableObject */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ObservableObject;
+			sourceTree = "<group>";
+		};
+		2F66E1592AF3F6E100A007F4 /* DataObject */ = {
+			isa = PBXGroup;
+			children = (
+				2FBD25732AF2878300C26DA3 /* Pantry.xcdatamodeld */,
+				2FBD25712AF2878300C26DA3 /* Persistence.swift */,
+			);
+			path = DataObject;
+			sourceTree = "<group>";
+		};
+		2F66E15A2AF3F72200A007F4 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				2FBD25782AF2878400C26DA3 /* Assets.xcassets */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		2F66E15F2AF3F9EE00A007F4 /* Utilies */ = {
+			isa = PBXGroup;
+			children = (
+				2FB558EB2AF3D77F002362AB /* TextEditor.swift */,
+				2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */,
+				2F66E1622AF3FA6400A007F4 /* TextField.swift */,
+				2F66E1642AF3FAB100A007F4 /* EmojiTextField.swift */,
+			);
+			path = Utilies;
 			sourceTree = "<group>";
 		};
 		2FBD25632AF2878300C26DA3 = {
@@ -82,14 +139,15 @@
 		2FBD256E2AF2878300C26DA3 /* Pantry */ = {
 			isa = PBXGroup;
 			children = (
-				2F66E1562AF3F64400A007F4 /* Views */,
-				2F66E1552AF3F5E700A007F4 /* Extensions */,
-				2FBD256F2AF2878300C26DA3 /* PantryApp.swift */,
-				2FBD25712AF2878300C26DA3 /* Persistence.swift */,
-				2FBD25762AF2878300C26DA3 /* ContentView.swift */,
-				2FBD25782AF2878400C26DA3 /* Assets.xcassets */,
 				2FBD257A2AF2878400C26DA3 /* Pantry.entitlements */,
-				2FBD25732AF2878300C26DA3 /* Pantry.xcdatamodeld */,
+				2FBD256F2AF2878300C26DA3 /* PantryApp.swift */,
+				2F66E1592AF3F6E100A007F4 /* DataObject */,
+				2F66E1582AF3F6D200A007F4 /* ObservableObject */,
+				2F66E1572AF3F6AD00A007F4 /* ViewComponent */,
+				2F66E1562AF3F64400A007F4 /* View */,
+				2F66E1552AF3F5E700A007F4 /* Extension */,
+				2F66E15F2AF3F9EE00A007F4 /* Utilies */,
+				2F66E15A2AF3F72200A007F4 /* Shared */,
 				2FBD257B2AF2878400C26DA3 /* Preview Content */,
 			);
 			path = Pantry;
@@ -173,6 +231,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F66E1632AF3FA6400A007F4 /* TextField.swift in Sources */,
+				2F66E1672AF5671C00A007F4 /* PersistenceController.swift in Sources */,
+				2F66E1652AF3FAB100A007F4 /* EmojiTextField.swift in Sources */,
+				2F66E15C2AF3F7DC00A007F4 /* NewItemView.swift in Sources */,
 				2FBD25862AF2C3A600C26DA3 /* Formatter.swift in Sources */,
 				2FBD25702AF2878300C26DA3 /* PantryApp.swift in Sources */,
 				2FBD25752AF2878300C26DA3 /* Pantry.xcdatamodeld in Sources */,
@@ -181,6 +243,8 @@
 				2FBD25772AF2878300C26DA3 /* ContentView.swift in Sources */,
 				2FBD25722AF2878300C26DA3 /* Persistence.swift in Sources */,
 				2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */,
+				2F66E1612AF3FA2300A007F4 /* ButtonStyle.swift in Sources */,
+				2F66E15E2AF3F7E600A007F4 /* EditNotesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

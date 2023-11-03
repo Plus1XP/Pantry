@@ -5,7 +5,11 @@
 //  Created by nabbit on 01/11/2023.
 //
 
+#if canImport(UIKit)
 import UIKit
+#else
+import AppKit
+#endif
 
 extension String {
     var isBlank: Bool { allSatisfy({ $0.isWhitespace }) }
