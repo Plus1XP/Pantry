@@ -62,7 +62,7 @@ struct EditNotesView: View {
         }
         .padding()
         .onAppear(perform: {
-            self.tempNote = item.notes!
+            self.tempNote = item.notes ?? ""
         })
     }
 }

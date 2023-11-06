@@ -13,6 +13,7 @@
 		2F66E1632AF3FA6400A007F4 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1622AF3FA6400A007F4 /* TextField.swift */; };
 		2F66E1652AF3FAB100A007F4 /* EmojiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1642AF3FAB100A007F4 /* EmojiTextField.swift */; };
 		2F66E1672AF5671C00A007F4 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1662AF5671C00A007F4 /* PersistenceController.swift */; };
+		2F7F0E262AF96EF700979951 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F0E252AF96EF700979951 /* Color.swift */; };
 		2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB558EB2AF3D77F002362AB /* TextEditor.swift */; };
 		2FB81D3F2AF30CA300ECD374 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB81D3E2AF30CA300ECD374 /* Binding.swift */; };
 		2FBD25702AF2878300C26DA3 /* PantryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD256F2AF2878300C26DA3 /* PantryApp.swift */; };
@@ -32,6 +33,7 @@
 		2F66E1622AF3FA6400A007F4 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		2F66E1642AF3FAB100A007F4 /* EmojiTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTextField.swift; sourceTree = "<group>"; };
 		2F66E1662AF5671C00A007F4 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		2F7F0E252AF96EF700979951 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2FB558EB2AF3D77F002362AB /* TextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
 		2FB81D3E2AF30CA300ECD374 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		2FBD256C2AF2878300C26DA3 /* Pantry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pantry.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,6 +66,7 @@
 				2FBD25852AF2C3A600C26DA3 /* Formatter.swift */,
 				2FBD25832AF290AE00C26DA3 /* String.swift */,
 				2F66E1662AF5671C00A007F4 /* PersistenceController.swift */,
+				2F7F0E252AF96EF700979951 /* Color.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				2FBD25702AF2878300C26DA3 /* PantryApp.swift in Sources */,
 				2FBD25752AF2878300C26DA3 /* Pantry.xcdatamodeld in Sources */,
 				2FB81D3F2AF30CA300ECD374 /* Binding.swift in Sources */,
+				2F7F0E262AF96EF700979951 /* Color.swift in Sources */,
 				2FBD25842AF290AE00C26DA3 /* String.swift in Sources */,
 				2FBD25772AF2878300C26DA3 /* ContentView.swift in Sources */,
 				2FBD25722AF2878300C26DA3 /* Persistence.swift in Sources */,

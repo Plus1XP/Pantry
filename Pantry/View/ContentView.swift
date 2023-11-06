@@ -10,6 +10,7 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.colorScheme) var colorScheme
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.created, ascending: true)],
         animation: .default)
@@ -63,7 +64,11 @@ struct ContentView: View {
                                     self.isEditNotesPopoverPresented = true
                                 }) {
                                     Label("Edit Notes", systemImage: "pencil")
+//                                        .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
+//                                        .padding(3)
                                 }
+//                                .buttonStyle(.bordered)
+//                                .buttonBorderShape(.circle )
                                 .popover(isPresented: $isEditNotesPopoverPresented) {
                                     EditNotesView(item: item)
                                         .environment(\.managedObjectContext, viewContext)
@@ -72,6 +77,8 @@ struct ContentView: View {
                                 }
                             }
                         }
+                        .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
+
                     } label: {
                         HStack {
                             HStack(spacing: emojiSpacing) {
@@ -104,14 +111,25 @@ struct ContentView: View {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(action: {
                         self.canEditItems = !self.canEditItems
+                        debugPrint(Color.background)
                     }) {
                         Label("Lock Items", systemImage: canEditItems ? "lock.open" : "lock")
+//                            .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
+//                            .foregroundStyle(canEditItems ? .green : .red)
+//                            .padding(3)
                     }
+//                    .buttonStyle(.bordered)
+//                    .buttonBorderShape(.circle )
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: addItem) {
                         Label("Settings", systemImage: "gear")
+//                            .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
+//                            .foregroundStyle(.white , .blue)
+//                            .padding(3)
                     }
+//                    .buttonStyle(.bordered)
+//                    .buttonBorderShape(.circle )
                 }
                 ToolbarItemGroup(placement: .bottomBar) {
                     Spacer()
@@ -119,8 +137,11 @@ struct ContentView: View {
                         self.isNewItemPopoverPresented = true
                     }) {
                         Label("Add Item", systemImage: "cart.badge.plus")
-                            .foregroundStyle(.green, .blue)
+                            .foregroundStyle(.green, colorScheme == .light ? .gray : .white)
+//                            .padding(3)
                     }
+//                    .buttonStyle(.bordered)
+//                    .buttonBorderShape(.circle )
                     .popover(isPresented: $isNewItemPopoverPresented) {
                         NewItemView()
                             .environment(\.managedObjectContext, viewContext)
@@ -130,6 +151,7 @@ struct ContentView: View {
                     Spacer()
                 }
             }
+            .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
         }
     }
     
@@ -188,4 +210,10 @@ func setItemQuantityWithOffset(quantity: Int64) -> Int64 {
 
 #Preview {
     ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        .preferredColorScheme(.light)
+}
+
+#Preview {
+    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        .preferredColorScheme(.dark)
 }
