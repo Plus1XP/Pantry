@@ -56,7 +56,7 @@ struct NewItemView: View {
             Divider()
             HStack{
                 Spacer()
-                Button(action: {
+                Button("Add", systemImage: "plus.circle.fill", action: {
                     let newItem = Item(context: viewContext)
                     newItem.id = UUID()
                     newItem.created = Date()
@@ -75,11 +75,9 @@ struct NewItemView: View {
                     }
                     isNoteFocused = false
                     dismiss()
-                }) {
-                    Label("Save Item", systemImage: "plus.circle.fill")
-                }
+                })
                 .padding(.top)
-                .buttonStyle(GrowingButton())
+                .buttonStyle(.borderedProminent)
                 Spacer()
             }
         }

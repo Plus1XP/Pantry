@@ -11,28 +11,32 @@ struct EditNotesView: View {
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) private var viewContext
-    @State var name: String = ""
+//    @State var tempItem: Item = Item()
+    @State var tempNote: String = ""
     @ObservedObject var item: Item
+    
+//    init(item: Item) {
+//        self.tempItem = item
+//        self.tempNote = self.tempItem.notes!
+//    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Edit Note")
                 .font(.title3)
                 .padding(.horizontal)
-            
             Divider()
-            
             Group {
                 HStack {
-                    TextEditor(text: $item.notes.toUnwrapped(defaultValue: ""))
+                    TextEditor(text: $tempNote)
                         .disableAutocorrection(false)
                 }
             }
-            
             Divider()
-            
             HStack{
                 Spacer()
-                Button(action: {
+                Button("Save", systemImage: "plus.circle", action: {
+                    item.notes = self.tempNote
                     do {
                         try viewContext.save()
                     } catch {
@@ -42,15 +46,24 @@ struct EditNotesView: View {
                         fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
                     }
                     dismiss()
-                }) {
-                    Label("Save Note", systemImage: "cart.badge.plus.fill")
-                }
+                })
                 .padding(.top)
-                .buttonStyle(GrowingButton())
+                .buttonStyle(.borderedProminent)
+                .tint(.green)
+                Spacer()
+                Button("Cancel", systemImage: "xmark.circle", action: {
+                    dismiss()
+                })
+                .padding(.top)
+                .buttonStyle(.borderedProminent)
+                .tint(.red)
                 Spacer()
             }
         }
         .padding()
+        .onAppear(perform: {
+            self.tempNote = item.notes!
+        })
     }
 }
 

@@ -78,9 +78,9 @@ struct ContentView: View {
                                 ForEach(0..<Int(item.total), id: \.self) { image in
                                     let emojiImage = item.name?.ToImage(fontSize: emojiSize)
                                     Image(uiImage: emojiImage!)
-                                        .opacity(item.quantity >= Int64(image) ? 1.0 : 0.1)
+                                        .opacity(getItemQuantityWithOffset(quantity: item.quantity) >= Int64(image) ? 1.0 : 0.1)
                                         .onTapGesture {
-                                            item.quantity = Int64(image)
+                                            item.quantity = setItemQuantityWithOffset(quantity: Int64(image))
                                             item.modified = Date()
                                             do {
                                                 try viewContext.save()
@@ -119,6 +119,7 @@ struct ContentView: View {
                         self.isNewItemPopoverPresented = true
                     }) {
                         Label("Add Item", systemImage: "cart.badge.plus")
+                            .foregroundStyle(.green, .blue)
                     }
                     .popover(isPresented: $isNewItemPopoverPresented) {
                         NewItemView()
@@ -176,6 +177,14 @@ private let itemFormatter: DateFormatter = {
     formatter.timeStyle = .short
     return formatter
 }()
+
+func getItemQuantityWithOffset(quantity: Int64) -> Int64 {
+    return quantity - 1
+}
+
+func setItemQuantityWithOffset(quantity: Int64) -> Int64 {
+    return quantity + 1
+}
 
 #Preview {
     ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
