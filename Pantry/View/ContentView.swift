@@ -114,9 +114,9 @@ struct ContentView: View {
                     leading:
                         Button(action: {
                             self.canEditItems = !self.canEditItems
-                            debugPrint(Color.background)
                         }) {
-                            Label("Lock Items", systemImage: canEditItems ? "lock.open" : "lock")
+                            Label("Lock Items", systemImage: canEditItems ? "hand.tap.fill" : "hand.tap")
+                                .foregroundStyle(colorScheme == .light ? .gray : .white, canEditItems ? .green : .red)
                         },
                     trailing:
                         Button(action: {
