@@ -19,18 +19,20 @@ struct ContentView: View {
     @State private var isEditItemNotesPopoverPresented: Bool = false
     @State private var isNewNotePopoverPresented: Bool = false
     //    @State private var isEditNotesPopoverPresented: Bool = false
+    @State private var isSettingsPopoverPresented: Bool = false
     @State private var canEditItems: Bool = false
     @State private var canEditItemNotes: Bool = false
     private var emojiSize: CGFloat = 15
     private var emojiSpacing: CGFloat?
     
-    @State private var tabSelection = 0
+    @State private var activeTabSelection = 0
+    @State private var previousTabSelection = 0
     
     var body: some View {
-        TabView(selection: $tabSelection) {
+        TabView(selection: $activeTabSelection) {
             NavigationView {
                 List {
-                    ForEach(items) { item in
+                    ForEach(items, id: \.self) { item in
                         //MARK: Item Information
                         NavigationLink {
                             List {
@@ -62,6 +64,17 @@ struct ContentView: View {
                                             .frame(maxWidth: .infinity, alignment: .center)
                                     }
                                 }
+//                                HStack {
+//                                    Button(action: {
+//
+//                                    }) {
+//                                        Label("Back", systemImage: "arrowshape.turn.up.backward")
+//                                            .foregroundStyle(.white, .white)
+//                                            .frame(maxWidth: .infinity)
+//                                    }
+//                                    .buttonStyle(.borderedProminent)
+//                                    .foregroundStyle(.white, .white)
+//                                }
                             }
                             .navigationBarItems(
                                 trailing:
@@ -69,7 +82,7 @@ struct ContentView: View {
                                         self.canEditItemNotes = !self.canEditItemNotes
                                         self.isEditItemNotesPopoverPresented = true
                                     }) {
-                                        Label("Edit Notes", systemImage: "pencil")
+                                        Label("Edit Notes", systemImage: "applepencil.and.scribble")
                                     }
                                     .popover(isPresented: $isEditItemNotesPopoverPresented) {
                                         EditNotesView(item: item)
@@ -78,7 +91,9 @@ struct ContentView: View {
                                             .presentationCompactAdaptation(.sheet)
                                     }
                             )
-                            .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
+                            .navigationTitle("Item Details")
+//                            .navigationBarBackButtonHidden()
+                            .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
                         } label: {
                             //MARK: Item List
                             HStack {
@@ -100,86 +115,131 @@ struct ContentView: View {
                                                 }
                                             }
                                     }
-                                    
                                 }
                                 .disabled(!canEditItems)
                             }
                         }
                     }
                     .onDelete(perform: deleteItems)
+//                    .onMove { items.move(fromOffsets: $0, toOffset: $1) }
                 }
-                .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
                 .navigationTitle("Lists")
                 .navigationBarItems(
                     leading:
-                        Button(action: {
-                            self.canEditItems = !self.canEditItems
-                        }) {
-                            Label("Lock Items", systemImage: canEditItems ? "hand.tap.fill" : "hand.tap")
-                                .foregroundStyle(colorScheme == .light ? .gray : .white, canEditItems ? .green : .red)
+                        HStack {
+                            Button(action: {
+                                self.canEditItems = !self.canEditItems
+                            }) {
+                                Label("Lock Items", systemImage: canEditItems ? "hand.tap" : "hand.tap")
+                                    .foregroundStyle(setFontColor(colorScheme: colorScheme), canEditItems ? .green : .red)
+                            }
                         },
                     trailing:
                         Button(action: {
-                            self.isNewItemPopoverPresented = true
+                            self.isSettingsPopoverPresented.toggle()
                         }) {
-                            Label("Add Item", systemImage: "cart.badge.plus")
-                                .foregroundStyle(.green, colorScheme == .light ? .gray : .white)
+                            Label("Settings", systemImage: "gear")
                         }
-                        .popover(isPresented: $isNewItemPopoverPresented) {
-                            NewItemView()
-                                .environment(\.managedObjectContext, viewContext)
-                                .padding()
-                                .presentationCompactAdaptation(.popover)
-                        }
+//                        NavigationLink {
+//                            SettingsView()
+//                                .navigationTitle("Settings")
+//                                .navigationBarBackButtonHidden()
+//                        } label: {
+//                            Label("Settings", systemImage: "gear")
+//                        }
                 )
+                .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
+                .onAppear(perform: {
+                    self.previousTabSelection = 0
+
+                })
             }
             .tabItem {
-                Image(systemName: "list.bullet.rectangle")
+                Image(systemName: "cart")
                 Text("List")
+            }
+            .popover(isPresented: $isNewItemPopoverPresented, attachmentAnchor: .point(.bottom), arrowEdge: .top) {
+                NewItemView()
+                    .environment(\.managedObjectContext, viewContext)
+                    .padding()
+                    .presentationCompactAdaptation(.popover)
             }
             .tag(0)
             NavigationView {
                 List {
+
+                }
+                    .navigationTitle("Change")
+                    .onAppear(perform: {
+                        if previousTabSelection == 0 {
+                            self.activeTabSelection = 0
+                            self.isNewItemPopoverPresented = true
+                        } else if previousTabSelection == 2 {
+                            self.activeTabSelection = 2
+                            self.isNewNotePopoverPresented = true
+                        }
+                    })
+            }
+            .tabItem {
+                Image(systemName: getCurrentTabIcon(activeTab: self.activeTabSelection))
+                Text(getCurrentTabName(activeTab: self.activeTabSelection))
+            }
+            .tag(1)
+            NavigationView {
+                List {
                     
                 }
-                .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
                 .navigationTitle("Notes")
                 .navigationBarItems(
                     leading:
-                        Button(action: {
-                            self.canEditItems = !self.canEditItems
-                            debugPrint(Color.background)
-                        }) {
-                            Label("Lock Items", systemImage: canEditItems ? "lock.open" : "lock")
+                        HStack {
+                            Button(action: {
+                                self.canEditItems.toggle()
+                            }) {
+                                Label("Lock Items", systemImage: canEditItems ? "pin" : "pin.fill")
+                                    .foregroundStyle(.orange, .orange)
+                            }
+                            Button(action: {
+                                self.canEditItems.toggle()
+                            }) {
+                                Label("Lock Items", systemImage: canEditItems ? "bookmark" : "bookmark.fill")
+                                    .foregroundStyle(.red, .red)
+                            }
                         },
                     trailing:
                         Button(action: {
-                            self.isNewNotePopoverPresented = true
+                            self.isSettingsPopoverPresented.toggle()
                         }) {
-                            Label("Add Note", systemImage: "note.text.badge.plus")
-                                .foregroundStyle(.green, colorScheme == .light ? .gray : .white)
+                            Label("Settings", systemImage: "gear")
                         }
-                        .popover(isPresented: $isNewNotePopoverPresented) {
-                            Text("TESTING PLS DONT CRASH")
-                                .padding()
-                                .presentationCompactAdaptation(.popover)
-                        }
+//                        NavigationLink {
+//                            SettingsView()
+//                                .navigationTitle("Settings")
+//                                .navigationBarBackButtonHidden()
+//                        } label: {
+//                            Label("Settings", systemImage: "gear")
+//                        }
                 )
+                .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
+                .onAppear(perform: {
+                    self.previousTabSelection = 2
+                })
             }
             .tabItem {
                 Image(systemName: "note.text")
                 Text("Notes")
             }
-            .tag(1)
-            NavigationView {
-                SettingsView()
-                    .navigationTitle("Settings")
-            }
-            .tabItem {
-                Image(systemName: "gear")
-                Text("Settings")
+            .popover(isPresented: $isNewNotePopoverPresented, attachmentAnchor: .point(.bottom), arrowEdge: .top) {
+                Text("IT WORKS I HOPE")
+                    .environment(\.managedObjectContext, viewContext)
+                    .padding()
+                    .presentationCompactAdaptation(.popover)
             }
             .tag(2)
+        }
+        .popover(isPresented: $isSettingsPopoverPresented) {
+            SettingsView()
+                .presentationCompactAdaptation(.fullScreenCover)
         }
         // This fixes navigationBarTitle LayoutConstraints issue for NavigationView
         .navigationViewStyle(.stack)
@@ -230,12 +290,36 @@ private let itemFormatter: DateFormatter = {
     return formatter
 }()
 
-func getItemQuantityWithOffset(quantity: Int64) -> Int64 {
+private func getItemQuantityWithOffset(quantity: Int64) -> Int64 {
     return quantity - 1
 }
 
-func setItemQuantityWithOffset(quantity: Int64) -> Int64 {
+private func setItemQuantityWithOffset(quantity: Int64) -> Int64 {
     return quantity + 1
+}
+
+private func getCurrentTabName(activeTab: Int) -> String {
+    if activeTab == 0 {
+        return "Add Item"
+    } else if activeTab == 2 {
+        return "Add Note"
+    } else {
+        return ""
+    }
+}
+
+private func getCurrentTabIcon(activeTab: Int) -> String {
+    if activeTab == 0 {
+        return "cart.badge.plus"
+    } else if activeTab == 2 {
+        return "note.text.badge.plus"
+    } else {
+        return ""
+    }
+}
+
+private func setFontColor(colorScheme: ColorScheme) -> Color {
+    return colorScheme == .light ? .black : .white
 }
 
 #Preview {

@@ -59,6 +59,7 @@ struct EditNotesView: View {
                 .tint(.red)
                 Spacer()
             }
+            .foregroundStyle(.white, .white)
         }
         .padding()
         .onAppear(perform: {
