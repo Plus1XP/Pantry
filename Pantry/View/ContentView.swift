@@ -16,143 +16,173 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Item>
     @State private var isNewItemPopoverPresented: Bool = false
-    @State private var isEditNotesPopoverPresented: Bool = false
+    @State private var isEditItemNotesPopoverPresented: Bool = false
+    @State private var isNewNotePopoverPresented: Bool = false
+    //    @State private var isEditNotesPopoverPresented: Bool = false
     @State private var canEditItems: Bool = false
-    @State private var canEditNotes: Bool = false
+    @State private var canEditItemNotes: Bool = false
     private var emojiSize: CGFloat = 15
     private var emojiSpacing: CGFloat?
     
+    @State private var tabSelection = 0
+    
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        List {
-                            Section(header: Text("Item Information").frame(maxWidth: .infinity, alignment: .center)) {
-                                HStack {
-                                    Text(item.name!)
-                                        .frame(maxWidth: .infinity, alignment: .center)
+        TabView(selection: $tabSelection) {
+            NavigationView {
+                List {
+                    ForEach(items) { item in
+                        //MARK: Item Information
+                        NavigationLink {
+                            List {
+                                Section(header: Text("Item Information").frame(maxWidth: .infinity, alignment: .center)) {
+                                    HStack {
+                                        Text(item.name!)
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                    }
+                                    HStack {
+                                        Text("\(item.quantity.description) / \(item.total.description)")
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                    }
                                 }
-                                HStack {
-                                    Text("\(item.quantity.description) / \(item.total.description)")
-                                        .frame(maxWidth: .infinity, alignment: .center)
+                                Section(header: Text("Notes").frame(maxWidth: .infinity, alignment: .center)) {
+                                    HStack {
+                                        Text(item.notes ?? "")
+                                            .frame(
+                                                minWidth: 0,
+                                                maxWidth: .infinity,
+                                                minHeight: 0,
+                                                maxHeight: .infinity,
+                                                alignment: .center
+                                            )
+                                    }
                                 }
-                            }
-                            Section(header: Text("Notes").frame(maxWidth: .infinity, alignment: .center)) {
-                                HStack {
-                                    Text(item.notes ?? "")
-                                        .frame(
-                                            minWidth: 0,
-                                            maxWidth: .infinity,
-                                            minHeight: 0,
-                                            maxHeight: .infinity,
-                                            alignment: .center
-                                        )
-                                }
-                            }
-                            Section(header: Text("Last Modified").frame(maxWidth: .infinity, alignment: .center)) {
-                                HStack {
-                                    Text(item.modified!, formatter: itemFormatter)
-                                        .frame(maxWidth: .infinity, alignment: .center)
-                                }
-                            }
-                        }
-                        .toolbar {
-                            ToolbarItem(placement: .topBarTrailing) {
-                                Button(action: {
-                                    self.canEditNotes = !self.canEditNotes
-                                    self.isEditNotesPopoverPresented = true
-                                }) {
-                                    Label("Edit Notes", systemImage: "pencil")
-//                                        .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
-//                                        .padding(3)
-                                }
-//                                .buttonStyle(.bordered)
-//                                .buttonBorderShape(.circle )
-                                .popover(isPresented: $isEditNotesPopoverPresented) {
-                                    EditNotesView(item: item)
-                                        .environment(\.managedObjectContext, viewContext)
-                                        .padding()
-                                        .presentationCompactAdaptation(.sheet)
+                                Section(header: Text("Last Modified").frame(maxWidth: .infinity, alignment: .center)) {
+                                    HStack {
+                                        Text(item.modified!, formatter: itemFormatter)
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                    }
                                 }
                             }
-                        }
-                        .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
-
-                    } label: {
-                        HStack {
-                            HStack(spacing: emojiSpacing) {
-                                ForEach(0..<Int(item.total), id: \.self) { image in
-                                    let emojiImage = item.name?.ToImage(fontSize: emojiSize)
-                                    Image(uiImage: emojiImage!)
-                                        .opacity(getItemQuantityWithOffset(quantity: item.quantity) >= Int64(image) ? 1.0 : 0.1)
-                                        .onTapGesture {
-                                            item.quantity = setItemQuantityWithOffset(quantity: Int64(image))
-                                            item.modified = Date()
-                                            do {
-                                                try viewContext.save()
-                                            } catch {
-                                                // Replace this implementation with code to handle the error appropriately.
-                                                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                                                let nsError = error as NSError
-                                                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                            .navigationBarItems(
+                                trailing:
+                                    Button(action: {
+                                        self.canEditItemNotes = !self.canEditItemNotes
+                                        self.isEditItemNotesPopoverPresented = true
+                                    }) {
+                                        Label("Edit Notes", systemImage: "pencil")
+                                    }
+                                    .popover(isPresented: $isEditItemNotesPopoverPresented) {
+                                        EditNotesView(item: item)
+                                            .environment(\.managedObjectContext, viewContext)
+                                            .padding()
+                                            .presentationCompactAdaptation(.sheet)
+                                    }
+                            )
+                            .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
+                        } label: {
+                            //MARK: Item List
+                            HStack {
+                                HStack(spacing: emojiSpacing) {
+                                    ForEach(0..<Int(item.total), id: \.self) { image in
+                                        let emojiImage = item.name?.ToImage(fontSize: emojiSize)
+                                        Image(uiImage: emojiImage!)
+                                            .opacity(getItemQuantityWithOffset(quantity: item.quantity) >= Int64(image) ? 1.0 : 0.1)
+                                            .onTapGesture {
+                                                item.quantity = setItemQuantityWithOffset(quantity: Int64(image))
+                                                item.modified = Date()
+                                                do {
+                                                    try viewContext.save()
+                                                } catch {
+                                                    // Replace this implementation with code to handle the error appropriately.
+                                                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                                                    let nsError = error as NSError
+                                                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                                                }
                                             }
-                                        }
+                                    }
+                                    
                                 }
-                                
+                                .disabled(!canEditItems)
                             }
-                            .disabled(!canEditItems)
                         }
                     }
+                    .onDelete(perform: deleteItems)
                 }
-                .onDelete(perform: deleteItems)
+                .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
+                .navigationTitle("Lists")
+                .navigationBarItems(
+                    leading:
+                        Button(action: {
+                            self.canEditItems = !self.canEditItems
+                            debugPrint(Color.background)
+                        }) {
+                            Label("Lock Items", systemImage: canEditItems ? "lock.open" : "lock")
+                        },
+                    trailing:
+                        Button(action: {
+                            self.isNewItemPopoverPresented = true
+                        }) {
+                            Label("Add Item", systemImage: "cart.badge.plus")
+                                .foregroundStyle(.green, colorScheme == .light ? .gray : .white)
+                        }
+                        .popover(isPresented: $isNewItemPopoverPresented) {
+                            NewItemView()
+                                .environment(\.managedObjectContext, viewContext)
+                                .padding()
+                                .presentationCompactAdaptation(.popover)
+                        }
+                )
             }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(action: {
-                        self.canEditItems = !self.canEditItems
-                        debugPrint(Color.background)
-                    }) {
-                        Label("Lock Items", systemImage: canEditItems ? "lock.open" : "lock")
-//                            .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
-//                            .foregroundStyle(canEditItems ? .green : .red)
-//                            .padding(3)
-                    }
-//                    .buttonStyle(.bordered)
-//                    .buttonBorderShape(.circle )
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: addItem) {
-                        Label("Settings", systemImage: "gear")
-//                            .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
-//                            .foregroundStyle(.white , .blue)
-//                            .padding(3)
-                    }
-//                    .buttonStyle(.bordered)
-//                    .buttonBorderShape(.circle )
-                }
-                ToolbarItemGroup(placement: .bottomBar) {
-                    Spacer()
-                    Button(action: {
-                        self.isNewItemPopoverPresented = true
-                    }) {
-                        Label("Add Item", systemImage: "cart.badge.plus")
-                            .foregroundStyle(.green, colorScheme == .light ? .gray : .white)
-//                            .padding(3)
-                    }
-//                    .buttonStyle(.bordered)
-//                    .buttonBorderShape(.circle )
-                    .popover(isPresented: $isNewItemPopoverPresented) {
-                        NewItemView()
-                            .environment(\.managedObjectContext, viewContext)
-                            .padding()
-                            .presentationCompactAdaptation(.popover)
-                    }
-                    Spacer()
-                }
+            .tabItem {
+                Image(systemName: "list.bullet.rectangle")
+                Text("List")
             }
-            .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
+            .tag(0)
+            NavigationView {
+                List {
+                    
+                }
+                .foregroundStyle(colorScheme == .light ? .gray : .white, .blue)
+                .navigationTitle("Notes")
+                .navigationBarItems(
+                    leading:
+                        Button(action: {
+                            self.canEditItems = !self.canEditItems
+                            debugPrint(Color.background)
+                        }) {
+                            Label("Lock Items", systemImage: canEditItems ? "lock.open" : "lock")
+                        },
+                    trailing:
+                        Button(action: {
+                            self.isNewNotePopoverPresented = true
+                        }) {
+                            Label("Add Note", systemImage: "note.text.badge.plus")
+                                .foregroundStyle(.green, colorScheme == .light ? .gray : .white)
+                        }
+                        .popover(isPresented: $isNewNotePopoverPresented) {
+                            Text("TESTING PLS DONT CRASH")
+                                .padding()
+                                .presentationCompactAdaptation(.popover)
+                        }
+                )
+            }
+            .tabItem {
+                Image(systemName: "note.text")
+                Text("Notes")
+            }
+            .tag(1)
+            NavigationView {
+                SettingsView()
+                    .navigationTitle("Settings")
+            }
+            .tabItem {
+                Image(systemName: "gear")
+                Text("Settings")
+            }
+            .tag(2)
         }
+        // This fixes navigationBarTitle LayoutConstraints issue for NavigationView
+        .navigationViewStyle(.stack)
     }
     
     private func addItem() {
