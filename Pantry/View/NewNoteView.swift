@@ -1,36 +1,31 @@
 //
-//  new.swift
+//  NewNoteView.swift
 //  Pantry
 //
-//  Created by nabbit on 02/11/2023.
+//  Created by nabbit on 08/11/2023.
 //
 
 import SwiftUI
 
-struct NewItemView: View {
+struct NewNoteView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) private var viewContext
     @State var name: String = ""
-    @State var total: Int64 = 0
+    @State var isPinned: Bool = false
     @State var notes: String = ""
     @FocusState private var isNoteFocused: Bool
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Add an item")
+            Text("Add a Note")
                 .font(.title3)
                 .padding(.horizontal)
             Divider()
             Group {
                 HStack {
-                    EmojiTextField(text: $name, placeholder: "Emoji of new item")
+                    TextField("Name of new note", text: $name)
                         .multilineTextAlignment(.leading)
                         .disableAutocorrection(false)
-                }
-                HStack {
-                    TextField("Total of new item", value: $total, formatter: Formatter.myNumberFormat)
-                        .multilineTextAlignment(.leading)
-                        .keyboardType(.decimalPad)
                 }
                 HStack {
                     // TextEditor does not have a placeholder
@@ -50,19 +45,27 @@ struct NewItemView: View {
                         }
                     }
                 }
+                HStack {
+                    Toggle(isOn: $isPinned) {
+                        Text(Image(systemName: self.isPinned ? "pin.fill" : "pin"))
+                    }
+                    .foregroundStyle(.orange, .orange)
+                    .toggleStyle(.button)
+                    .tint(.clear)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
             }
             Divider()
             HStack{
                 Spacer()
                 Button("Add", systemImage: "plus.circle.fill", action: {
-                    let newItem = Item(context: viewContext)
-                    newItem.id = UUID()
-                    newItem.created = Date()
-                    newItem.modified = Date()
-                    newItem.name = self.name
-                    newItem.quantity = self.total
-                    newItem.total = self.total
-                    newItem.notes = self.notes
+                    let newNote = Note(context: viewContext)
+                    newNote.id = UUID()
+                    newNote.created = Date()
+                    newNote.modified = Date()
+                    newNote.name = self.name
+                    newNote.body = self.notes
+                    newNote.pinned = self.isPinned
                     do {
                         try viewContext.save()
                     } catch {
@@ -84,5 +87,5 @@ struct NewItemView: View {
 }
 
 #Preview {
-    NewItemView()
+    NewNoteView()
 }

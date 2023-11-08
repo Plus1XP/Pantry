@@ -7,13 +7,12 @@
 
 import SwiftUI
 
-struct EditNotesView: View {
-    
+struct EditNoteView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) private var viewContext
 //    @State var tempItem: Item = Item()
     @State var tempNote: String = ""
-    @ObservedObject var item: Item
+    @ObservedObject var note: Note
     
 //    init(item: Item) {
 //        self.tempItem = item
@@ -36,7 +35,7 @@ struct EditNotesView: View {
             HStack{
                 Spacer()
                 Button("Save", systemImage: "plus.circle", action: {
-                    item.notes = self.tempNote
+                    note.body = self.tempNote
                     do {
                         try viewContext.save()
                     } catch {
@@ -63,12 +62,12 @@ struct EditNotesView: View {
         }
         .padding()
         .onAppear(perform: {
-            self.tempNote = item.notes ?? ""
+            self.tempNote = note.body ?? ""
         })
     }
 }
 
 #Preview {
-    return EditNotesView(item: PersistenceController.shared.samepleItem)
+    return EditNoteView(note: PersistenceController.shared.samepleNote)
 }
 

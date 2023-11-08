@@ -22,6 +22,13 @@ struct PersistenceController {
             newItem.created = Date()
             newItem.modified = Date()
             newItem.notes = "Some bullshit here"
+            let newNote = Note(context: viewContext)
+            newNote.id = UUID()
+            newNote.name = "my Secret"
+            newNote.body = "Im really happy!"
+            newNote.pinned = false
+            newNote.created = Date()
+            newNote.modified = Date()
         }
         do {
             try viewContext.save()

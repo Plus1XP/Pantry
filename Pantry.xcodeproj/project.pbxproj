@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F1B6CEE2AFBD4A100377207 /* EditItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6CED2AFBD4A100377207 /* EditItemView.swift */; };
+		2F1B6CF02AFBD9C500377207 /* NewNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6CEF2AFBD9C500377207 /* NewNoteView.swift */; };
 		2F66E15C2AF3F7DC00A007F4 /* NewItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E15B2AF3F7DC00A007F4 /* NewItemView.swift */; };
-		2F66E15E2AF3F7E600A007F4 /* EditNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E15D2AF3F7E600A007F4 /* EditNotesView.swift */; };
+		2F66E15E2AF3F7E600A007F4 /* EditNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E15D2AF3F7E600A007F4 /* EditNoteView.swift */; };
 		2F66E1612AF3FA2300A007F4 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */; };
 		2F66E1632AF3FA6400A007F4 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1622AF3FA6400A007F4 /* TextField.swift */; };
 		2F66E1652AF3FAB100A007F4 /* EmojiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1642AF3FAB100A007F4 /* EmojiTextField.swift */; };
@@ -28,8 +30,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F1B6CED2AFBD4A100377207 /* EditItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemView.swift; sourceTree = "<group>"; };
+		2F1B6CEF2AFBD9C500377207 /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
 		2F66E15B2AF3F7DC00A007F4 /* NewItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewItemView.swift; sourceTree = "<group>"; };
-		2F66E15D2AF3F7E600A007F4 /* EditNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNotesView.swift; sourceTree = "<group>"; };
+		2F66E15D2AF3F7E600A007F4 /* EditNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteView.swift; sourceTree = "<group>"; };
 		2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		2F66E1622AF3FA6400A007F4 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		2F66E1642AF3FAB100A007F4 /* EmojiTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTextField.swift; sourceTree = "<group>"; };
@@ -78,7 +82,9 @@
 			children = (
 				2FBD25762AF2878300C26DA3 /* ContentView.swift */,
 				2F66E15B2AF3F7DC00A007F4 /* NewItemView.swift */,
-				2F66E15D2AF3F7E600A007F4 /* EditNotesView.swift */,
+				2F1B6CED2AFBD4A100377207 /* EditItemView.swift */,
+				2F1B6CEF2AFBD9C500377207 /* NewNoteView.swift */,
+				2F66E15D2AF3F7E600A007F4 /* EditNoteView.swift */,
 				2F7F0E272AF98BC900979951 /* SettingsView.swift */,
 			);
 			path = View;
@@ -243,6 +249,8 @@
 				2F66E15C2AF3F7DC00A007F4 /* NewItemView.swift in Sources */,
 				2FBD25862AF2C3A600C26DA3 /* Formatter.swift in Sources */,
 				2FBD25702AF2878300C26DA3 /* PantryApp.swift in Sources */,
+				2F1B6CEE2AFBD4A100377207 /* EditItemView.swift in Sources */,
+				2F1B6CF02AFBD9C500377207 /* NewNoteView.swift in Sources */,
 				2FBD25752AF2878300C26DA3 /* Pantry.xcdatamodeld in Sources */,
 				2FB81D3F2AF30CA300ECD374 /* Binding.swift in Sources */,
 				2F7F0E262AF96EF700979951 /* Color.swift in Sources */,
@@ -252,7 +260,7 @@
 				2FBD25722AF2878300C26DA3 /* Persistence.swift in Sources */,
 				2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */,
 				2F66E1612AF3FA2300A007F4 /* ButtonStyle.swift in Sources */,
-				2F66E15E2AF3F7E600A007F4 /* EditNotesView.swift in Sources */,
+				2F66E15E2AF3F7E600A007F4 /* EditNoteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
