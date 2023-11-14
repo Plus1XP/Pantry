@@ -11,15 +11,17 @@ import SwiftUI
 struct PantryApp: App {
     @StateObject private var itemStore = ItemStore()
     @StateObject private var noteStore = NoteStore()
+    @StateObject private var biometricStore = BiometricStore()
 
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AuthenticationView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(itemStore)
                 .environmentObject(noteStore)
+                .environmentObject(biometricStore)
         }
     }
 }

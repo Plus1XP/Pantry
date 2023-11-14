@@ -227,11 +227,6 @@ private func setFontColor(colorScheme: ColorScheme) -> Color {
 }
 
 #Preview {
-//    let itemStore = ItemStore()
-//    itemStore.addNewEntry(name: "ee", quantity: 2, total: 4, notes: "fgh")
-    
-    
-    
     ContentView()
         .environmentObject(ItemStore())
         .environmentObject(NoteStore())
@@ -244,7 +239,3 @@ private func setFontColor(colorScheme: ColorScheme) -> Color {
         .environmentObject(NoteStore())
         .preferredColorScheme(.dark)
 }
-
-//static var previews: some View {
-//       let userService = UserService()
-//       userService.user = User(username: "Alex", email: "alex@test.com")

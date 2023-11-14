@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @EnvironmentObject var biometricStore: BiometricStore
     @Environment(\.dismiss) var dismiss
-    @AppStorage("isFaceidEnabled") var isFaceidEnabled: Bool = false
     @AppStorage("isIcloudEnabled") var isIcloudEnabled: Bool = false
     // Fill in App ID when app is added to appstore connect!
     let appID: String = "1628565468"
@@ -34,9 +34,15 @@ struct SettingsView: View {
                             Image(systemName: "faceid")
                                 .foregroundStyle(.green)
                             // Causes `kCFRunLoopCommonModes` / `CFRunLoopRunSpecific` error
-                            Toggle("Enable Face ID", isOn: $isFaceidEnabled)
+                            Toggle("Enable Face ID", isOn: $biometricStore.isFaceidEnabled)
                                 .padding([.leading, .trailing])
-                                .disabled(true)
+                        }
+                        HStack {
+                            Image(systemName: "lock.badge.clock")
+                                .foregroundStyle(.red)
+                            // Causes `kCFRunLoopCommonModes` / `CFRunLoopRunSpecific` error
+                            Toggle("Enable Auto-Lock", isOn: $biometricStore.isAutoLockEnabled)
+                                .padding([.leading, .trailing])
                         }
                     }
                 }
@@ -48,7 +54,6 @@ struct SettingsView: View {
                             // Causes `kCFRunLoopCommonModes` / `CFRunLoopRunSpecific` error
                             Toggle("iCloud", isOn: $isIcloudEnabled)
                                 .padding([.leading, .trailing])
-                                .disabled(true)
                         }
                     }
                 }
@@ -157,4 +162,5 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
+        .environmentObject(BiometricStore())
 }

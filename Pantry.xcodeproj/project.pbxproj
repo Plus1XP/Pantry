@@ -31,6 +31,10 @@
 		2FBD257D2AF2878400C26DA3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FBD257C2AF2878400C26DA3 /* Preview Assets.xcassets */; };
 		2FBD25842AF290AE00C26DA3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD25832AF290AE00C26DA3 /* String.swift */; };
 		2FBD25862AF2C3A600C26DA3 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD25852AF2C3A600C26DA3 /* Formatter.swift */; };
+		2FE1834D2B03E2E000F7CEF7 /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */; };
+		2FE1834F2B03E35000F7CEF7 /* BiometricStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */; };
+		2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */; };
+		2FE30D632B04309E00927FC6 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE30D622B04309E00927FC6 /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +64,11 @@
 		2FBD257C2AF2878400C26DA3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2FBD25832AF290AE00C26DA3 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2FBD25852AF2C3A600C26DA3 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricService.swift; sourceTree = "<group>"; };
+		2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStore.swift; sourceTree = "<group>"; };
+		2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		2FE183522B03E96700F7CEF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2FE30D622B04309E00927FC6 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +105,8 @@
 				2F1B6D152AFFCBA600377207 /* ItemRowView.swift */,
 				2F1B6D192B01370100377207 /* NoteRowView.swift */,
 				2F1B6D1B2B01371900377207 /* NoteDetailsView.swift */,
+				2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */,
+				2FE30D622B04309E00927FC6 /* LoginView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -112,6 +123,7 @@
 			children = (
 				2F1B6D132AFD94FA00377207 /* ItemStore.swift */,
 				2F1B6D172B0134C200377207 /* NoteStore.swift */,
+				2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */,
 			);
 			path = ObservableObject;
 			sourceTree = "<group>";
@@ -121,6 +133,7 @@
 			children = (
 				2FBD25732AF2878300C26DA3 /* Pantry.xcdatamodeld */,
 				2FBD25712AF2878300C26DA3 /* Persistence.swift */,
+				2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */,
 			);
 			path = DataObject;
 			sourceTree = "<group>";
@@ -163,6 +176,7 @@
 		2FBD256E2AF2878300C26DA3 /* Pantry */ = {
 			isa = PBXGroup;
 			children = (
+				2FE183522B03E96700F7CEF7 /* Info.plist */,
 				2FBD257A2AF2878400C26DA3 /* Pantry.entitlements */,
 				2FBD256F2AF2878300C26DA3 /* PantryApp.swift */,
 				2F66E1592AF3F6E100A007F4 /* DataObject */,
@@ -265,15 +279,19 @@
 				2FBD25752AF2878300C26DA3 /* Pantry.xcdatamodeld in Sources */,
 				2F1B6D182B0134C300377207 /* NoteStore.swift in Sources */,
 				2FB81D3F2AF30CA300ECD374 /* Binding.swift in Sources */,
+				2FE1834F2B03E35000F7CEF7 /* BiometricStore.swift in Sources */,
 				2F7F0E262AF96EF700979951 /* Color.swift in Sources */,
 				2F7F0E282AF98BC900979951 /* SettingsView.swift in Sources */,
+				2FE1834D2B03E2E000F7CEF7 /* BiometricService.swift in Sources */,
 				2FBD25842AF290AE00C26DA3 /* String.swift in Sources */,
 				2FBD25772AF2878300C26DA3 /* ContentView.swift in Sources */,
+				2FE30D632B04309E00927FC6 /* LoginView.swift in Sources */,
 				2F1B6D162AFFCBA600377207 /* ItemRowView.swift in Sources */,
 				2FBD25722AF2878300C26DA3 /* Persistence.swift in Sources */,
 				2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */,
 				2F66E1612AF3FA2300A007F4 /* ButtonStyle.swift in Sources */,
 				2F1B6D1A2B01370100377207 /* NoteRowView.swift in Sources */,
+				2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */,
 				2F1B6D142AFD94FA00377207 /* ItemStore.swift in Sources */,
 				2F1B6D122AFD445A00377207 /* ItemDetailsView.swift in Sources */,
 				2F1B6D1C2B01371900377207 /* NoteDetailsView.swift in Sources */,
@@ -410,6 +428,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Pantry/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Required to unlock app.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -449,6 +469,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Pantry/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Required to unlock app.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

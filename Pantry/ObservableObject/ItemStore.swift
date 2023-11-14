@@ -14,6 +14,18 @@ class ItemStore: ObservableObject {
         fetchEntries()
     }
     
+//    #if DEBUG
+//    func fetchEntries() {
+//        let request = NSFetchRequest<Item>(entityName: "Item")
+//        let sort = NSSortDescriptor(key: "created", ascending: true)
+//                request.sortDescriptors = [sort]
+//        do {
+//            items = try PersistenceController.preview.container.viewContext.fetch(request)
+//        } catch {
+//            print("Error fetching. \(error)")
+//        }
+//    }
+//    #else
     func fetchEntries() {
         let request = NSFetchRequest<Item>(entityName: "Item")
         let sort = NSSortDescriptor(key: "created", ascending: true)
@@ -24,6 +36,7 @@ class ItemStore: ObservableObject {
             print("Error fetching. \(error)")
         }
     }
+//    #endif
     
     func addNewEntry(name: String?, quantity: Int64?, total: Int64?, notes: String?) {
         let newItem = Item(context: PersistenceController.shared.container.viewContext)
