@@ -26,7 +26,7 @@ struct PersistenceController {
             newNote.id = UUID()
             newNote.name = "my Secret"
             newNote.body = "Im really happy!"
-            newNote.pinned = false
+            newNote.isPinned = false
             newNote.created = Date()
             newNote.modified = Date()
         }
@@ -65,5 +65,17 @@ struct PersistenceController {
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+    }
+    
+    //Added this!
+    func saveContext(completionHandler: @escaping (Error?) -> Void) {
+        if PersistenceController.shared.container.viewContext.hasChanges {
+            do {
+                try PersistenceController.shared.container.viewContext.save()
+                completionHandler(nil)
+            } catch {
+                completionHandler(error)
+            }
+        }
     }
 }

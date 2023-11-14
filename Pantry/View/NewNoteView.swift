@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct NewNoteView: View {
+    @EnvironmentObject var noteStore: NoteStore
     @Environment(\.dismiss) var dismiss
-    @Environment(\.managedObjectContext) private var viewContext
     @State var name: String = ""
     @State var isPinned: Bool = false
-    @State var notes: String = ""
+    @State var noteBody: String = ""
     @FocusState private var isNoteFocused: Bool
     
     var body: some View {
@@ -31,11 +31,11 @@ struct NewNoteView: View {
                     // TextEditor does not have a placeholder
                     // Using a ZStack & FocusState as a work around.
                     ZStack(alignment: .topLeading) {
-                        TextEditor(text: $notes)
+                        TextEditor(text: $noteBody)
                             .focused($isNoteFocused)
                             .multilineTextAlignment(.leading)
                             .disableAutocorrection(false)
-                        if !isNoteFocused && notes.isEmpty {
+                        if !isNoteFocused && noteBody.isEmpty {
                             Text("Notes of new item")
                                 .multilineTextAlignment(.leading)
                                 .disableAutocorrection(false)
@@ -59,21 +59,7 @@ struct NewNoteView: View {
             HStack{
                 Spacer()
                 Button("Add", systemImage: "plus.circle.fill", action: {
-                    let newNote = Note(context: viewContext)
-                    newNote.id = UUID()
-                    newNote.created = Date()
-                    newNote.modified = Date()
-                    newNote.name = self.name
-                    newNote.body = self.notes
-                    newNote.pinned = self.isPinned
-                    do {
-                        try viewContext.save()
-                    } catch {
-                        // Replace this implementation with code to handle the error appropriately.
-                        // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                        let nsError = error as NSError
-                        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-                    }
+                    noteStore.addNewEntry(name: self.name, noteBody: self.noteBody, isPinned: self.isPinned)
                     isNoteFocused = false
                     dismiss()
                 })

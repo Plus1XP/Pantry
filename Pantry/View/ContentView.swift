@@ -9,79 +9,33 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var itemStore: ItemStore
+    @EnvironmentObject var noteStore: NoteStore
     @Environment(\.colorScheme) var colorScheme
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.created, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Note.created, ascending: true)],
-        animation: .default)
-    private var notes: FetchedResults<Note>
     @State private var isNewItemPopoverPresented: Bool = false
-    @State private var isEditItemNotesPopoverPresented: Bool = false
     @State private var isNewNotePopoverPresented: Bool = false
-    @State private var isEditNotesPopoverPresented: Bool = false
     @State private var isSettingsPopoverPresented: Bool = false
-    @State private var canEditItems: Bool = false
+    @State private var canEditEmojis: Bool = false
+    @State private var canEditItem: Bool = false
+    @State private var canEditNote: Bool = false
     @State private var canShowPinnedNotes: Bool = false
-    private var emojiSize: CGFloat = 15
-    private var emojiSpacing: CGFloat?
-    
     @State private var activeTabSelection = 0
     @State private var previousTabSelection = 0
-    
+        
     var body: some View {
         TabView(selection: $activeTabSelection) {
             NavigationView {
                 List {
-                    ForEach(items, id: \.self) { item in
+                    ForEach(itemStore.items, id: \.self) { item in
                         //MARK: Item Information
                         NavigationLink {
-                            Form {
-                                Section(header: Text(item.name!)
-                                    .font(.largeTitle)
-                                    .frame(maxWidth: .infinity, alignment: .center)) {
-                                    
-                                }
-                                Section(header: Text("Quantity Remaining").frame(maxWidth: .infinity, alignment: .center)) {
-                                    HStack {
-                                        Text("\(item.quantity.description) / \(item.total.description)")
-                                            .frame(maxWidth: .infinity, alignment: .center)
-                                    }
-                                }
-                                Section(header: Text("Notes").frame(maxWidth: .infinity, alignment: .center)) {
-                                    HStack {
-                                        Text(item.notes ?? "")
-                                            .frame(
-                                                minWidth: 0,
-                                                maxWidth: .infinity,
-                                                minHeight: 0,
-                                                maxHeight: .infinity,
-                                                alignment: .center
-                                            )
-                                    }
-                                }
-                                Section(header: Text("Last Modified").frame(maxWidth: .infinity, alignment: .center)) {
-                                    HStack {
-                                        Text(item.modified!, formatter: itemFormatter)
-                                            .frame(maxWidth: .infinity, alignment: .center)
-                                    }
-                                }
-                            }
+                            ItemDetailsView(item: item, canEditItem: $canEditItem)
                             .navigationBarItems(
                                 trailing:
                                     Button(action: {
-                                        self.isEditItemNotesPopoverPresented = true
+                                        self.canEditItem.toggle()
                                     }) {
                                         Label("Edit Notes", systemImage: "applepencil.and.scribble")
-                                    }
-                                    .popover(isPresented: $isEditItemNotesPopoverPresented) {
-                                        EditItemView(item: item)
-                                            .environment(\.managedObjectContext, viewContext)
-                                            .padding()
-                                            .presentationCompactAdaptation(.sheet)
                                     }
                             )
                             .navigationTitle("Item Details")
@@ -89,43 +43,31 @@ struct ContentView: View {
                             .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
                         } label: {
                             //MARK: Item List
-                            HStack {
-                                HStack(spacing: emojiSpacing) {
-                                    ForEach(0..<Int(item.total), id: \.self) { image in
-                                        let emojiImage = item.name?.ToImage(fontSize: emojiSize)
-                                        Image(uiImage: emojiImage!)
-                                            .opacity(getItemQuantityWithOffset(quantity: item.quantity) >= Int64(image) ? 1.0 : 0.1)
-                                            .onTapGesture {
-                                                item.quantity = setItemQuantityWithOffset(quantity: Int64(image))
-                                                item.modified = Date()
-                                                do {
-                                                    try viewContext.save()
-                                                } catch {
-                                                    // Replace this implementation with code to handle the error appropriately.
-                                                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                                                    let nsError = error as NSError
-                                                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-                                                }
-                                            }
-                                    }
-                                }
-                                .disabled(!canEditItems)
-                            }
+                            ItemRowView(item: item, canEditEmojis: canEditEmojis)
                         }
                     }
-                    .onDelete(perform: deleteItems)
-//                    .onMove { items.move(fromOffsets: $0, toOffset: $1) }
+                    .onDelete(perform: { indexSet in
+                        itemStore.deleteEntry(offsets: indexSet)
+                    })
                 }
                 .navigationTitle("Lists")
                 .navigationBarItems(
                     leading:
                         HStack {
                             Button(action: {
-                                self.canEditItems = !self.canEditItems
+                                self.canEditEmojis.toggle()
                             }) {
-                                Label("Lock Items", systemImage: canEditItems ? "hand.tap" : "hand.tap")
-                                    .foregroundStyle(setFontColor(colorScheme: colorScheme), canEditItems ? .green : .red)
+                                Label("Lock Emojis", systemImage: canEditEmojis ? "hand.tap" : "hand.tap")
+                                    .foregroundStyle(setFontColor(colorScheme: colorScheme), canEditEmojis ? .green : .red)
                             }
+#if DEBUG
+                            Button(action: {
+                                itemStore.sampleItems()
+                            }) {
+                                Label("Mock Data", systemImage: "plus.circle.fill")
+                                    .foregroundStyle(.white, .green)
+                            }
+#endif
                         },
                     trailing:
                         Button(action: {
@@ -133,19 +75,15 @@ struct ContentView: View {
                         }) {
                             Label("Settings", systemImage: "gear")
                         }
-//                        NavigationLink {
-//                            SettingsView()
-//                                .navigationTitle("Settings")
-//                                .navigationBarBackButtonHidden()
-//                        } label: {
-//                            Label("Settings", systemImage: "gear")
-//                        }
                 )
                 .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
                 .onAppear(perform: {
                     self.previousTabSelection = 0
 
                 })
+                .refreshable {
+                    itemStore.fetchEntries()
+                }
             }
             .tabItem {
                 Image(systemName: "cart")
@@ -153,7 +91,6 @@ struct ContentView: View {
             }
             .popover(isPresented: $isNewItemPopoverPresented, attachmentAnchor: .point(.bottom), arrowEdge: .top) {
                 NewItemView()
-                    .environment(\.managedObjectContext, viewContext)
                     .padding()
                     .presentationCompactAdaptation(.popover)
             }
@@ -180,42 +117,16 @@ struct ContentView: View {
             .tag(1)
             NavigationView {
                 List {
-                    ForEach(notes.filter{ self.canShowPinnedNotes ? $0.pinned : true}) { note in
+                    ForEach(noteStore.notes.filter{ self.canShowPinnedNotes ? $0.isPinned : true}, id: \.self) { note in
                         //MARK: Note Information
                         NavigationLink {
-                            Form {
-                                Section {
-                                    Text(note.body!)
-                                        .frame(maxWidth: .infinity, alignment: .center)
-                                } header: {
-                                    Text(note.name!)
-                                        .font(.title2)
-                                        .frame(maxWidth: .infinity, alignment: .center)
-                                } footer: {
-                                    Text(Image(systemName: note.pinned ? "pin.fill" : "pin"))
-                                        .padding()
-                                        .font(.title3)
-                                        .frame(maxWidth: .infinity, alignment: .center)
-                                }
-                                Section(header: Text("Last Modified").frame(maxWidth: .infinity, alignment: .center))
-                                {
-                                    Text(note.modified!, formatter: itemFormatter)
-                                        .frame(maxWidth: .infinity, alignment: .center)
-                                }
-                            }
+                            NoteDetailsView(note: note, canEditNote: $canEditNote)
                             .navigationBarItems(
                                 trailing:
                                     Button(action: {
-                                        self.isEditNotesPopoverPresented = true
+                                        self.canEditNote.toggle()
                                     }) {
                                         Label("Edit Notes", systemImage: "applepencil.and.scribble")
-                                    }
-                                    .popover(isPresented:
-                                        $isEditNotesPopoverPresented) {
-                                        EditNoteView(note: note)
-                                            .environment(\.managedObjectContext, viewContext)
-                                            .padding()
-                                            .presentationCompactAdaptation(.sheet)
                                     }
                             )
                             .navigationTitle("Note Details")
@@ -223,14 +134,12 @@ struct ContentView: View {
                             .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
                         } label: {
                             //MARK: Note List
-                            HStack {
-                                Text(note.name!)
-                                Spacer()
-                                Text(Image(systemName: note.pinned ? "pin.fill" : "pin"))
-                            }
+                            NoteRowView(note: Binding(get: {note}, set: {_ in}))
                         }
                     }
-                    .onDelete(perform: deleteNotes)
+                    .onDelete(perform: { indexSet in
+                        noteStore.deleteEntry(offsets: indexSet)
+                    })
                 }
                 .navigationTitle("Notes")
                 .navigationBarItems(
@@ -242,6 +151,14 @@ struct ContentView: View {
                                 Label("Pinned Notes", systemImage: canShowPinnedNotes ? "pin.fill" : "pin")
                                     .foregroundStyle(.orange, .orange)
                             }
+#if DEBUG
+                            Button(action: {
+                                noteStore.samepleNotes()
+                            }) {
+                                Label("Mock Data", systemImage: "plus.circle.fill")
+                                    .foregroundStyle(.white, .green)
+                            }
+#endif
                         },
                     trailing:
                         Button(action: {
@@ -249,18 +166,14 @@ struct ContentView: View {
                         }) {
                             Label("Settings", systemImage: "gear")
                         }
-//                        NavigationLink {
-//                            SettingsView()
-//                                .navigationTitle("Settings")
-//                                .navigationBarBackButtonHidden()
-//                        } label: {
-//                            Label("Settings", systemImage: "gear")
-//                        }
                 )
                 .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
                 .onAppear(perform: {
                     self.previousTabSelection = 2
                 })
+                .refreshable {
+                    noteStore.fetchEntries()
+                }
             }
             .tabItem {
                 Image(systemName: "note.text")
@@ -268,7 +181,6 @@ struct ContentView: View {
             }
             .popover(isPresented: $isNewNotePopoverPresented, attachmentAnchor: .point(.bottom), arrowEdge: .top) {
                 NewNoteView()
-                    .environment(\.managedObjectContext, viewContext)
                     .padding()
                     .presentationCompactAdaptation(.popover)
             }
@@ -281,78 +193,6 @@ struct ContentView: View {
         // This fixes navigationBarTitle LayoutConstraints issue for NavigationView
         .navigationViewStyle(.stack)
     }
-    
-    private func addNote() {
-        withAnimation {
-            let newNote = Note(context: viewContext)
-            newNote.id = UUID()
-            newNote.name = "my Secret"
-            newNote.body = "Im really happy!"
-            newNote.pinned = false
-            newNote.created = Date()
-            newNote.modified = Date()
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-    
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.id = UUID()
-            newItem.name = "🧅"
-            newItem.quantity = 5
-            newItem.total = 5
-            newItem.created = Date()
-            newItem.modified = Date()
-            newItem.notes = "Some bullshit here"
-            
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-    
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-            
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-    
-    private func deleteNotes(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { notes[$0] }.forEach(viewContext.delete)
-            
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
 }
 
 private let itemFormatter: DateFormatter = {
@@ -361,14 +201,6 @@ private let itemFormatter: DateFormatter = {
     formatter.timeStyle = .short
     return formatter
 }()
-
-private func getItemQuantityWithOffset(quantity: Int64) -> Int64 {
-    return quantity - 1
-}
-
-private func setItemQuantityWithOffset(quantity: Int64) -> Int64 {
-    return quantity + 1
-}
 
 private func getCurrentTabName(activeTab: Int) -> String {
     if activeTab == 0 {
@@ -395,11 +227,24 @@ private func setFontColor(colorScheme: ColorScheme) -> Color {
 }
 
 #Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+//    let itemStore = ItemStore()
+//    itemStore.addNewEntry(name: "ee", quantity: 2, total: 4, notes: "fgh")
+    
+    
+    
+    ContentView()
+        .environmentObject(ItemStore())
+        .environmentObject(NoteStore())
         .preferredColorScheme(.light)
 }
 
 #Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    ContentView()
+        .environmentObject(ItemStore())
+        .environmentObject(NoteStore())
         .preferredColorScheme(.dark)
 }
+
+//static var previews: some View {
+//       let userService = UserService()
+//       userService.user = User(username: "Alex", email: "alex@test.com")

@@ -9,13 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
-
     @AppStorage("isFaceidEnabled") var isFaceidEnabled: Bool = false
     @AppStorage("isIcloudEnabled") var isIcloudEnabled: Bool = false
-    
-    @GestureState private var dragOffset = CGSize.zero
-
-    
     // Fill in App ID when app is added to appstore connect!
     let appID: String = "1628565468"
     let mailURL: String = "mailto:evlbrains@protonmail.ch"
@@ -144,21 +139,7 @@ struct SettingsView: View {
                         }
                     }
                 }
-//                HStack {
-//                    Button(action: {
-//                        dismiss()
-//                    }) {
-//                        Label("Back", systemImage: "arrowshape.turn.up.backward")
-//                            .foregroundStyle(.white, .white)
-//                            .frame(maxWidth: .infinity)
-//                            .padding(5)
-//                    }
-//                    .buttonStyle(.borderedProminent)
-//                    .foregroundStyle(.white, .white)
-//                }
             }
-//            .navigationTitle("Settings")
-//            .navigationBarBackButtonHidden()
             .navigationBarItems(
                 leading:
                     Text("Settings")

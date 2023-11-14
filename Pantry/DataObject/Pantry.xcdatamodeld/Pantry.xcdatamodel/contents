@@ -13,8 +13,8 @@
         <attribute name="body" optional="YES" attributeType="String"/>
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isPinned" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="modified" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="pinned" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
 </model>

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct NewItemView: View {
+    @EnvironmentObject var itemStore: ItemStore
     @Environment(\.dismiss) var dismiss
-    @Environment(\.managedObjectContext) private var viewContext
     @State var name: String = ""
     @State var total: Int64 = 0
     @State var notes: String = ""
@@ -55,22 +55,7 @@ struct NewItemView: View {
             HStack{
                 Spacer()
                 Button("Add", systemImage: "plus.circle.fill", action: {
-                    let newItem = Item(context: viewContext)
-                    newItem.id = UUID()
-                    newItem.created = Date()
-                    newItem.modified = Date()
-                    newItem.name = self.name
-                    newItem.quantity = self.total
-                    newItem.total = self.total
-                    newItem.notes = self.notes
-                    do {
-                        try viewContext.save()
-                    } catch {
-                        // Replace this implementation with code to handle the error appropriately.
-                        // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                        let nsError = error as NSError
-                        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-                    }
+                    itemStore.addNewEntry(name: self.name, quantity: self.total, total: self.total, notes: self.notes)
                     isNoteFocused = false
                     dismiss()
                 })
