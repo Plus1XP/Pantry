@@ -9,8 +9,10 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var biometricStore: BiometricStore
+    @EnvironmentObject var cloudSyncStore: CloudSyncStore
     @Environment(\.dismiss) var dismiss
-    @AppStorage("isIcloudEnabled") var isIcloudEnabled: Bool = false
+    @ObservedObject var syncMonitor = SyncMonitor.shared
+//    @AppStorage("isIcloudEnabled") var isIcloudEnabled: Bool = false
     // Fill in App ID when app is added to appstore connect!
     let appID: String = "1628565468"
     let mailURL: String = "mailto:evlbrains@protonmail.ch"
@@ -36,6 +38,12 @@ struct SettingsView: View {
                             // Causes `kCFRunLoopCommonModes` / `CFRunLoopRunSpecific` error
                             Toggle("Enable Face ID", isOn: $biometricStore.isFaceidEnabled)
                                 .padding([.leading, .trailing])
+                                .onChange(of: biometricStore.isFaceidEnabled,
+                                {
+                                    if biometricStore.isFaceidEnabled {
+                                        biometricStore.ValidateBiometrics()
+                                    }
+                                })
                         }
                         HStack {
                             Image(systemName: "lock.badge.clock")
@@ -48,12 +56,53 @@ struct SettingsView: View {
                 }
                 Section(header: Text("\(Image(systemName: "clock.arrow.circlepath")) Backup")) {
                     Group {
-                        HStack {
-                            Image(systemName: "icloud.fill")
-                                .foregroundStyle(.gray)
-                            // Causes `kCFRunLoopCommonModes` / `CFRunLoopRunSpecific` error
-                            Toggle("iCloud", isOn: $isIcloudEnabled)
-                                .padding([.leading, .trailing])
+                        VStack {
+                            HStack {
+                                Image(systemName: syncMonitor.syncStateSummary.symbolName)
+                                    .foregroundColor(syncMonitor.syncStateSummary.symbolColor)
+                                // Causes `kCFRunLoopCommonModes` / `CFRunLoopRunSpecific` error
+                                Toggle("iCloud", isOn: $cloudSyncStore.isIcloudEnabled)
+                                    .padding([.leading, .trailing])
+                            }
+                            HStack {
+                                Text("TEST")
+                                if SyncMonitor.shared.syncError {
+                                    if let e = SyncMonitor.shared.setupError {
+                                        Text("Unable to set up iCloud sync, changes won't be saved! \(e.localizedDescription)")
+                                    }
+                                    if let e = SyncMonitor.shared.importError {
+                                        Text("Import is broken: \(e.localizedDescription)")
+                                    }
+                                    if let e = SyncMonitor.shared.exportError {
+                                        Text("Export is broken - your changes aren't being saved! \(e.localizedDescription)")
+                                    }
+                                } else if SyncMonitor.shared.notSyncing {
+                                    Text("Sync should be working, but isn't. Look for a badge on Settings or other possible issues.")
+                                }
+                            }
+                            HStack {
+                                Group {
+                                    if syncMonitor.syncError {
+                                        VStack {
+                                            HStack {
+                                                if syncMonitor.setupError != nil {
+                                                    Image(systemName: "xmark.icloud").foregroundColor(.red)
+                                                }
+                                                if syncMonitor.importError != nil {
+                                                    Image(systemName: "icloud.and.arrow.down").foregroundColor(.red)
+                                                }
+                                                if syncMonitor.exportError != nil {
+                                                    Image(systemName: "icloud.and.arrow.up").foregroundColor(.red)
+                                                }
+                                            }
+                                        }
+                                    } else if syncMonitor.notSyncing {
+                                        Image(systemName: "xmark.icloud")
+                                    } else {
+                                        Image(systemName: "icloud").foregroundColor(.green)
+                                    }
+                                }
+                            }
                         }
                     }
                 }

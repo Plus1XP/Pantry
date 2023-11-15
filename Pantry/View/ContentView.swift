@@ -50,7 +50,7 @@ struct ContentView: View {
                         itemStore.deleteEntry(offsets: indexSet)
                     })
                 }
-                .navigationTitle("Lists")
+                .navigationTitle("Items")
                 .navigationBarItems(
                     leading:
                         HStack {
@@ -87,7 +87,7 @@ struct ContentView: View {
             }
             .tabItem {
                 Image(systemName: "cart")
-                Text("List")
+                Text("Items")
             }
             .popover(isPresented: $isNewItemPopoverPresented, attachmentAnchor: .point(.bottom), arrowEdge: .top) {
                 NewItemView()
