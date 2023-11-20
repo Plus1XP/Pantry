@@ -12,8 +12,6 @@ struct PantryApp: App {
     @StateObject private var itemStore = ItemStore()
     @StateObject private var noteStore = NoteStore()
     @StateObject private var biometricStore = BiometricStore()
-    @StateObject var cloudSyncStore = CloudSyncStore()
-    
 
     let persistenceController = PersistenceController.shared
 
@@ -24,7 +22,6 @@ struct PantryApp: App {
                 .environmentObject(itemStore)
                 .environmentObject(noteStore)
                 .environmentObject(biometricStore)
-                .environmentObject(cloudSyncStore)
         }
     }
 }

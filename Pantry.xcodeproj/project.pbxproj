@@ -35,7 +35,6 @@
 		2FE1834F2B03E35000F7CEF7 /* BiometricStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */; };
 		2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */; };
 		2FE30D632B04309E00927FC6 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE30D622B04309E00927FC6 /* LoginView.swift */; };
-		2FF4C2B52B043F3800D7700E /* CloudSyncStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF4C2B42B043F3800D7700E /* CloudSyncStore.swift */; };
 		2FF4C2B72B04408800D7700E /* SyncMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF4C2B62B04408800D7700E /* SyncMonitor.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,7 +70,6 @@
 		2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		2FE183522B03E96700F7CEF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2FE30D622B04309E00927FC6 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		2FF4C2B42B043F3800D7700E /* CloudSyncStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncStore.swift; sourceTree = "<group>"; };
 		2FF4C2B62B04408800D7700E /* SyncMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMonitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,7 +126,6 @@
 				2F1B6D132AFD94FA00377207 /* ItemStore.swift */,
 				2F1B6D172B0134C200377207 /* NoteStore.swift */,
 				2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */,
-				2FF4C2B42B043F3800D7700E /* CloudSyncStore.swift */,
 			);
 			path = ObservableObject;
 			sourceTree = "<group>";
@@ -275,7 +272,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FF4C2B52B043F3800D7700E /* CloudSyncStore.swift in Sources */,
 				2F66E1632AF3FA6400A007F4 /* TextField.swift in Sources */,
 				2F66E1672AF5671C00A007F4 /* PersistenceController.swift in Sources */,
 				2F66E1652AF3FAB100A007F4 /* EmojiTextField.swift in Sources */,

@@ -9,10 +9,10 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var biometricStore: BiometricStore
-    @EnvironmentObject var cloudSyncStore: CloudSyncStore
     @Environment(\.dismiss) var dismiss
     @ObservedObject var syncMonitor = SyncMonitor.shared
 //    @AppStorage("isIcloudEnabled") var isIcloudEnabled: Bool = false
+    @State var canShowSyncError: Bool = false
     // Fill in App ID when app is added to appstore connect!
     let appID: String = "1628565468"
     let mailURL: String = "mailto:evlbrains@protonmail.ch"
@@ -39,7 +39,7 @@ struct SettingsView: View {
                             Toggle("Enable Face ID", isOn: $biometricStore.isFaceidEnabled)
                                 .padding([.leading, .trailing])
                                 .onChange(of: biometricStore.isFaceidEnabled,
-                                {
+                                          {
                                     if biometricStore.isFaceidEnabled {
                                         biometricStore.ValidateBiometrics()
                                     }
@@ -54,41 +54,33 @@ struct SettingsView: View {
                         }
                     }
                 }
-                Section(header: Text("\(Image(systemName: "clock.arrow.circlepath")) Backup")) {
-                    Group {
+                Section(content: {
+                    HStack {
+                        Image(systemName: syncMonitor.syncStateSummary.symbolName)
+                            .foregroundColor(syncMonitor.syncStateSummary.symbolColor)
+                        Text("iCloud Sync Status")
+                        Spacer()
+                        Button {
+                            self.canShowSyncError.toggle()
+                        } label: {
+                            HStack {
+                                Image(systemName: "info.circle")
+                            }
+                        }
+                        .foregroundStyle(SyncMonitor.shared.syncError || SyncMonitor.shared.notSyncing ? .blue : .gray)
+                        .disabled(SyncMonitor.shared.syncError || SyncMonitor.shared.notSyncing  ? false : true)
+                    }
+                    if canShowSyncError {
                         VStack {
-                            HStack {
-                                Image(systemName: syncMonitor.syncStateSummary.symbolName)
-                                    .foregroundColor(syncMonitor.syncStateSummary.symbolColor)
-                                // Causes `kCFRunLoopCommonModes` / `CFRunLoopRunSpecific` error
-                                Toggle("iCloud", isOn: $cloudSyncStore.isIcloudEnabled)
-                                    .padding([.leading, .trailing])
-                            }
-                            HStack {
-                                Text("TEST")
-                                if SyncMonitor.shared.syncError {
-                                    if let e = SyncMonitor.shared.setupError {
-                                        Text("Unable to set up iCloud sync, changes won't be saved! \(e.localizedDescription)")
-                                    }
-                                    if let e = SyncMonitor.shared.importError {
-                                        Text("Import is broken: \(e.localizedDescription)")
-                                    }
-                                    if let e = SyncMonitor.shared.exportError {
-                                        Text("Export is broken - your changes aren't being saved! \(e.localizedDescription)")
-                                    }
-                                } else if SyncMonitor.shared.notSyncing {
-                                    Text("Sync should be working, but isn't. Look for a badge on Settings or other possible issues.")
-                                }
-                            }
                             HStack {
                                 Group {
                                     if syncMonitor.syncError {
                                         VStack {
                                             HStack {
-                                                if syncMonitor.setupError != nil {
+                                            if syncMonitor.setupError != nil {
                                                     Image(systemName: "xmark.icloud").foregroundColor(.red)
                                                 }
-                                                if syncMonitor.importError != nil {
+                                            if syncMonitor.importError != nil {
                                                     Image(systemName: "icloud.and.arrow.down").foregroundColor(.red)
                                                 }
                                                 if syncMonitor.exportError != nil {
@@ -103,9 +95,29 @@ struct SettingsView: View {
                                     }
                                 }
                             }
+                            .padding(.bottom)
+                            VStack(spacing: 10) {
+                                if SyncMonitor.shared.syncError {
+                                    if let e = SyncMonitor.shared.setupError {
+                                        Text("Unable to set up iCloud sync, changes won't be saved! \(e.localizedDescription)")
+                                    }
+                                    if let e = SyncMonitor.shared.importError {
+                                        Text("Import is broken: \(e.localizedDescription)")
+                                    }
+                                    if let e = SyncMonitor.shared.exportError {
+                                        Text("Export is broken - your changes aren't being saved! \(e.localizedDescription)")
+                                    }
+                                } else if SyncMonitor.shared.notSyncing {
+                                    Text("Sync should be working, but isn't. Look for a badge on Settings or other possible issues.")
+                                }
+                            }
                         }
                     }
-                }
+                }, header: {
+                    Text("\(Image(systemName: "clock.arrow.circlepath")) Backup")
+                }, footer: {
+                    Text("")
+                })
                 Section(header: Text("\(Image(systemName: "message")) FeedBack")) {
                     Group {
                         HStack {
