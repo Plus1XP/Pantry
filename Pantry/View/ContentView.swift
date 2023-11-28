@@ -67,6 +67,12 @@ struct ContentView: View {
                                 Label("Mock Data", systemImage: "plus.circle.fill")
                                     .foregroundStyle(.white, .green)
                             }
+                            Button(action: {
+                                itemStore.deleteAll()
+                            }) {
+                                Label("Mock Data", systemImage: "minus.circle.fill")
+                                    .foregroundStyle(.white, .red)
+                            }
 #endif
                         },
                     trailing:
@@ -157,6 +163,12 @@ struct ContentView: View {
                             }) {
                                 Label("Mock Data", systemImage: "plus.circle.fill")
                                     .foregroundStyle(.white, .green)
+                            }
+                            Button(action: {
+                                noteStore.deleteAll()
+                            }) {
+                                Label("Mock Data", systemImage: "minus.circle.fill")
+                                    .foregroundStyle(.white, .red)
                             }
 #endif
                         },

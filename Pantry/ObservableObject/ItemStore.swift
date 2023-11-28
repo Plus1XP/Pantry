@@ -68,6 +68,13 @@ class ItemStore: ObservableObject {
         saveChanges()
     }
     
+    func deleteAll() {
+        for item in self.items {
+            PersistenceController.shared.container.viewContext.delete(item)
+        }
+        saveChanges()
+    }
+    
     func discardChanges() {
         PersistenceController.shared.container.viewContext.rollback()
         self.fetchEntries()

@@ -54,6 +54,13 @@ class NoteStore: ObservableObject {
         saveChanges()
     }
     
+    func deleteAll() {
+        for note in self.notes {
+            PersistenceController.shared.container.viewContext.delete(note)
+        }
+        saveChanges()
+    }
+    
     func discardChanges() {
         PersistenceController.shared.container.viewContext.rollback()
     }
