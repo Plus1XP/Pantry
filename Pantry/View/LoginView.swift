@@ -13,7 +13,7 @@ struct LoginView: View {
     var body: some View {
         Button(action: {
             debugPrint("authenticate button Pushed")
-            biometricStore.ValidateBiometrics()
+            self.biometricStore.ValidateBiometrics()
         }, label: {
             let biometric = BiometricService()
             VStack {

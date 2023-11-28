@@ -8,25 +8,25 @@
 import SwiftUI
 
 struct ItemDetailsView: View {
-    @EnvironmentObject var itemStore: ItemStore
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var itemStore: ItemStore
     @State var item: Item
     @Binding var canEditItem: Bool
 
     var body: some View {
         Form {
-            Section(header: EmojiTextField(text: Binding(get: {item.name ?? ""}, set: {item.name = $0}))
-                .font(.largeTitle)
-                .textFieldStyle(.plain)
-                .multilineTextAlignment(.center)
-                .disabled(!self.canEditItem)
-                .frame(maxWidth: .infinity, alignment: .center)) {
-                
+            Section(header: Text("Item Information").frame(maxWidth: .infinity, alignment: .center)) {
+                HStack {
+                    TextField("test", text: Binding(get: {item.name ?? ""}, set: {item.name = $0}))
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .font(.largeTitle)
+                        .multilineTextAlignment(.center)
+                }
+                .listRowBackground(Color.clear)
             }
+            
             Section(header: Text("Quantity Remaining").frame(maxWidth: .infinity, alignment: .center)) {
                 HStack {
-//                                        Text("\(tempItem.quantity.description) / \(tempItem.total.description)")
-//                    Spacer()
                     TextField("Quantity", text: Binding(get: {"\(item.quantity)"}, set: {item.quantity = Int64($0) ?? 0}))
                         .textFieldStyle(.plain)
                         .multilineTextAlignment(.trailing)
@@ -36,7 +36,6 @@ struct ItemDetailsView: View {
                         .textFieldStyle(.plain)
                         .multilineTextAlignment(.leading)
                         .disabled(!self.canEditItem)
-//                    Spacer()
                 }
             }
             Section(header: Text("Notes").frame(maxWidth: .infinity, alignment: .center)) {
@@ -49,8 +48,8 @@ struct ItemDetailsView: View {
                             maxHeight: .infinity,
                             alignment: .center
                         )
+                        .multilineTextAlignment(.center)
                         .disabled(!self.canEditItem)
-
                 }
             }
             Section(header: Text("Last Modified").frame(maxWidth: .infinity, alignment: .center)) {

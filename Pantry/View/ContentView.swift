@@ -9,9 +9,9 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var itemStore: ItemStore
     @EnvironmentObject var noteStore: NoteStore
-    @Environment(\.colorScheme) var colorScheme
     @State private var isNewItemPopoverPresented: Bool = false
     @State private var isNewNotePopoverPresented: Bool = false
     @State private var isSettingsPopoverPresented: Bool = false

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct NewNoteView: View {
-    @EnvironmentObject var noteStore: NoteStore
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var noteStore: NoteStore
     @State var name: String = ""
     @State var isPinned: Bool = false
     @State var noteBody: String = ""

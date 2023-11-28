@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject var biometricStore: BiometricStore
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var syncMonitor = SyncMonitor.shared
-//    @AppStorage("isIcloudEnabled") var isIcloudEnabled: Bool = false
+    @EnvironmentObject var biometricStore: BiometricStore
+    @ObservedObject var syncMonitor: SyncMonitor = SyncMonitor.shared
     @State var canShowSyncError: Bool = false
     // Fill in App ID when app is added to appstore connect!
     let appID: String = "1628565468"
@@ -38,10 +37,10 @@ struct SettingsView: View {
                             // Causes `kCFRunLoopCommonModes` / `CFRunLoopRunSpecific` error
                             Toggle("Enable Face ID", isOn: $biometricStore.isFaceidEnabled)
                                 .padding([.leading, .trailing])
-                                .onChange(of: biometricStore.isFaceidEnabled,
-                                          {
-                                    if biometricStore.isFaceidEnabled {
-                                        biometricStore.ValidateBiometrics()
+                                .onChange(of: self.biometricStore.isFaceidEnabled,
+                                {
+                                    if self.biometricStore.isFaceidEnabled {
+                                        self.biometricStore.ValidateBiometrics()
                                     }
                                 })
                         }
@@ -56,8 +55,8 @@ struct SettingsView: View {
                 }
                 Section(content: {
                     HStack {
-                        Image(systemName: syncMonitor.syncStateSummary.symbolName)
-                            .foregroundColor(syncMonitor.syncStateSummary.symbolColor)
+                        Image(systemName: self.syncMonitor.syncStateSummary.symbolName)
+                            .foregroundColor(self.syncMonitor.syncStateSummary.symbolColor)
                         Text("iCloud Sync Status")
                         Spacer()
                         Button {
@@ -70,25 +69,25 @@ struct SettingsView: View {
                         .foregroundStyle(SyncMonitor.shared.syncError || SyncMonitor.shared.notSyncing ? .blue : .gray)
                         .disabled(SyncMonitor.shared.syncError || SyncMonitor.shared.notSyncing  ? false : true)
                     }
-                    if canShowSyncError {
+                    if self.canShowSyncError {
                         VStack {
                             HStack {
                                 Group {
-                                    if syncMonitor.syncError {
+                                    if self.syncMonitor.syncError {
                                         VStack {
                                             HStack {
-                                            if syncMonitor.setupError != nil {
+                                                if self.syncMonitor.setupError != nil {
                                                     Image(systemName: "xmark.icloud").foregroundColor(.red)
                                                 }
-                                            if syncMonitor.importError != nil {
+                                                if self.syncMonitor.importError != nil {
                                                     Image(systemName: "icloud.and.arrow.down").foregroundColor(.red)
                                                 }
-                                                if syncMonitor.exportError != nil {
+                                                if self.syncMonitor.exportError != nil {
                                                     Image(systemName: "icloud.and.arrow.up").foregroundColor(.red)
                                                 }
                                             }
                                         }
-                                    } else if syncMonitor.notSyncing {
+                                    } else if self.syncMonitor.notSyncing {
                                         Image(systemName: "xmark.icloud")
                                     } else {
                                         Image(systemName: "icloud").foregroundColor(.green)
@@ -121,7 +120,7 @@ struct SettingsView: View {
                 Section(header: Text("\(Image(systemName: "message")) FeedBack")) {
                     Group {
                         HStack {
-                            Link(destination: URL(string: mailURL)!) {
+                            Link(destination: URL(string: self.mailURL)!) {
                                 HStack {
                                     Image(systemName: "paperplane.fill")
                                         .foregroundStyle(.blue)
@@ -132,7 +131,7 @@ struct SettingsView: View {
                             .disabled(true)
                         }
                         HStack {
-                            Link(destination: URL(string: twitterURL)!) {
+                            Link(destination: URL(string: self.twitterURL)!) {
                                 HStack {
                                     Image(systemName: "quote.bubble.fill")
                                         .foregroundStyle(.blue)
@@ -144,7 +143,7 @@ struct SettingsView: View {
                         }
                         HStack {
                             Button {
-                                let AV = UIActivityViewController(activityItems: [appURL+appID], applicationActivities: nil)
+                                let AV = UIActivityViewController(activityItems: [self.appURL + self.appID], applicationActivities: nil)
                                 let scenes = UIApplication.shared.connectedScenes
                                 let windowScene = scenes.first as? UIWindowScene
                                 windowScene?.keyWindow?.rootViewController?.present(AV, animated: true, completion: nil)
@@ -159,7 +158,7 @@ struct SettingsView: View {
                             .disabled(true)
                         }
                         HStack {
-                            Link(destination: URL(string: appURL+appID+reviewForwarder)!) {
+                            Link(destination: URL(string: self.appURL + self.appID + self.reviewForwarder)!) {
                                 HStack {
                                     Image(systemName: "star.fill")
                                         .foregroundStyle(.yellow)
@@ -176,10 +175,10 @@ struct SettingsView: View {
                         HStack {
                             Image(systemName: "exclamationmark.triangle.fill")
                                 .foregroundStyle(.black, .yellow)
-                            Text("Version \(versionString)")
+                            Text("Version \(self.versionString)")
                         }
                         HStack {
-                            Link(destination: URL(string: githubURL)!) {
+                            Link(destination: URL(string: self.githubURL)!) {
                                 HStack {
                                     Image(systemName: "paintbrush.fill")
                                         .foregroundStyle(.orange)
@@ -189,7 +188,7 @@ struct SettingsView: View {
                             }
                         }
                         HStack {
-                            Link(destination: URL(string: githubURL)!) {
+                            Link(destination: URL(string: self.githubURL)!) {
                                 HStack {
                                     Image(systemName: "hammer.fill")
                                         .foregroundStyle(.gray)

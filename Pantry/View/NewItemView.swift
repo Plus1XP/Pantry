@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct NewItemView: View {
-    @EnvironmentObject var itemStore: ItemStore
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var itemStore: ItemStore
     @State var name: String = ""
     @State var total: Int64 = 0
     @State var notes: String = ""
@@ -22,11 +22,6 @@ struct NewItemView: View {
                 .padding(.horizontal)
             Divider()
             Group {
-                HStack {
-                    EmojiTextField(text: $name, placeholder: "Emoji of new item")
-                        .multilineTextAlignment(.leading)
-                        .disableAutocorrection(false)
-                }
                 HStack {
                     TextField("Total of new item", value: $total, formatter: Formatter.myNumberFormat)
                         .multilineTextAlignment(.leading)

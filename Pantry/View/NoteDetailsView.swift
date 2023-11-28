@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct NoteDetailsView: View {
-    @EnvironmentObject var noteStore: NoteStore
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var noteStore: NoteStore
     @State var note: Note
+    @State var isPinnedTrigger: Bool = false
     @Binding var canEditNote: Bool
     @FocusState private var isNoteFocused: Bool
     
-    @State var isPinnedTrigger: Bool = false
         
     var body: some View {
         Form {
@@ -24,7 +24,7 @@ struct NoteDetailsView: View {
                     ZStack(alignment: .topLeading) {
                         TextEditor(text: Binding(get: {note.body ?? ""}, set: {note.body = $0}))
                             .focused($isNoteFocused)
-                            .multilineTextAlignment(.leading)
+                            .multilineTextAlignment(.center)
                             .disableAutocorrection(false)
                         if !isNoteFocused && ((note.body?.isEmpty) == nil) {
                             Text("Notes of new item")
@@ -36,28 +36,28 @@ struct NoteDetailsView: View {
                         }
                     }
                     .disabled(!self.canEditNote)
-//                .frame(maxWidth: .infinity, alignment: .center)
             } header: {
-                TextField("Name of new note", text: Binding(get: {note.name ?? ""}, set: {note.name = $0}))
-                    .font(.title2)
-                    .multilineTextAlignment(.leading)
-                    .disableAutocorrection(false)
-                    .frame(maxWidth: .infinity, alignment: .center)
+                ZStack {
+                    TextField("Name of new note", text: Binding(get: {note.name ?? ""}, set: {note.name = $0}))
+                        .font(.title2)
+                        .multilineTextAlignment(.center)
+                        .disableAutocorrection(false)
+                        .disabled(!self.canEditNote)
+                    Toggle(isOn: $isPinnedTrigger) {
+                        Text(Image(systemName: isPinnedTrigger ? "pin.fill" : "pin"))
+                    }
+                    .foregroundStyle(.orange, .orange)
+                    .toggleStyle(.button)
+                    .tint(.clear)
+                    .font(.title3)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
                     .disabled(!self.canEditNote)
-            } footer: {
-                Toggle(isOn: $isPinnedTrigger) {
-                    Text(Image(systemName: isPinnedTrigger ? "pin.fill" : "pin"))
+                    .onChange(of: isPinnedTrigger, {
+                        note.isPinned = isPinnedTrigger
+                    })
                 }
-                .foregroundStyle(.orange, .orange)
-                .toggleStyle(.button)
-                .tint(.clear)
-                .padding()
-                .font(.title3)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .disabled(!self.canEditNote)
-                .onChange(of: isPinnedTrigger, {
-                    note.isPinned = isPinnedTrigger
-                })
+            } footer: {
+                
             }
             Section(header: Text("Last Modified").frame(maxWidth: .infinity, alignment: .center)) {
                 HStack {

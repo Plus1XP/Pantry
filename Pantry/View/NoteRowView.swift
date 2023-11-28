@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NoteRowView: View {
-    // Added NoteStore to trigger view refresh when note is changed.
+//     Added NoteStore to trigger view refresh when note is changed.
 //    @EnvironmentObject var noteStore: NoteStore
     @Binding var note: Note
     
