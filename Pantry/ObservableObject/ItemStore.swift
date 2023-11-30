@@ -28,7 +28,7 @@ class ItemStore: ObservableObject {
 //    #else
     func fetchEntries() {
         let request = NSFetchRequest<Item>(entityName: "Item")
-        let sort = NSSortDescriptor(key: "created", ascending: true)
+        let sort = NSSortDescriptor(key: "position", ascending: true)
                 request.sortDescriptors = [sort]
         do {
             items = try PersistenceController.shared.container.viewContext.fetch(request)
@@ -41,6 +41,7 @@ class ItemStore: ObservableObject {
     func addNewEntry(name: String?, quantity: Int64?, total: Int64?, notes: String?) {
         let newItem = Item(context: PersistenceController.shared.container.viewContext)
         newItem.id = UUID()
+        newItem.position = Int64(items.count + 1)
         newItem.name = name
         newItem.quantity = quantity ?? 0
         newItem.total = total ?? 0
@@ -56,6 +57,18 @@ class ItemStore: ObservableObject {
 //                list.setValue(Date(), forKey: "createdAt")
 //            }
         saveChanges()
+    }
+    
+    func moveEntry(from oldIndex: IndexSet, to newIndex: Int) {
+        // This guarantees that the edits are performed in the same thread as the CoreData context
+        PersistenceController.shared.container.viewContext.perform {
+            var revisedItems: [Item] = self.items.map({$0})
+            revisedItems.move(fromOffsets: oldIndex, toOffset: newIndex)
+            for reverseIndex in stride(from: revisedItems.count-1, through: 0, by: -1) {
+                revisedItems[reverseIndex].position = Int64(reverseIndex)
+            }
+            self.saveChanges()
+        }
     }
     
     func deleteEntry(entry: Item) {
@@ -90,60 +103,25 @@ class ItemStore: ObservableObject {
         }
     }
     
-//    func move(from oldIndex: IndexSet, to newIndex: Int) {
-//        // This guarantees that the edits are performed in the same thread as the CoreData context
-//        PersistenceController.shared.container.viewContext.perform {
-//            var revisedItems: [Item] = items.map({$0})
-//            revisedItems.move(fromOffsets: oldIndex, toOffset: newIndex)
-//            for reverseIndex in stride(from: revisedItems.count-1, through: 0, by: -1) {
-//                revisedItems[reverseIndex].id = Int64(reverseIndex)
-//            }
-//            PersistenceController.shared.save()
-//        }
-//    }
-    
-//    private func onMove(source: IndexSet, to destination: Int) {
-//        var revisedItems: [Item] = items.sorted(by: { $0.order < $1.order }).map{ $0 }
-//
-//            CoreDataHelper.executeBlockAndCommit {
-//                revisedItems.move(fromOffsets: source, toOffset: destination )
-//
-//                for reverseIndex in stride(from: revisedItems.count - 1, through: 0, by: -1)
-//                {
-//                    revisedItems[reverseIndex].order = Int32(reverseIndex)
-//                }
-//            }
-//        }
-    
-//    private func move(from source: IndexSet, to destination: Int) {
-//
-//            var revisedAttendees = items
-//
-//            revisedAttendees.move(fromOffsets: source, toOffset: destination )
-//
-//            for reverseIndex in stride( from: revisedAttendees.count - 1, through: 0, by: -1 ) {
-//                revisedAttendees[ reverseIndex ].order =
-//                    Int16( reverseIndex )
-//            }
-//            saveChanges()
-//        }
-    
     func sampleItems() {
-        var count = 0
+        var loopCount = 0
+        var positionCount = items.count
         for _ in 0..<6 {
+            positionCount += 1
             let context = PersistenceController.shared.container.viewContext
             let item = Item(context: context)
             let name = ["🍎", "🥝", "🍌", "🍉", "🥥"]
             let quantity = [3, 2, 5, 1, 5, 3, 1]
             let total = [5, 2, 6, 3, 7, 4, 1]
             item.id = UUID()
+            item.position = Int64(positionCount)
             item.name = name.randomElement()
-            item.quantity = Int64(quantity[0 + count])
-            item.total = Int64(total[0 + count])
+            item.quantity = Int64(quantity[0 + loopCount])
+            item.total = Int64(total[0 + loopCount])
             item.notes = "We live as we die, Alone.."
             item.created = Date()
             item.modified = Date().addingTimeInterval(30000000)
-            count += 1
+            loopCount += 1
         }
         do {
             saveChanges()

@@ -16,7 +16,7 @@ class NoteStore: ObservableObject {
     
     func fetchEntries() {
         let request = NSFetchRequest<Note>(entityName: "Note")
-        let sort = NSSortDescriptor(key: "created", ascending: true)
+        let sort = NSSortDescriptor(key: "position", ascending: true)
                 request.sortDescriptors = [sort]
         do {
             notes = try PersistenceController.shared.container.viewContext.fetch(request)
@@ -28,6 +28,7 @@ class NoteStore: ObservableObject {
     func addNewEntry(name: String?, noteBody: String?, isPinned: Bool?) {
         let newNote = Note(context: PersistenceController.shared.container.viewContext)
         newNote.id = UUID()
+        newNote.position = Int64(notes.count + 1)
         newNote.name = name
         newNote.body = noteBody
         newNote.isPinned = isPinned ?? false
@@ -42,6 +43,18 @@ class NoteStore: ObservableObject {
 //                list.setValue(Date(), forKey: "createdAt")
 //            }
         saveChanges()
+    }
+    
+    func moveEntry(from oldIndex: IndexSet, to newIndex: Int) {
+        // This guarantees that the edits are performed in the same thread as the CoreData context
+        PersistenceController.shared.container.viewContext.perform {
+            var revisedEntries: [Note] = self.notes.map({$0})
+            revisedEntries.move(fromOffsets: oldIndex, toOffset: newIndex)
+            for reverseIndex in stride(from: revisedEntries.count-1, through: 0, by: -1) {
+                revisedEntries[reverseIndex].position = Int64(reverseIndex)
+            }
+            self.saveChanges()
+        }
     }
     
     func deleteEntry(entry: Note) {
@@ -75,52 +88,17 @@ class NoteStore: ObservableObject {
         }
     }
     
-//    func move(from oldIndex: IndexSet, to newIndex: Int) {
-//        // This guarantees that the edits are performed in the same thread as the CoreData context
-//        PersistenceController.shared.container.viewContext.perform {
-//            var revisedItems: [Soul] = souls.map({$0})
-//            revisedItems.move(fromOffsets: oldIndex, toOffset: newIndex)
-//            for reverseIndex in stride(from: revisedItems.count-1, through: 0, by: -1) {
-//                revisedItems[reverseIndex].id = Int64(reverseIndex)
-//            }
-//            PersistenceController.shared.save()
-//        }
-//    }
-    
-//    private func onMove(source: IndexSet, to destination: Int) {
-//        var revisedItems: [Soul] = souls.sorted(by: { $0.order < $1.order }).map{ $0 }
-//
-//            CoreDataHelper.executeBlockAndCommit {
-//                revisedItems.move(fromOffsets: source, toOffset: destination )
-//
-//                for reverseIndex in stride(from: revisedItems.count - 1, through: 0, by: -1)
-//                {
-//                    revisedItems[reverseIndex].order = Int32(reverseIndex)
-//                }
-//            }
-//        }
-    
-    private func move(from source: IndexSet, to destination: Int) {
-
-//            var revisedAttendees = souls
-//
-//            revisedAttendees.move(fromOffsets: source, toOffset: destination )
-//
-//            for reverseIndex in stride( from: revisedAttendees.count - 1, through: 0, by: -1 ) {
-//                revisedAttendees[ reverseIndex ].order =
-//                    Int16( reverseIndex )
-//            }
-//            saveChanges()
-        }
-    
     func samepleNotes() {
+        var positionCount = notes.count
         for _ in 0..<6 {
+            positionCount += 1
             let context = PersistenceController.shared.container.viewContext
             let note = Note(context: context)
             let name = ["Favourite Stores", "Excluded Brands", "Allergies", "Offers", "Protein Rich"]
             let body = ["The devil watches over his own", "Youth is wasted on the young.", "We live as we dream.... Alone.", "Rules only exist if you follow them.", "Seeking is not always the way to find. "]
             let isPinned = [true, false]
             note.id = UUID()
+            note.position = Int64(positionCount)
             note.name = name.randomElement()
             note.body = body.randomElement()
             note.isPinned = isPinned.randomElement() ?? false

@@ -14,9 +14,12 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
+        var count = 0
         for _ in 0..<10 {
+            count + 1
             let newItem = Item(context: viewContext)
             newItem.id = UUID()
+            newItem.position = Int64(count)
             newItem.name = "🥥"
             newItem.quantity = 3
             newItem.total = 5
@@ -25,6 +28,7 @@ struct PersistenceController {
             newItem.notes = "Some bullshit here"
             let newNote = Note(context: viewContext)
             newNote.id = UUID()
+            newNote.position = Int64(count)
             newNote.name = "my Secret"
             newNote.body = "Im really happy!"
             newNote.isPinned = false

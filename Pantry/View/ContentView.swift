@@ -50,11 +50,9 @@ struct ContentView: View {
                     .onDelete(perform: { indexSet in
                         itemStore.deleteEntry(offsets: indexSet)
                     })
-//                    .onDelete {
-//                        itemStore.items.remove(atOffsets: $0)
-//                        itemStore.saveChanges()
-//                    }
-                    .onMove { itemStore.items.move(fromOffsets: $0, toOffset: $1) }
+                    .onMove(perform: { indices, newOffset in
+                        itemStore.moveEntry(from: indices, to: newOffset)
+                    })
                 }
                 .navigationTitle("Items")
                 .navigationBarItems(
@@ -153,8 +151,9 @@ struct ContentView: View {
                     .onDelete(perform: { indexSet in
                         noteStore.deleteEntry(offsets: indexSet)
                     })
-//                    .onDelete { noteStore.notes.remove(atOffsets: $0) }
-                    .onMove { noteStore.notes.move(fromOffsets: $0, toOffset: $1) }
+                    .onMove(perform: { indices, newOffset in
+                        noteStore.moveEntry(from: indices, to: newOffset)
+                    })
                 }
                 .navigationTitle("Notes")
                 .navigationBarItems(
