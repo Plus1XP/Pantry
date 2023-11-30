@@ -10,6 +10,7 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.editMode) private var editMode
     @EnvironmentObject var itemStore: ItemStore
     @EnvironmentObject var noteStore: NoteStore
     @State private var isNewItemPopoverPresented: Bool = false
@@ -49,6 +50,11 @@ struct ContentView: View {
                     .onDelete(perform: { indexSet in
                         itemStore.deleteEntry(offsets: indexSet)
                     })
+//                    .onDelete {
+//                        itemStore.items.remove(atOffsets: $0)
+//                        itemStore.saveChanges()
+//                    }
+                    .onMove { itemStore.items.move(fromOffsets: $0, toOffset: $1) }
                 }
                 .navigationTitle("Items")
                 .navigationBarItems(
@@ -60,6 +66,7 @@ struct ContentView: View {
                                 Label("Lock Emojis", systemImage: canEditEmojis ? "hand.tap" : "hand.tap")
                                     .foregroundStyle(setFontColor(colorScheme: colorScheme), canEditEmojis ? .green : .red)
                             }
+                            EditButton()
 #if DEBUG
                             Button(action: {
                                 itemStore.sampleItems()
@@ -146,6 +153,8 @@ struct ContentView: View {
                     .onDelete(perform: { indexSet in
                         noteStore.deleteEntry(offsets: indexSet)
                     })
+//                    .onDelete { noteStore.notes.remove(atOffsets: $0) }
+                    .onMove { noteStore.notes.move(fromOffsets: $0, toOffset: $1) }
                 }
                 .navigationTitle("Notes")
                 .navigationBarItems(
@@ -157,6 +166,7 @@ struct ContentView: View {
                                 Label("Pinned Notes", systemImage: canShowPinnedNotes ? "pin.fill" : "pin")
                                     .foregroundStyle(.orange, .orange)
                             }
+                            EditButton()
 #if DEBUG
                             Button(action: {
                                 noteStore.samepleNotes()

@@ -93,7 +93,7 @@ class ItemStore: ObservableObject {
 //    func move(from oldIndex: IndexSet, to newIndex: Int) {
 //        // This guarantees that the edits are performed in the same thread as the CoreData context
 //        PersistenceController.shared.container.viewContext.perform {
-//            var revisedItems: [Soul] = souls.map({$0})
+//            var revisedItems: [Item] = items.map({$0})
 //            revisedItems.move(fromOffsets: oldIndex, toOffset: newIndex)
 //            for reverseIndex in stride(from: revisedItems.count-1, through: 0, by: -1) {
 //                revisedItems[reverseIndex].id = Int64(reverseIndex)
@@ -103,7 +103,7 @@ class ItemStore: ObservableObject {
 //    }
     
 //    private func onMove(source: IndexSet, to destination: Int) {
-//        var revisedItems: [Soul] = souls.sorted(by: { $0.order < $1.order }).map{ $0 }
+//        var revisedItems: [Item] = items.sorted(by: { $0.order < $1.order }).map{ $0 }
 //
 //            CoreDataHelper.executeBlockAndCommit {
 //                revisedItems.move(fromOffsets: source, toOffset: destination )
@@ -115,9 +115,9 @@ class ItemStore: ObservableObject {
 //            }
 //        }
     
-    private func move(from source: IndexSet, to destination: Int) {
-
-//            var revisedAttendees = souls
+//    private func move(from source: IndexSet, to destination: Int) {
+//
+//            var revisedAttendees = items
 //
 //            revisedAttendees.move(fromOffsets: source, toOffset: destination )
 //
@@ -126,7 +126,7 @@ class ItemStore: ObservableObject {
 //                    Int16( reverseIndex )
 //            }
 //            saveChanges()
-        }
+//        }
     
     func sampleItems() {
         var count = 0

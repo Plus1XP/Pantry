@@ -23,6 +23,11 @@ struct NewItemView: View {
             Divider()
             Group {
                 HStack {
+                    EmojiTextField(text: $name, placeholder: "Emoji of new item")
+                        .multilineTextAlignment(.leading)
+                        .disableAutocorrection(false)
+                }
+                HStack {
                     TextField("Total of new item", value: $total, formatter: Formatter.myNumberFormat)
                         .multilineTextAlignment(.leading)
                         .keyboardType(.decimalPad)
