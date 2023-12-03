@@ -16,6 +16,7 @@ struct ItemRowView: View {
     
     var body: some View {
         HStack(spacing: emojiSpacing) {
+            Text(item.position.description)
             ForEach(0..<Int(item.total), id: \.self) { image in
                 let emojiImage = item.name?.ToImage(fontSize: emojiSize)
                 Image(uiImage: emojiImage!)

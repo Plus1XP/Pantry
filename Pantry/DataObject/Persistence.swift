@@ -16,7 +16,6 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
         var count = 0
         for _ in 0..<10 {
-            count + 1
             let newItem = Item(context: viewContext)
             newItem.id = UUID()
             newItem.position = Int64(count)
@@ -34,6 +33,7 @@ struct PersistenceController {
             newNote.isPinned = false
             newNote.created = Date()
             newNote.modified = Date()
+            count += 1
         }
         do {
             try viewContext.save()

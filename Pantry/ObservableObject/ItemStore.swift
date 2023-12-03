@@ -41,14 +41,14 @@ class ItemStore: ObservableObject {
     func addNewEntry(name: String?, quantity: Int64?, total: Int64?, notes: String?) {
         let newItem = Item(context: PersistenceController.shared.container.viewContext)
         newItem.id = UUID()
-        newItem.position = Int64(items.count + 1)
+        newItem.position = Int64(items.count == 0 ? 0 :items.count + 1)
         newItem.name = name
         newItem.quantity = quantity ?? 0
         newItem.total = total ?? 0
         newItem.notes = notes
         newItem.created = Date()
         newItem.modified = Date()
-        saveChanges()
+        self.saveChanges()
     }
     
     func updateEntry(entry: Item) {
@@ -56,7 +56,17 @@ class ItemStore: ObservableObject {
 //        if list.value(forKey: "createdAt") == nil {
 //                list.setValue(Date(), forKey: "createdAt")
 //            }
-        saveChanges()
+        self.saveChanges()
+    }
+    
+    func sortEntries() {
+        PersistenceController.shared.container.viewContext.perform {
+            let revisedItems: [Item] = self.items.map({$0})
+            for reverseIndex in stride(from: revisedItems.count-1, through: 0, by: -1) {
+                revisedItems[reverseIndex].position = Int64(reverseIndex)
+            }
+            self.saveChanges()
+        }
     }
     
     func moveEntry(from oldIndex: IndexSet, to newIndex: Int) {
@@ -73,19 +83,29 @@ class ItemStore: ObservableObject {
     
     func deleteEntry(entry: Item) {
         PersistenceController.shared.container.viewContext.delete(entry)
-        saveChanges()
+        self.sortEntries()
+        self.saveChanges()
     }
     
     func deleteEntry(offsets: IndexSet) {
         offsets.map { items[$0] }.forEach(PersistenceController.shared.container.viewContext.delete)
-        saveChanges()
+        self.sortEntries()
+        self.saveChanges()
+    }
+    
+    func deleteEntries(selection: Set<Item>) {
+        for entry in selection {
+            PersistenceController.shared.container.viewContext.delete(entry)
+        }
+        self.sortEntries()
+        self.saveChanges()
     }
     
     func deleteAll() {
         for item in self.items {
             PersistenceController.shared.container.viewContext.delete(item)
         }
-        saveChanges()
+        self.saveChanges()
     }
     
     func discardChanges() {
@@ -107,7 +127,6 @@ class ItemStore: ObservableObject {
         var loopCount = 0
         var positionCount = items.count
         for _ in 0..<6 {
-            positionCount += 1
             let context = PersistenceController.shared.container.viewContext
             let item = Item(context: context)
             let name = ["🍎", "🥝", "🍌", "🍉", "🥥"]
@@ -122,9 +141,10 @@ class ItemStore: ObservableObject {
             item.created = Date()
             item.modified = Date().addingTimeInterval(30000000)
             loopCount += 1
+            positionCount += 1
         }
         do {
-            saveChanges()
+            self.saveChanges()
         }
     }
 }
