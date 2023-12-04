@@ -45,6 +45,12 @@ class NoteStore: ObservableObject {
         self.saveChanges()
     }
     
+    func updatePin(entry: Note) {
+        entry.isPinned.toggle()
+//        entry.modified = Date()
+        self.saveChanges()
+    }
+    
     func sortEntries() {
         PersistenceController.shared.container.viewContext.perform {
             let revisedEntries: [Note] = self.notes.map({$0})

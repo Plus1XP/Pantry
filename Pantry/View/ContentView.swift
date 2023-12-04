@@ -11,14 +11,14 @@ struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var itemStore: ItemStore
     @EnvironmentObject var noteStore: NoteStore
-    @State private var editMode: EditMode = .inactive
-    @State private var selectedItems: Set<Item> = []
-    @State private var selectedNotes: Set<Note> = []
+    @State var editMode: EditMode = .inactive
+    @State var selectedItems: Set<Item> = []
+    @State var selectedNotes: Set<Note> = []
     @State private var isNewItemPopoverPresented: Bool = false
     @State private var isNewNotePopoverPresented: Bool = false
-    @State private var isSettingsPopoverPresented: Bool = false
-    @State private var canEditEmojis: Bool = false
-    @State private var canShowPinnedNotes: Bool = false
+    @State var isSettingsPopoverPresented: Bool = false
+    @State var canEditEmojis: Bool = false
+    @State var canShowPinnedNotes: Bool = false
     @State private var canEditItem: Bool = false
     @State private var canEditNote: Bool = false
     @State private var confirmDeletion: Bool = false
@@ -67,9 +67,6 @@ struct ContentView: View {
                             }
                         }
                     }
-//                    .onDelete(perform: { indexSet in
-//                        self.itemStore.deleteEntry(offsets: indexSet)
-//                    })
                     .onMove(perform: { indices, newOffset in
                         self.itemStore.moveEntry(from: indices, to: newOffset)
                     })
@@ -79,83 +76,25 @@ struct ContentView: View {
                     leading:
                         HStack {
                             if self.editMode == .inactive {
-                                Button(action: {
-                                    let selectionFeedback = UISelectionFeedbackGenerator()
-                                    selectionFeedback.selectionChanged()
-                                    self.canEditEmojis.toggle()
-                                }) {
-                                    Label("Lock Emojis", systemImage: self.canEditEmojis ? "hand.tap" : "hand.tap")
-                                        .foregroundStyle(setFontColor(colorScheme: colorScheme), self.canEditEmojis ? .green : .red)
-                                }
-    #if DEBUG
-                                Button(action: {
-                                    self.itemStore.sampleItems()
-                                }) {
-                                    Label("Mock Data", systemImage: "plus.circle.fill")
-                                        .foregroundStyle(.white, .green)
-                                }
-                                Button(action: {
-                                    self.itemStore.deleteAll()
-                                }) {
-                                    Label("Mock Data", systemImage: "minus.circle.fill")
-                                        .foregroundStyle(.white, .red)
-                                }
-    #endif
+                                EmojiEditLockButton(canEditEmojis: $canEditEmojis)
+                                    .foregroundStyle(setFontColor(colorScheme: colorScheme), self.canEditEmojis ? .green : .red)
+#if DEBUG
+                                ItemDebugButtons()
+#endif
                             }
                             if self.editMode == .active {
-                                Button(action: {
-                                    if self.selectedItems.isEmpty {
-                                        for item in self.itemStore.items {
-                                            self.selectedItems.insert(item)
-                                        }
-                                    } else {
-                                        self.selectedItems.removeAll()
-                                    }
-                                }) {
-                                    Image(systemName: self.selectedItems.isEmpty ? "checklist.unchecked" : "checklist.checked")
-                                        .foregroundStyle(.blue, setFontColor(colorScheme: colorScheme))
-                                }
-                                .disabled(editMode == .inactive ? true : false)
-                                Button(action: {
-                                    self.confirmDeletion = true
-                                }) {
-                                    Label("Trash", systemImage: "trash")
-                                        .foregroundStyle(self.selectedItems.isEmpty ? .gray : .red, .blue)
-                                }
-                                .disabled(self.selectedItems.isEmpty)
+                                SelectAllItemsButton(selectedItems: $selectedItems)
+                                    .foregroundStyle(.blue, setFontColor(colorScheme: colorScheme))
+                                    .disabled(editMode == .inactive ? true : false)
+                                ItemDeleteButton(selectedItems: $selectedItems, confirmDeletion: $confirmDeletion)
+                                    .foregroundStyle(self.selectedItems.isEmpty ? .gray : .red, .blue)
+                                    .disabled(self.selectedItems.isEmpty)
                             }
                         },
                     trailing:
                         HStack {
-                            Button {
-                                self.canEditEmojis = false
-//                                let impactFeedback = UIImpactFeedbackGenerator(style: .light)
-//                                impactFeedback.impactOccurred()
-                                if self.editMode == .inactive {
-//                                    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-//                                    feedbackGenerator?.notificationOccurred(.success)
-                                    self.editMode = .active
-                                }
-                                else if self.editMode == .active {
-//                                    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-//                                    feedbackGenerator?.notificationOccurred(.warning)
-                                    self.selectedItems.removeAll()
-                                    self.editMode = .inactive
-                                }
-                            } label: {
-                                if self.editMode.isEditing {
-                                    Image(systemName: "line.3.horizontal.circle.fill")
-                                        .foregroundStyle(colorScheme == .light ? .white : .black, colorScheme == .light ? .black : .white)
-                                } else {
-                                    Image(systemName: "line.3.horizontal.circle")
-                                        .foregroundStyle(setFontColor(colorScheme: colorScheme), setFontColor(colorScheme: colorScheme))
-                                }
-                            }
-                            Button(action: {
-                                self.isSettingsPopoverPresented.toggle()
-                            }) {
-                                Label("Settings", systemImage: "gear")
-                            }
+                            EditModeButton(editMode: $editMode, selectedItems: $selectedItems, selectedNotes: $selectedNotes)
+                            SettingsButton
                         }
                 )
                 .environment(\.editMode, $editMode)
@@ -247,7 +186,7 @@ struct ContentView: View {
                             Button("Pin") {
                                 let selectionFeedback = UISelectionFeedbackGenerator()
                                 selectionFeedback.selectionChanged()
-                                note.isPinned.toggle()
+                                self.noteStore.updatePin(entry: note)
                                 self.selectedNotes.removeAll()
                             }
                             .tint(.orange)
@@ -261,9 +200,6 @@ struct ContentView: View {
                             }
                         }
                     }
-//                    .onDelete(perform: { indexSet in
-//                        self.noteStore.deleteEntry(offsets: indexSet)
-//                    })
                     .onMove(perform: { indices, newOffset in
                         self.noteStore.moveEntry(from: indices, to: newOffset)
                     })
@@ -273,83 +209,25 @@ struct ContentView: View {
                     leading:
                         HStack {
                             if self.editMode == .inactive {
-                                Button(action: {
-                                    let selectionFeedback = UISelectionFeedbackGenerator()
-                                    selectionFeedback.selectionChanged()
-                                    self.canShowPinnedNotes.toggle()
-                                }) {
-                                    Label("Pinned Notes", systemImage: self.canShowPinnedNotes ? "pin.fill" : "pin")
-                                        .foregroundStyle(.orange, .orange)
-                                }
+                                PinnedNotesButton(canShowPinnedNotes: $canShowPinnedNotes)
+                                    .foregroundStyle(.orange, .orange)
 #if DEBUG
-                                Button(action: {
-                                    self.noteStore.samepleNotes()
-                                }) {
-                                    Label("Mock Data", systemImage: "plus.circle.fill")
-                                        .foregroundStyle(.white, .green)
-                                }
-                                Button(action: {
-                                    self.noteStore.deleteAll()
-                                }) {
-                                    Label("Mock Data", systemImage: "minus.circle.fill")
-                                        .foregroundStyle(.white, .red)
-                                }
+                               NoteDebugButtons()
 #endif
                             }
                             if self.editMode == .active {
-                                Button(action: {
-                                    if self.selectedNotes.isEmpty {
-                                        for note in self.noteStore.notes {
-                                            self.selectedNotes.insert(note)
-                                        }
-                                    } else {
-                                        self.selectedNotes.removeAll()
-                                    }
-                                }) {
-                                    Image(systemName: self.selectedNotes.isEmpty ? "checklist.unchecked" : "checklist.checked")
-                                        .foregroundStyle(.blue, setFontColor(colorScheme: colorScheme))
-                                }
-                                .disabled(editMode == .inactive ? true : false)
-                                Button(action: {
-                                    self.confirmDeletion = true
-                                }) {
-                                    Label("Trash", systemImage: "trash")
-                                        .foregroundStyle(self.selectedNotes.isEmpty ? .gray : .red, .blue)
-                                }
-                                .disabled(self.selectedNotes.isEmpty)
+                                SelectAllNotesButton(selectedNotes: $selectedNotes)
+                                    .foregroundStyle(.blue, setFontColor(colorScheme: colorScheme))
+                                    .disabled(editMode == .inactive ? true : false)
+                                NoteDeleteButton(selectedNotes: $selectedNotes, confirmDeletion: $confirmDeletion)
+                                    .foregroundStyle(self.selectedNotes.isEmpty ? .gray : .red, .blue)
+                                    .disabled(self.selectedNotes.isEmpty)
                             }
                         },
                     trailing:
                         HStack {
-                            Button {
-                                self.canShowPinnedNotes = false
-//                                let impactFeedback = UIImpactFeedbackGenerator(style: .light)
-//                                impactFeedback.impactOccurred()
-                                if self.editMode == .inactive {
-//                                    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-//                                    feedbackGenerator?.notificationOccurred(.success)
-                                    self.editMode = .active
-                                }
-                                else if self.editMode == .active {
-//                                    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-//                                    feedbackGenerator?.notificationOccurred(.warning)
-                                    self.selectedNotes.removeAll()
-                                    self.editMode = .inactive
-                                }
-                            } label: {
-                                if self.editMode.isEditing {
-                                    Image(systemName: "line.3.horizontal.circle.fill")
-                                        .foregroundStyle(colorScheme == .light ? .white : .black, colorScheme == .light ? .black : .white)
-                                } else {
-                                    Image(systemName: "line.3.horizontal.circle")
-                                        .foregroundStyle(setFontColor(colorScheme: colorScheme), setFontColor(colorScheme: colorScheme))
-                                }
-                            }
-                            Button(action: {
-                                self.isSettingsPopoverPresented.toggle()
-                            }) {
-                                Label("Settings", systemImage: "gear")
-                            }
+                            EditModeButton(editMode: $editMode, selectedItems: $selectedItems, selectedNotes: $selectedNotes)
+                            SettingsButton
                         }
                 )
                 .environment(\.editMode, $editMode)
@@ -396,6 +274,10 @@ struct ContentView: View {
             SettingsView()
                 .presentationCompactAdaptation(.fullScreenCover)
         }
+        .onChange(of: self.editMode) { newValue in
+            self.canEditEmojis = false
+            self.canShowPinnedNotes = false
+        }
         // This fixes navigationBarTitle LayoutConstraints issue for NavigationView
         .navigationViewStyle(.stack)
     }
@@ -432,7 +314,7 @@ private func getCurrentTabIcon(activeTab: Int) -> String {
     }
 }
 
-private func setFontColor(colorScheme: ColorScheme) -> Color {
+func setFontColor(colorScheme: ColorScheme) -> Color {
     return colorScheme == .light ? .black : .white
 }
 
@@ -449,3 +331,4 @@ private func setFontColor(colorScheme: ColorScheme) -> Color {
         .environmentObject(NoteStore())
         .preferredColorScheme(.dark)
 }
+

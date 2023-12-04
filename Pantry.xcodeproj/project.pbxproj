@@ -31,6 +31,17 @@
 		2FBD25862AF2C3A600C26DA3 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD25852AF2C3A600C26DA3 /* Formatter.swift */; };
 		2FCEF3652B168F4700E5DCCA /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3632B168F4700E5DCCA /* TextField.swift */; };
 		2FCEF3662B168F4700E5DCCA /* EmojiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3642B168F4700E5DCCA /* EmojiTextField.swift */; };
+		2FCEF36A2B1E1F3700E5DCCA /* SettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3692B1E1F3700E5DCCA /* SettingsButton.swift */; };
+		2FCEF36E2B1E59A100E5DCCA /* EditModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF36D2B1E59A100E5DCCA /* EditModeButton.swift */; };
+		2FCEF3702B1E5DA700E5DCCA /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF36F2B1E5DA700E5DCCA /* AlertView.swift */; };
+		2FCEF3722B1E601900E5DCCA /* SelectAllNotesButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3712B1E601900E5DCCA /* SelectAllNotesButtonView.swift */; };
+		2FCEF3742B1E614300E5DCCA /* NoteDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3732B1E614300E5DCCA /* NoteDeleteButton.swift */; };
+		2FCEF3772B1E64CE00E5DCCA /* ItemDebugButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3762B1E64CE00E5DCCA /* ItemDebugButtons.swift */; };
+		2FCEF3792B1E657800E5DCCA /* EmojiEditLockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3782B1E657800E5DCCA /* EmojiEditLockButton.swift */; };
+		2FCEF37D2B1E70CD00E5DCCA /* SelectAllItemsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF37C2B1E70CD00E5DCCA /* SelectAllItemsButton.swift */; };
+		2FCEF37F2B1E70D900E5DCCA /* ItemDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF37E2B1E70D900E5DCCA /* ItemDeleteButton.swift */; };
+		2FCEF3812B1E730C00E5DCCA /* PinnedNotesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3802B1E730C00E5DCCA /* PinnedNotesButton.swift */; };
+		2FCEF3832B1E739900E5DCCA /* NoteDebugButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3822B1E739900E5DCCA /* NoteDebugButtons.swift */; };
 		2FE1834D2B03E2E000F7CEF7 /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */; };
 		2FE1834F2B03E35000F7CEF7 /* BiometricStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */; };
 		2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */; };
@@ -65,6 +76,17 @@
 		2FBD25852AF2C3A600C26DA3 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		2FCEF3632B168F4700E5DCCA /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		2FCEF3642B168F4700E5DCCA /* EmojiTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiTextField.swift; sourceTree = "<group>"; };
+		2FCEF3692B1E1F3700E5DCCA /* SettingsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButton.swift; sourceTree = "<group>"; };
+		2FCEF36D2B1E59A100E5DCCA /* EditModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeButton.swift; sourceTree = "<group>"; };
+		2FCEF36F2B1E5DA700E5DCCA /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		2FCEF3712B1E601900E5DCCA /* SelectAllNotesButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAllNotesButtonView.swift; sourceTree = "<group>"; };
+		2FCEF3732B1E614300E5DCCA /* NoteDeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDeleteButton.swift; sourceTree = "<group>"; };
+		2FCEF3762B1E64CE00E5DCCA /* ItemDebugButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDebugButtons.swift; sourceTree = "<group>"; };
+		2FCEF3782B1E657800E5DCCA /* EmojiEditLockButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiEditLockButton.swift; sourceTree = "<group>"; };
+		2FCEF37C2B1E70CD00E5DCCA /* SelectAllItemsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAllItemsButton.swift; sourceTree = "<group>"; };
+		2FCEF37E2B1E70D900E5DCCA /* ItemDeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDeleteButton.swift; sourceTree = "<group>"; };
+		2FCEF3802B1E730C00E5DCCA /* PinnedNotesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedNotesButton.swift; sourceTree = "<group>"; };
+		2FCEF3822B1E739900E5DCCA /* NoteDebugButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDebugButtons.swift; sourceTree = "<group>"; };
 		2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricService.swift; sourceTree = "<group>"; };
 		2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStore.swift; sourceTree = "<group>"; };
 		2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
@@ -116,6 +138,17 @@
 		2F66E1572AF3F6AD00A007F4 /* ViewComponent */ = {
 			isa = PBXGroup;
 			children = (
+				2FCEF36F2B1E5DA700E5DCCA /* AlertView.swift */,
+				2FCEF3692B1E1F3700E5DCCA /* SettingsButton.swift */,
+				2FCEF3782B1E657800E5DCCA /* EmojiEditLockButton.swift */,
+				2FCEF3762B1E64CE00E5DCCA /* ItemDebugButtons.swift */,
+				2FCEF37C2B1E70CD00E5DCCA /* SelectAllItemsButton.swift */,
+				2FCEF37E2B1E70D900E5DCCA /* ItemDeleteButton.swift */,
+				2FCEF36D2B1E59A100E5DCCA /* EditModeButton.swift */,
+				2FCEF3802B1E730C00E5DCCA /* PinnedNotesButton.swift */,
+				2FCEF3822B1E739900E5DCCA /* NoteDebugButtons.swift */,
+				2FCEF3712B1E601900E5DCCA /* SelectAllNotesButtonView.swift */,
+				2FCEF3732B1E614300E5DCCA /* NoteDeleteButton.swift */,
 			);
 			path = ViewComponent;
 			sourceTree = "<group>";
@@ -273,14 +306,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F66E1672AF5671C00A007F4 /* PersistenceController.swift in Sources */,
+				2FCEF3832B1E739900E5DCCA /* NoteDebugButtons.swift in Sources */,
 				2FCEF3662B168F4700E5DCCA /* EmojiTextField.swift in Sources */,
 				2F66E15C2AF3F7DC00A007F4 /* NewItemView.swift in Sources */,
 				2FBD25862AF2C3A600C26DA3 /* Formatter.swift in Sources */,
+				2FCEF3772B1E64CE00E5DCCA /* ItemDebugButtons.swift in Sources */,
 				2FBD25702AF2878300C26DA3 /* PantryApp.swift in Sources */,
+				2FCEF3702B1E5DA700E5DCCA /* AlertView.swift in Sources */,
 				2F1B6CF02AFBD9C500377207 /* NewNoteView.swift in Sources */,
+				2FCEF3722B1E601900E5DCCA /* SelectAllNotesButtonView.swift in Sources */,
 				2FCEF3652B168F4700E5DCCA /* TextField.swift in Sources */,
+				2FCEF3812B1E730C00E5DCCA /* PinnedNotesButton.swift in Sources */,
 				2FBD25752AF2878300C26DA3 /* Pantry.xcdatamodeld in Sources */,
+				2FCEF3742B1E614300E5DCCA /* NoteDeleteButton.swift in Sources */,
 				2F1B6D182B0134C300377207 /* NoteStore.swift in Sources */,
+				2FCEF37F2B1E70D900E5DCCA /* ItemDeleteButton.swift in Sources */,
 				2FB81D3F2AF30CA300ECD374 /* Binding.swift in Sources */,
 				2FE1834F2B03E35000F7CEF7 /* BiometricStore.swift in Sources */,
 				2F7F0E262AF96EF700979951 /* Color.swift in Sources */,
@@ -290,11 +330,15 @@
 				2FBD25772AF2878300C26DA3 /* ContentView.swift in Sources */,
 				2FE30D632B04309E00927FC6 /* LoginView.swift in Sources */,
 				2F1B6D162AFFCBA600377207 /* ItemRowView.swift in Sources */,
+				2FCEF36A2B1E1F3700E5DCCA /* SettingsButton.swift in Sources */,
 				2FBD25722AF2878300C26DA3 /* Persistence.swift in Sources */,
+				2FCEF37D2B1E70CD00E5DCCA /* SelectAllItemsButton.swift in Sources */,
 				2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */,
 				2F66E1612AF3FA2300A007F4 /* ButtonStyle.swift in Sources */,
 				2FF4C2B72B04408800D7700E /* SyncMonitor.swift in Sources */,
+				2FCEF3792B1E657800E5DCCA /* EmojiEditLockButton.swift in Sources */,
 				2F1B6D1A2B01370100377207 /* NoteRowView.swift in Sources */,
+				2FCEF36E2B1E59A100E5DCCA /* EditModeButton.swift in Sources */,
 				2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */,
 				2F1B6D142AFD94FA00377207 /* ItemStore.swift in Sources */,
 				2F1B6D122AFD445A00377207 /* ItemDetailsView.swift in Sources */,
