@@ -17,10 +17,23 @@ struct ItemDetailsView: View {
         Form {
             Section(header: Text("Item Information").frame(maxWidth: .infinity, alignment: .center)) {
                 HStack {
-                    TextField("test", text: Binding(get: {item.name ?? ""}, set: {item.name = $0}))
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .font(.largeTitle)
-                        .multilineTextAlignment(.center)
+                    if self.canEditItem {
+                        EmojiTextField(text: Binding(get: {item.name ?? ""}, set: {item.name = $0}))
+                            .font(.largeTitle)
+                            .textFieldStyle(.plain)
+                            .multilineTextAlignment(.center)
+                            .disabled(!self.canEditItem)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    } else {
+                        TextField("Item Name", text: Binding(get: {item.name ?? ""}, set: {item.name = $0}))
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .font(.largeTitle)
+                            .multilineTextAlignment(.center)
+                    }
+//                    TextField("Item Name", text: Binding(get: {item.name ?? ""}, set: {item.name = $0}))
+//                        .frame(maxWidth: .infinity, alignment: .center)
+//                        .font(.largeTitle)
+//                        .multilineTextAlignment(.center)
                 }
                 .listRowBackground(Color.clear)
             }

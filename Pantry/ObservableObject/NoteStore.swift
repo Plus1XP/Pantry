@@ -28,13 +28,13 @@ class NoteStore: ObservableObject {
     func addNewEntry(name: String?, noteBody: String?, isPinned: Bool?) {
         let newNote = Note(context: PersistenceController.shared.container.viewContext)
         newNote.id = UUID()
-        newNote.position = Int64(notes.count + 1)
+        newNote.position = Int64(notes.count == 0 ? 0 : notes.count + 1)
         newNote.name = name
         newNote.body = noteBody
         newNote.isPinned = isPinned ?? false
         newNote.created = Date()
         newNote.modified = Date()
-        saveChanges()
+        self.saveChanges()
     }
     
     func updateEntry(entry: Note) {
@@ -42,7 +42,17 @@ class NoteStore: ObservableObject {
 //        if list.value(forKey: "createdAt") == nil {
 //                list.setValue(Date(), forKey: "createdAt")
 //            }
-        saveChanges()
+        self.saveChanges()
+    }
+    
+    func sortEntries() {
+        PersistenceController.shared.container.viewContext.perform {
+            let revisedEntries: [Note] = self.notes.map({$0})
+            for reverseIndex in stride(from: revisedEntries.count-1, through: 0, by: -1) {
+                revisedEntries[reverseIndex].position = Int64(reverseIndex)
+            }
+            self.saveChanges()
+        }
     }
     
     func moveEntry(from oldIndex: IndexSet, to newIndex: Int) {
@@ -59,23 +69,34 @@ class NoteStore: ObservableObject {
     
     func deleteEntry(entry: Note) {
         PersistenceController.shared.container.viewContext.delete(entry)
-        saveChanges()
+        self.sortEntries()
+        self.saveChanges()
     }
     
     func deleteEntry(offsets: IndexSet) {
         offsets.map { notes[$0] }.forEach(PersistenceController.shared.container.viewContext.delete)
-        saveChanges()
+        self.sortEntries()
+        self.saveChanges()
+    }
+    
+    func deleteEntries(selection: Set<Note>) {
+        for entry in selection {
+            PersistenceController.shared.container.viewContext.delete(entry)
+        }
+        self.sortEntries()
+        self.saveChanges()
     }
     
     func deleteAll() {
         for note in self.notes {
             PersistenceController.shared.container.viewContext.delete(note)
         }
-        saveChanges()
+        self.saveChanges()
     }
     
     func discardChanges() {
         PersistenceController.shared.container.viewContext.rollback()
+        self.fetchEntries()
     }
     
     func saveChanges() {
@@ -89,9 +110,9 @@ class NoteStore: ObservableObject {
     }
     
     func samepleNotes() {
+        var loopCount = 0
         var positionCount = notes.count
         for _ in 0..<6 {
-            positionCount += 1
             let context = PersistenceController.shared.container.viewContext
             let note = Note(context: context)
             let name = ["Favourite Stores", "Excluded Brands", "Allergies", "Offers", "Protein Rich"]
@@ -104,9 +125,11 @@ class NoteStore: ObservableObject {
             note.isPinned = isPinned.randomElement() ?? false
             note.created = Date()
             note.modified = Date().addingTimeInterval(30000000)
+            loopCount += 1
+            positionCount += 1
         }
         do {
-            saveChanges()
+            self.saveChanges()
         }
     }
 }

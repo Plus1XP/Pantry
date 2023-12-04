@@ -41,7 +41,7 @@ class ItemStore: ObservableObject {
     func addNewEntry(name: String?, quantity: Int64?, total: Int64?, notes: String?) {
         let newItem = Item(context: PersistenceController.shared.container.viewContext)
         newItem.id = UUID()
-        newItem.position = Int64(items.count == 0 ? 0 :items.count + 1)
+        newItem.position = Int64(items.count == 0 ? 0 : items.count + 1)
         newItem.name = name
         newItem.quantity = quantity ?? 0
         newItem.total = total ?? 0
@@ -61,9 +61,9 @@ class ItemStore: ObservableObject {
     
     func sortEntries() {
         PersistenceController.shared.container.viewContext.perform {
-            let revisedItems: [Item] = self.items.map({$0})
-            for reverseIndex in stride(from: revisedItems.count-1, through: 0, by: -1) {
-                revisedItems[reverseIndex].position = Int64(reverseIndex)
+            let revisedEntries: [Item] = self.items.map({$0})
+            for reverseIndex in stride(from: revisedEntries.count-1, through: 0, by: -1) {
+                revisedEntries[reverseIndex].position = Int64(reverseIndex)
             }
             self.saveChanges()
         }

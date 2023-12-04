@@ -39,8 +39,12 @@ struct SettingsView: View {
                                 .padding([.leading, .trailing])
                                 .onChange(of: self.biometricStore.isFaceidEnabled,
                                 {
+                                    let selectionFeedback = UISelectionFeedbackGenerator()
+                                    selectionFeedback.selectionChanged()
                                     if self.biometricStore.isFaceidEnabled {
                                         self.biometricStore.ValidateBiometrics()
+                                    } else {
+                                        self.biometricStore.isAutoLockEnabled = false
                                     }
                                 })
                         }
@@ -50,6 +54,12 @@ struct SettingsView: View {
                             // Causes `kCFRunLoopCommonModes` / `CFRunLoopRunSpecific` error
                             Toggle("Enable Auto-Lock", isOn: $biometricStore.isAutoLockEnabled)
                                 .padding([.leading, .trailing])
+                                .onChange(of: self.biometricStore.isAutoLockEnabled,
+                                {
+                                    let selectionFeedback = UISelectionFeedbackGenerator()
+                                    selectionFeedback.selectionChanged()
+                                })
+                                .disabled(!self.biometricStore.isFaceidEnabled)
                         }
                     }
                 }
@@ -60,6 +70,8 @@ struct SettingsView: View {
                         Text("iCloud Sync Status")
                         Spacer()
                         Button {
+                            let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+                            feedbackGenerator?.notificationOccurred(.error)
                             self.canShowSyncError.toggle()
                         } label: {
                             HStack {
