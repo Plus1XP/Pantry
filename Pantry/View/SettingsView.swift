@@ -30,7 +30,7 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 Section(header: Text("\(Image(systemName: "lock")) Security")) {
-                    Group {
+//                    Group {
                         HStack {
                             Image(systemName: "faceid")
                                 .foregroundStyle(.green)
@@ -61,7 +61,7 @@ struct SettingsView: View {
                                 })
                                 .disabled(!self.biometricStore.isFaceidEnabled)
                         }
-                    }
+//                    }
                 }
                 Section(content: {
                     HStack {

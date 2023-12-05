@@ -20,6 +20,6 @@ struct ItemDeleteButton: View {
     }
 }
 
-//#Preview {
-//    ItemDeleteButton()
-//}
+#Preview {
+    ItemDeleteButton(selectedItems: .constant(Set<Item>()), confirmDeletion: .constant(false))
+}

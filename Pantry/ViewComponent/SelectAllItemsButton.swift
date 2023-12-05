@@ -26,6 +26,7 @@ struct SelectAllItemsButton: View {
     }
 }
 
-//#Preview {
-//    SelectAllItemsButton()
-//}
+#Preview {
+    @State var items: Set<Item> = [PersistenceController.preview.sampleItem]
+    return SelectAllItemsButton(selectedItems: $items)
+}

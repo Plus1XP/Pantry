@@ -26,6 +26,8 @@ struct SelectAllNotesButton: View {
     }
 }
 
-//#Preview {
-//    SelectAllNotesButton()
-//}
+#Preview {
+    @State var notes: Set<Note> = [PersistenceController.preview.sampleNote]
+    
+    return SelectAllNotesButton(selectedNotes: $notes)
+}

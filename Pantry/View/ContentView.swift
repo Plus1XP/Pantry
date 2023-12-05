@@ -8,23 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var itemStore: ItemStore
-    @EnvironmentObject var noteStore: NoteStore
-    @State var editMode: EditMode = .inactive
-    @State var selectedItems: Set<Item> = []
-    @State var selectedNotes: Set<Note> = []
+    @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var itemStore: ItemStore
+    @EnvironmentObject private var noteStore: NoteStore
+    @State private var editMode: EditMode = .inactive
+    @State private var selectedItems: Set<Item> = []
+    @State private var selectedNotes: Set<Note> = []
     @State private var isNewItemPopoverPresented: Bool = false
     @State private var isNewNotePopoverPresented: Bool = false
-    @State var isSettingsPopoverPresented: Bool = false
-    @State var canEditEmojis: Bool = false
-    @State var canShowPinnedNotes: Bool = false
+    @State private var isSettingsPopoverPresented: Bool = false
+    @State private var canEditEmojis: Bool = false
+    @State private var canShowPinnedNotes: Bool = false
     @State private var canEditItem: Bool = false
     @State private var canEditNote: Bool = false
     @State private var confirmDeletion: Bool = false
     @State private var activeTabSelection: Int = 0
     @State private var previousTabSelection: Int = 0
-    
+    @State private var searchItem: String = ""
+    @State private var searchNote: String = ""
+
     private let itemFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -32,11 +34,27 @@ struct ContentView: View {
         return formatter
     }()
         
+    private var itemSearchResults: [Item] {
+        if self.searchItem.isEmpty {
+            return self.itemStore.items
+        } else {
+            return self.itemStore.items.filter { $0.name!.contains(self.searchItem) }
+        }
+    }
+    
+    private var noteSearchResults: [Note] {
+        if self.searchNote.isEmpty {
+            return self.noteStore.notes
+        } else {
+            return self.noteStore.notes.filter { $0.name!.localizedCaseInsensitiveContains(self.searchNote) }
+        }
+    }
+    
     var body: some View {
         TabView(selection: $activeTabSelection) {
             NavigationView {
                 List(selection: $selectedItems) {
-                    ForEach(self.itemStore.items, id: \.self) { item in
+                    ForEach(self.itemSearchResults, id: \.self) { item in
                         //MARK: Item Information
                         NavigationLink {
                             ItemDetailsView(item: item, canEditItem: $canEditItem)
@@ -94,7 +112,7 @@ struct ContentView: View {
                     trailing:
                         HStack {
                             EditModeButton(editMode: $editMode, selectedItems: $selectedItems, selectedNotes: $selectedNotes)
-                            SettingsButton
+                            SettingButton(canPresentSettingsPopOver: $isSettingsPopoverPresented)
                         }
                 )
                 .environment(\.editMode, $editMode)
@@ -109,6 +127,7 @@ struct ContentView: View {
                 .refreshable {
                     self.itemStore.fetchEntries()
                 }
+                .searchable(text: $searchItem, prompt: "Search Items..")
                 .alert(isPresented: $confirmDeletion) {
                     Alert(title: Text("Confirm Deletion"),
                           message:Text(deletionAlertText(selection: self.selectedItems.count)),
@@ -160,7 +179,7 @@ struct ContentView: View {
             .tag(1)
             NavigationView {
                 List(selection: $selectedNotes) {
-                    ForEach(self.noteStore.notes.filter{ self.canShowPinnedNotes ? $0.isPinned : true}, id: \.self) { note in
+                    ForEach(self.noteSearchResults.filter{ self.canShowPinnedNotes ? $0.isPinned : true}, id: \.self) { note in
                         //MARK: Note Information
                         NavigationLink {
                             NoteDetailsView(note: note, canEditNote: $canEditNote)
@@ -227,7 +246,7 @@ struct ContentView: View {
                     trailing:
                         HStack {
                             EditModeButton(editMode: $editMode, selectedItems: $selectedItems, selectedNotes: $selectedNotes)
-                            SettingsButton
+                            SettingButton(canPresentSettingsPopOver: $isSettingsPopoverPresented)
                         }
                 )
                 .environment(\.editMode, $editMode)
@@ -241,6 +260,7 @@ struct ContentView: View {
                 .refreshable {
                     self.noteStore.fetchEntries()
                 }
+                .searchable(text: $searchNote, prompt: "Search Notes..")
                 .alert(isPresented: $confirmDeletion) {
                     Alert(title: Text("Confirm Deletion"),
                           message:Text(deletionAlertText(selection: self.selectedNotes.count)),
@@ -274,10 +294,11 @@ struct ContentView: View {
             SettingsView()
                 .presentationCompactAdaptation(.fullScreenCover)
         }
-        .onChange(of: self.editMode) { newValue in
+        .onChange(of: self.editMode,
+        {
             self.canEditEmojis = false
             self.canShowPinnedNotes = false
-        }
+        })
         // This fixes navigationBarTitle LayoutConstraints issue for NavigationView
         .navigationViewStyle(.stack)
     }

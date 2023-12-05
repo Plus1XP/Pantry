@@ -33,7 +33,6 @@
 		2FCEF3662B168F4700E5DCCA /* EmojiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3642B168F4700E5DCCA /* EmojiTextField.swift */; };
 		2FCEF36A2B1E1F3700E5DCCA /* SettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3692B1E1F3700E5DCCA /* SettingsButton.swift */; };
 		2FCEF36E2B1E59A100E5DCCA /* EditModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF36D2B1E59A100E5DCCA /* EditModeButton.swift */; };
-		2FCEF3702B1E5DA700E5DCCA /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF36F2B1E5DA700E5DCCA /* AlertView.swift */; };
 		2FCEF3722B1E601900E5DCCA /* SelectAllNotesButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3712B1E601900E5DCCA /* SelectAllNotesButtonView.swift */; };
 		2FCEF3742B1E614300E5DCCA /* NoteDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3732B1E614300E5DCCA /* NoteDeleteButton.swift */; };
 		2FCEF3772B1E64CE00E5DCCA /* ItemDebugButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3762B1E64CE00E5DCCA /* ItemDebugButtons.swift */; };
@@ -78,7 +77,6 @@
 		2FCEF3642B168F4700E5DCCA /* EmojiTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiTextField.swift; sourceTree = "<group>"; };
 		2FCEF3692B1E1F3700E5DCCA /* SettingsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButton.swift; sourceTree = "<group>"; };
 		2FCEF36D2B1E59A100E5DCCA /* EditModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeButton.swift; sourceTree = "<group>"; };
-		2FCEF36F2B1E5DA700E5DCCA /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		2FCEF3712B1E601900E5DCCA /* SelectAllNotesButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAllNotesButtonView.swift; sourceTree = "<group>"; };
 		2FCEF3732B1E614300E5DCCA /* NoteDeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDeleteButton.swift; sourceTree = "<group>"; };
 		2FCEF3762B1E64CE00E5DCCA /* ItemDebugButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDebugButtons.swift; sourceTree = "<group>"; };
@@ -138,13 +136,12 @@
 		2F66E1572AF3F6AD00A007F4 /* ViewComponent */ = {
 			isa = PBXGroup;
 			children = (
-				2FCEF36F2B1E5DA700E5DCCA /* AlertView.swift */,
-				2FCEF3692B1E1F3700E5DCCA /* SettingsButton.swift */,
 				2FCEF3782B1E657800E5DCCA /* EmojiEditLockButton.swift */,
 				2FCEF3762B1E64CE00E5DCCA /* ItemDebugButtons.swift */,
 				2FCEF37C2B1E70CD00E5DCCA /* SelectAllItemsButton.swift */,
 				2FCEF37E2B1E70D900E5DCCA /* ItemDeleteButton.swift */,
 				2FCEF36D2B1E59A100E5DCCA /* EditModeButton.swift */,
+				2FCEF3692B1E1F3700E5DCCA /* SettingsButton.swift */,
 				2FCEF3802B1E730C00E5DCCA /* PinnedNotesButton.swift */,
 				2FCEF3822B1E739900E5DCCA /* NoteDebugButtons.swift */,
 				2FCEF3712B1E601900E5DCCA /* SelectAllNotesButtonView.swift */,
@@ -312,7 +309,6 @@
 				2FBD25862AF2C3A600C26DA3 /* Formatter.swift in Sources */,
 				2FCEF3772B1E64CE00E5DCCA /* ItemDebugButtons.swift in Sources */,
 				2FBD25702AF2878300C26DA3 /* PantryApp.swift in Sources */,
-				2FCEF3702B1E5DA700E5DCCA /* AlertView.swift in Sources */,
 				2F1B6CF02AFBD9C500377207 /* NewNoteView.swift in Sources */,
 				2FCEF3722B1E601900E5DCCA /* SelectAllNotesButtonView.swift in Sources */,
 				2FCEF3652B168F4700E5DCCA /* TextField.swift in Sources */,

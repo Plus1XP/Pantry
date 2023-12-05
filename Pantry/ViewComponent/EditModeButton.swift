@@ -41,6 +41,9 @@ struct EditModeButton: View {
     }
 }
 
-//#Preview {
-//    EditButtonView()
-//}
+#Preview {
+    @State var items: Set<Item> = [PersistenceController.preview.sampleItem]
+    @State var notes: Set<Note> = [PersistenceController.preview.sampleNote]
+
+    return EditModeButton(editMode: .constant(EditMode.inactive), selectedItems: $items, selectedNotes: $notes)
+}

@@ -27,13 +27,9 @@ struct ItemDetailsView: View {
                     } else {
                         TextField("Item Name", text: Binding(get: {item.name ?? ""}, set: {item.name = $0}))
                             .frame(maxWidth: .infinity, alignment: .center)
-                            .font(.largeTitle)
+                            .font(.system(size: 50))
                             .multilineTextAlignment(.center)
                     }
-//                    TextField("Item Name", text: Binding(get: {item.name ?? ""}, set: {item.name = $0}))
-//                        .frame(maxWidth: .infinity, alignment: .center)
-//                        .font(.largeTitle)
-//                        .multilineTextAlignment(.center)
                 }
                 .listRowBackground(Color.clear)
             }

@@ -41,6 +41,7 @@ struct NoteDetailsView: View {
                     TextField("Name of new note", text: Binding(get: {note.name ?? ""}, set: {note.name = $0}))
                         .font(.title2)
                         .multilineTextAlignment(.center)
+                        .textCase(nil)
                         .disableAutocorrection(false)
                         .disabled(!self.canEditNote)
                     Toggle(isOn: $isPinnedTrigger) {

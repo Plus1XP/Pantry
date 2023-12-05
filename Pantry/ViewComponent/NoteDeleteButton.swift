@@ -20,6 +20,6 @@ struct NoteDeleteButton: View {
     }
 }
 
-//#Preview {
-//    DeleteSelectionButtonView(selectedNotes: .constant(<#T##value: Set<Note>##Set<Note>#>), confirmDeletion: .constant(false))
-//}
+#Preview {
+    NoteDeleteButton(selectedNotes: .constant(Set<Note>()), confirmDeletion: .constant(false))
+}
