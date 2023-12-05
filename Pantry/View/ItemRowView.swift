@@ -10,7 +10,6 @@ import SwiftUI
 struct ItemRowView: View {
     @EnvironmentObject var itemStore: ItemStore
     @State var item: Item
-    var canEditEmojis: Bool
     var emojiSize: CGFloat = 15
     var emojiSpacing: CGFloat?
     
@@ -27,7 +26,6 @@ struct ItemRowView: View {
                     }
             }
         }
-        .disabled(!canEditEmojis)
     }
 }
 
@@ -40,5 +38,5 @@ private func setItemQuantityWithOffset(quantity: Int64) -> Int64 {
 }
 
 #Preview {
-    ItemRowView(item: PersistenceController.shared.sampleItem, canEditEmojis: true)
+    ItemRowView(item: PersistenceController.shared.sampleItem)
 }

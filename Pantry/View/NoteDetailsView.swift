@@ -98,10 +98,6 @@ struct NoteDetailsView: View {
         .onAppear(perform: {
             isPinnedTrigger = note.isPinned
         })
-        .onDisappear(perform:
-        {
-            self.canEditNote = false
-        })
     }
 }
 
@@ -114,4 +110,5 @@ private let itemFormatter: DateFormatter = {
 
 #Preview {
     NoteDetailsView(note: PersistenceController.shared.sampleNote, canEditNote: .constant(false))
+        .environmentObject(NoteStore())
 }

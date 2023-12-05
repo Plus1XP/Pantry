@@ -96,10 +96,6 @@ struct ItemDetailsView: View {
             }
             
         }
-        .onDisappear(perform:
-        {
-            self.canEditItem = false
-        })
     }
 }
 
@@ -112,4 +108,5 @@ private let itemFormatter: DateFormatter = {
 
 #Preview {
     ItemDetailsView(item: PersistenceController.shared.sampleItem, canEditItem: .constant(false))
+        .environmentObject(ItemStore())
 }

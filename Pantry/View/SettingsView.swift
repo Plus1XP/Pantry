@@ -226,8 +226,11 @@ struct SettingsView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: "arrowshape.turn.up.backward")
-                    })
+//                        Image(systemName: "arrowshape.turn.up.backward")
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(.white, .red)
+                    }
+            )
         }
     }
 }

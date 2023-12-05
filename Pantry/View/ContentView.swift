@@ -22,6 +22,7 @@ struct ContentView: View {
     @State private var confirmDeletion: Bool = false
     @State private var activeTabSelection: Int = 0
     @State private var previousTabSelection: Int = 0
+    
     private let itemFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -50,11 +51,13 @@ struct ContentView: View {
                             .navigationBarTitleDisplayMode(.inline)
                             .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
                             .onDisappear(perform: {
+                                self.canEditItem = false
                                 self.itemStore.itemSelection.removeAll()
                             })
                         } label: {
                             //MARK: Item List
-                            ItemRowView(item: item, canEditEmojis: self.canEditEmojis)
+                            ItemRowView(item: item)
+                                .disabled(!canEditEmojis)
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                             Button("Delete", role: .destructive) {
@@ -177,6 +180,7 @@ struct ContentView: View {
                             .navigationBarTitleDisplayMode(.inline)
                             .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
                             .onDisappear(perform: {
+                                self.canEditNote = false
                                 self.noteStore.noteSelection.removeAll()
                             })
                         } label: {
