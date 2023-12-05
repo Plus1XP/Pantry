@@ -9,19 +9,18 @@ import SwiftUI
 
 struct SelectAllNotesButton: View {
     @EnvironmentObject var noteStore: NoteStore
-    @Binding var selectedNotes: Set<Note>
     
     var body: some View {
         Button(action: {
-            if self.selectedNotes.isEmpty {
+            if self.noteStore.noteSelection.isEmpty {
                 for note in self.noteStore.notes {
-                    self.selectedNotes.insert(note)
+                    self.noteStore.noteSelection.insert(note)
                 }
             } else {
-                self.selectedNotes.removeAll()
+                self.noteStore.noteSelection.removeAll()
             }
         }) {
-            Image(systemName: self.selectedNotes.isEmpty ? "checklist.unchecked" : "checklist.checked")
+            Image(systemName: self.noteStore.noteSelection.isEmpty ? "checklist.unchecked" : "checklist.checked")
         }
     }
 }
@@ -29,5 +28,6 @@ struct SelectAllNotesButton: View {
 #Preview {
     @State var notes: Set<Note> = [PersistenceController.preview.sampleNote]
     
-    return SelectAllNotesButton(selectedNotes: $notes)
+    return SelectAllNotesButton()
+        .environmentObject(NoteStore())
 }

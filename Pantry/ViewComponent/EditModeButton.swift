@@ -9,9 +9,9 @@ import SwiftUI
 
 struct EditModeButton: View {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var itemStore: ItemStore
+    @EnvironmentObject var noteStore: NoteStore
     @Binding var editMode: EditMode
-    @Binding var selectedItems: Set<Item>
-    @Binding var selectedNotes: Set<Note>
     
     var body: some View {
         Button {
@@ -25,8 +25,8 @@ struct EditModeButton: View {
             else if self.editMode == .active {
 //                let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
 //                feedbackGenerator?.notificationOccurred(.warning)
-                self.selectedItems.removeAll()
-                self.selectedNotes.removeAll()
+                self.itemStore.itemSelection.removeAll()
+                self.noteStore.noteSelection.removeAll()
                 self.editMode = .inactive
             }
         } label: {
@@ -45,5 +45,7 @@ struct EditModeButton: View {
     @State var items: Set<Item> = [PersistenceController.preview.sampleItem]
     @State var notes: Set<Note> = [PersistenceController.preview.sampleNote]
 
-    return EditModeButton(editMode: .constant(EditMode.inactive), selectedItems: $items, selectedNotes: $notes)
+    return EditModeButton(editMode: .constant(EditMode.inactive))
+        .environmentObject(ItemStore())
+        .environmentObject(NoteStore())
 }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ItemDeleteButton: View {
-    @Binding var selectedItems: Set<Item>
     @Binding var confirmDeletion: Bool
     
     var body: some View {
@@ -21,5 +20,5 @@ struct ItemDeleteButton: View {
 }
 
 #Preview {
-    ItemDeleteButton(selectedItems: .constant(Set<Item>()), confirmDeletion: .constant(false))
+    ItemDeleteButton(confirmDeletion: .constant(false))
 }

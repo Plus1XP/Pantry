@@ -9,6 +9,27 @@ import CoreData
 
 class NoteStore: ObservableObject {
     @Published var notes: [Note] = []
+    @Published var noteSelection: Set<Note> = []
+    @Published var searchText: String = ""
+    @Published var isPinnedNotesFiltered: Bool = false
+    
+    var searchResults: [Note] {
+        guard !self.searchText.isEmpty else { return self.notes }
+        return self.notes.filter { $0.name!.localizedCaseInsensitiveContains(self.searchText)
+        }
+    }
+    
+    var pinnedResults: [Note] {
+        guard self.isPinnedNotesFiltered else { return self.notes }
+        return self.notes.filter{ $0.isPinned }
+    }
+    
+    var combinedResults: [Note] {
+        let pinnedResults = self.pinnedResults
+        guard !self.searchText.isEmpty else { return pinnedResults }
+        return pinnedResults.filter { $0.name!.localizedCaseInsensitiveContains(self.searchText)
+        }
+    }
     
     init() {
         fetchEntries()
@@ -89,6 +110,15 @@ class NoteStore: ObservableObject {
         for entry in selection {
             PersistenceController.shared.container.viewContext.delete(entry)
         }
+        self.sortEntries()
+        self.saveChanges()
+    }
+    
+    func deleteNoteSelectionEntries() {
+        for entry in self.noteSelection {
+            PersistenceController.shared.container.viewContext.delete(entry)
+        }
+        self.noteSelection.removeAll()
         self.sortEntries()
         self.saveChanges()
     }

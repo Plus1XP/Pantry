@@ -9,6 +9,14 @@ import CoreData
 
 class ItemStore: ObservableObject {
     @Published var items: [Item] = []
+    @Published var itemSelection: Set<Item> = []
+    @Published var searchText: String = ""
+
+    var searchResults: [Item] {
+        guard !self.searchText.isEmpty else { return self.items }
+        return self.items.filter { $0.name!.contains(self.searchText)
+        }
+    }
     
     init() {
         fetchEntries()
@@ -97,6 +105,15 @@ class ItemStore: ObservableObject {
         for entry in selection {
             PersistenceController.shared.container.viewContext.delete(entry)
         }
+        self.sortEntries()
+        self.saveChanges()
+    }
+    
+    func deleteItemSelectionEntries() {
+        for entry in self.itemSelection {
+            PersistenceController.shared.container.viewContext.delete(entry)
+        }
+        self.itemSelection.removeAll()
         self.sortEntries()
         self.saveChanges()
     }

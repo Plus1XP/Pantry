@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct PinnedNotesButton: View {
-    @Binding var canShowPinnedNotes: Bool
+    @EnvironmentObject var noteStore: NoteStore
     
     var body: some View {
         Button(action: {
             let selectionFeedback = UISelectionFeedbackGenerator()
             selectionFeedback.selectionChanged()
-            self.canShowPinnedNotes.toggle()
+            self.noteStore.isPinnedNotesFiltered.toggle()
         }) {
-            Label("Pinned Notes", systemImage: self.canShowPinnedNotes ? "pin.fill" : "pin")
+            Label("Pinned Notes", systemImage: self.noteStore.isPinnedNotesFiltered ? "pin.fill" : "pin")
         }
     }
 }
 
 #Preview {
-    PinnedNotesButton(canShowPinnedNotes: .constant(false))
+    PinnedNotesButton()
+        .environmentObject(NoteStore())
 }

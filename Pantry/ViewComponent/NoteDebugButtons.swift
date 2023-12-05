@@ -29,6 +29,6 @@ struct NoteDebugButtons: View {
     HStack {
         NoteDebugButtons()
     }
-    .environmentObject(ItemStore())
+    .environmentObject(NoteStore())
     .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
 }
