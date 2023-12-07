@@ -31,11 +31,15 @@ struct EditModeButton: View {
             }
         } label: {
             if self.editMode.isEditing {
-                Image(systemName: "line.3.horizontal.circle.fill")
-                    .foregroundStyle(colorScheme == .light ? .white : .black, colorScheme == .light ? .black : .white)
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundStyle(.white, .blue)
+//                Image(systemName: "line.3.horizontal.circle.fill")
+//                    .foregroundStyle(colorScheme == .light ? .white : .black, colorScheme == .light ? .black : .white)
             } else {
-                Image(systemName: "line.3.horizontal.circle")
-                    .foregroundStyle(setFontColor(colorScheme: colorScheme), setFontColor(colorScheme: colorScheme))
+                Image(systemName: "checkmark.circle")
+                    .foregroundStyle(.gray, .blue)
+//                Image(systemName: "line.3.horizontal.circle")
+//                    .foregroundStyle(setFontColor(colorScheme: colorScheme), setFontColor(colorScheme: colorScheme))
             }
         }
     }

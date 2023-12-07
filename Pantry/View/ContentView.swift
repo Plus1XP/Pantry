@@ -81,7 +81,7 @@ struct ContentView: View {
                                 EmojiEditLockButton(canEditEmojis: $canEditEmojis)
                                     .foregroundStyle(setFontColor(colorScheme: colorScheme), self.canEditEmojis ? .green : .red)
 #if DEBUG
-                                ItemDebugButtons()
+//                                ItemDebugButtons()
 #endif
                             }
                             if self.editMode == .active {
