@@ -13,6 +13,7 @@ struct ItemDetailsView: View {
     @EnvironmentObject private var itemStore: ItemStore
     @State var item: Item
     @Binding var canEditItem: Bool
+    @FocusState private var isNoteFocused: Bool
     
     private let sectionTitleColor: Color = Color.secondary
     
@@ -28,7 +29,7 @@ struct ItemDetailsView: View {
             //FIXME: EmojionField icon size
             HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
                 if self.canEditItem {
-                    EmojiTextField(text: Binding(get: {item.name ?? ""}, set: {item.name = $0}))
+                    EmojiTextField(text: Binding(get: {item.name ?? ""}, set: {item.name = $0}), placeholder: "Untitled Item")
                         .fixedSize(horizontal: true, vertical: true)
                 } else {
                     Text(item.name ?? "")
@@ -46,11 +47,11 @@ struct ItemDetailsView: View {
                     .foregroundStyle(self.sectionTitleColor)
             })
             HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                TextField("Quantity", text: Binding(get: {"\(item.quantity)"}, set: {item.quantity = Int64($0) ?? 0}))
+                TextField("Quantity", text: Binding(get: {"\(item.quantity)"}, set: {item.quantity = Int64($0) ?? 0}), prompt: Text("Current"))
                     .multilineTextAlignment(.trailing)
                     .disabled(!self.canEditItem)
                 Text("of")
-                TextField("Total", text: Binding(get: {"\(item.total)"}, set: {item.total = Int64($0) ?? 0}))
+                TextField("Total", text: Binding(get: {"\(item.total)"}, set: {item.total = Int64($0) ?? 0}), prompt: Text("Total"))
                     .multilineTextAlignment(.leading)
                     .disabled(!self.canEditItem)
             }) 
@@ -74,11 +75,15 @@ struct ItemDetailsView: View {
                     .textCase(nil)
                     .foregroundStyle(self.sectionTitleColor)
             })
-            HStack(content: {
+            
+            // TextEditor does not have a placeholder Using a
+            // ZStack & FocusState as a work around.
+            ZStack(alignment: .topLeading, content: {
                 if self.canEditItem {
                     TextEditor(text: Binding(get: {item.notes ?? ""}, set: {item.notes = $0}))
                         .scrollContentBackground(.hidden) // <- Hide it
                         .background(.clear) // To see this
+                        .focused($isNoteFocused)
                 } else {
                     ScrollView { // <-- add scroll around Text
                         Text(item.notes ?? "")
@@ -86,6 +91,12 @@ struct ItemDetailsView: View {
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading) // <-- tell Text to take the entire space available for ScrollView
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity) // <-- if needed, tell ScrollView to use the full size of its parent too
+                }
+                if !self.isNoteFocused && (item.notes == "") {
+                    Text("No additional text")
+                        .foregroundColor(Color(uiColor: .placeholderText))
+                        .multilineTextAlignment(.leading)
+                        .allowsHitTesting(false)
                 }
             })
             .padding()
