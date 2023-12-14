@@ -14,7 +14,7 @@ struct SettingsView: View {
     @State var canShowSyncError: Bool = false
     // Fill in App ID when app is added to appstore connect!
     let appName: String = "Pantry App"
-    let appID: String = "1628565468"
+    let appID: String = "6473959298"
     let mailURL: String = "mailto:evlbrains@protonmail.ch"
     let supportURL: String = "https://plus1xp.github.io/Pantry/"
     let githubURL: String = "https://github.com/Plus1XP"
