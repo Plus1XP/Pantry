@@ -63,7 +63,7 @@
 		2F7F0E272AF98BC900979951 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2FB558EB2AF3D77F002362AB /* TextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
 		2FB81D3E2AF30CA300ECD374 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
-		2FBD256C2AF2878300C26DA3 /* Pantry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pantry.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FBD256C2AF2878300C26DA3 /* PantryPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PantryPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FBD256F2AF2878300C26DA3 /* PantryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryApp.swift; sourceTree = "<group>"; };
 		2FBD25712AF2878300C26DA3 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		2FBD25742AF2878300C26DA3 /* Pantry.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Pantry.xcdatamodel; sourceTree = "<group>"; };
@@ -193,7 +193,7 @@
 		2FBD25632AF2878300C26DA3 = {
 			isa = PBXGroup;
 			children = (
-				2FBD256E2AF2878300C26DA3 /* Pantry */,
+				2FBD256E2AF2878300C26DA3 /* PantryPal */,
 				2FBD256D2AF2878300C26DA3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -201,12 +201,12 @@
 		2FBD256D2AF2878300C26DA3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2FBD256C2AF2878300C26DA3 /* Pantry.app */,
+				2FBD256C2AF2878300C26DA3 /* PantryPal.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2FBD256E2AF2878300C26DA3 /* Pantry */ = {
+		2FBD256E2AF2878300C26DA3 /* PantryPal */ = {
 			isa = PBXGroup;
 			children = (
 				2FE183522B03E96700F7CEF7 /* Info.plist */,
@@ -221,7 +221,7 @@
 				2F66E15A2AF3F72200A007F4 /* Shared */,
 				2FBD257B2AF2878400C26DA3 /* Preview Content */,
 			);
-			path = Pantry;
+			path = PantryPal;
 			sourceTree = "<group>";
 		};
 		2FBD257B2AF2878400C26DA3 /* Preview Content */ = {
@@ -235,9 +235,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2FBD256B2AF2878300C26DA3 /* Pantry */ = {
+		2FBD256B2AF2878300C26DA3 /* PantryPal */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2FBD25802AF2878400C26DA3 /* Build configuration list for PBXNativeTarget "Pantry" */;
+			buildConfigurationList = 2FBD25802AF2878400C26DA3 /* Build configuration list for PBXNativeTarget "PantryPal" */;
 			buildPhases = (
 				2FBD25682AF2878300C26DA3 /* Sources */,
 				2FBD25692AF2878300C26DA3 /* Frameworks */,
@@ -247,9 +247,9 @@
 			);
 			dependencies = (
 			);
-			name = Pantry;
+			name = PantryPal;
 			productName = Pantry;
-			productReference = 2FBD256C2AF2878300C26DA3 /* Pantry.app */;
+			productReference = 2FBD256C2AF2878300C26DA3 /* PantryPal.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -260,14 +260,14 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1510;
 				TargetAttributes = {
 					2FBD256B2AF2878300C26DA3 = {
 						CreatedOnToolsVersion = 15.0;
 					};
 				};
 			};
-			buildConfigurationList = 2FBD25672AF2878300C26DA3 /* Build configuration list for PBXProject "Pantry" */;
+			buildConfigurationList = 2FBD25672AF2878300C26DA3 /* Build configuration list for PBXProject "PantryPal" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -280,7 +280,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2FBD256B2AF2878300C26DA3 /* Pantry */,
+				2FBD256B2AF2878300C26DA3 /* PantryPal */,
 			);
 		};
 /* End PBXProject section */
@@ -379,6 +379,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -440,6 +441,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -464,15 +466,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Pantry/Pantry.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PantryPal/Pantry.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Pantry/Preview Content\"";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"PantryPal/Preview Content\"";
 				DEVELOPMENT_TEAM = L4UU7WP4CE;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Pantry/Info.plist;
+				INFOPLIST_FILE = PantryPal/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Required to unlock app.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -489,8 +494,9 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.pantry.Pantry;
+				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.pantry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -505,15 +511,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Pantry/Pantry.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PantryPal/Pantry.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Pantry/Preview Content\"";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"PantryPal/Preview Content\"";
 				DEVELOPMENT_TEAM = L4UU7WP4CE;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Pantry/Info.plist;
+				INFOPLIST_FILE = PantryPal/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Required to unlock app.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -530,8 +539,9 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.pantry.Pantry;
+				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.pantry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -544,7 +554,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2FBD25672AF2878300C26DA3 /* Build configuration list for PBXProject "Pantry" */ = {
+		2FBD25672AF2878300C26DA3 /* Build configuration list for PBXProject "PantryPal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2FBD257E2AF2878400C26DA3 /* Debug */,
@@ -553,7 +563,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2FBD25802AF2878400C26DA3 /* Build configuration list for PBXNativeTarget "Pantry" */ = {
+		2FBD25802AF2878400C26DA3 /* Build configuration list for PBXNativeTarget "PantryPal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2FBD25812AF2878400C26DA3 /* Debug */,
