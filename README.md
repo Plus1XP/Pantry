@@ -1,6 +1,6 @@
 # Pantry
 
-Welcome to PantryPal, your ultimate companion for keeping your pantry in check and ensuring you never forget a brilliant idea or important note. PantryPal is the seamless solution to effortlessly manage your pantry items and notes, all synchronized across your devices.
+Welcome to PantryPal, your ultimate companion for keeping your pantry in check and ensuring you never forget a brilliant idea or important note. PantryPal is the seamless solution to effortlessly manage your pantry items and notes, all synchronised across your devices.
 
 ### Key Features:
 
@@ -10,7 +10,7 @@ Never run out of essentials again! Easily catalog and track items in your pantry
 
 #### 2. Sync Across Devices:
 
-Stay organized on the go! PantryPal synchronizes your pantry inventory and notes seamlessly across all your devices. iCloud Sync works between iPads and iPhones, your information is always up-to-date.
+Stay organised on the go! PantryPal synchronises your pantry inventory and notes seamlessly across all your devices. iCloud Sync works between iPads and iPhones, your information is always up-to-date.
 
 #### 3. Notes & Ideas:
 
@@ -26,4 +26,11 @@ Plan your shopping with ease. PantryPal allows you to see your current quantity 
 
 #### 6. Secure & Private:
 
-Your data, your rules. PantryPal prioritizes your privacy and ensures that your pantry inventory and notes are secure with FaceID. Enjoy peace of mind knowing that your information is for your eyes only. Download PantryPal today and experience the joy of an organized pantry and clutter-free notes. Simplify your life, save time, and make room for what truly matters!
+Your data, your rules. PantryPal prioritises your privacy and ensures that your pantry inventory and notes are secure with FaceID. Enjoy peace of mind knowing that your information is for your eyes only. Download PantryPal today and experience the joy of an organised pantry and clutter-free notes. Simplify your life, save time, and make room for what truly matters!
+
+# Screenshots
+### iOS
+| ![](images/ios1.png)| ![](images/ios2.png)|
+|---------------------|---------------------|
+| ![](images/ios3.png)| ![](images/ios4.png)|
+| ![](images/ios5.png)| ![](images/ios6.png)|

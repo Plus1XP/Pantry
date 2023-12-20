@@ -12,11 +12,11 @@ struct ContentView: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var itemStore: ItemStore
     @EnvironmentObject private var noteStore: NoteStore
+    @AppStorage("canEditEmojis") var canEditEmojis: Bool = true
     @State private var editMode: EditMode = .inactive
     @State private var isNewItemPopoverPresented: Bool = false
     @State private var isNewNotePopoverPresented: Bool = false
     @State private var isSettingsPopoverPresented: Bool = false
-    @State private var canEditEmojis: Bool = false
     @State private var canEditItem: Bool = false
     @State private var canEditNote: Bool = false
     @State private var confirmDeletion: Bool = false
