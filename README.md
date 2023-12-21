@@ -30,7 +30,7 @@ Your data, your rules. PantryPal prioritises your privacy and ensures that your 
 
 # Screenshots
 ### iOS
-| ![](images/ios1.png)| ![](images/ios2.png)|
+| ![](Images/ios1.png)| ![](Images/ios2.png)|
 |---------------------|---------------------|
-| ![](images/ios3.png)| ![](images/ios4.png)|
-| ![](images/ios5.png)| ![](images/ios6.png)|
+| ![](Images/ios3.png)| ![](Images/ios4.png)|
+| ![](Images/ios5.png)| ![](Images/ios6.png)|
