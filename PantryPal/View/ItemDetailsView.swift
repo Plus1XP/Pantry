@@ -9,21 +9,20 @@ import SwiftUI
 
 struct ItemDetailsView: View {
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.locale) private var locale
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var itemStore: ItemStore
     @State var item: Item
     @Binding var canEditItem: Bool
     @FocusState private var isNoteFocused: Bool
-    
     private let sectionTitleColor: Color = Color.secondary
-    
     private let itemFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .short
         return formatter
     }()
-
+    
     var body: some View {
         VStack {
             //FIXME: EmojionField icon size
@@ -65,6 +64,63 @@ struct ItemDetailsView: View {
                 )
                 .fill(setFieldBackgroundColor(colorScheme: self.colorScheme))
             )
+            .padding(.leading)
+            .padding(.trailing)
+            .padding(.bottom)
+            
+            HStack {
+                VStack {
+                    HStack {
+                        Text("Price/Bulk")
+                            .font(.footnote)
+                            .textCase(nil)
+                            .foregroundStyle(self.sectionTitleColor)
+                    }
+                    HStack {
+                        TextField("Amount", value: Binding(get: { item.bulkprice! as Decimal.FormatStyle.Currency.FormatInput }, set: { item.bulkprice = $0 as NSDecimalNumber }),
+                                  format: .currency(code: locale.currency?.identifier ?? "USD"))
+                        .multilineTextAlignment(.center)
+                        .keyboardType(.decimalPad)
+                        .disabled(!self.canEditItem)
+
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(.primary)
+                    .background(
+                        RoundedRectangle(
+                            cornerRadius: 12,
+                            style: .continuous
+                        )
+                        .fill(setFieldBackgroundColor(colorScheme: self.colorScheme))
+                    )
+                }
+                VStack {
+                    HStack {
+                        Text("Price/Unit")
+                            .font(.footnote)
+                            .textCase(nil)
+                            .foregroundStyle(self.sectionTitleColor)
+                    }
+                    HStack {
+                        TextField("Amount", value: Binding(get: { item.unitprice! as Decimal.FormatStyle.Currency.FormatInput }, set: { item.unitprice = $0 as NSDecimalNumber }),
+                                  format: .currency(code: locale.currency?.identifier ?? "USD"))
+                            .multilineTextAlignment(.center)
+                            .keyboardType(.decimalPad)
+                            .disabled(!self.canEditItem)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(.primary)
+                    .background(
+                        RoundedRectangle(
+                            cornerRadius: 12,
+                            style: .continuous
+                        )
+                        .fill(setFieldBackgroundColor(colorScheme: self.colorScheme))
+                    )
+                }
+            }
             .padding(.leading)
             .padding(.trailing)
             .padding(.bottom)
