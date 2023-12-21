@@ -16,12 +16,6 @@ struct ItemDetailsView: View {
     @Binding var canEditItem: Bool
     @FocusState private var isNoteFocused: Bool
     private let sectionTitleColor: Color = Color.secondary
-    private let itemFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter
-    }()
     
     var body: some View {
         VStack {
@@ -77,7 +71,7 @@ struct ItemDetailsView: View {
                             .foregroundStyle(self.sectionTitleColor)
                     }
                     HStack {
-                        TextField("Amount", value: Binding(get: { item.bulkprice! as Decimal.FormatStyle.Currency.FormatInput }, set: { item.bulkprice = $0 as NSDecimalNumber }),
+                        TextField("Amount", value: Binding(get: { item.bulkprice }, set: { item.bulkprice = $0 }),
                                   format: .currency(code: locale.currency?.identifier ?? "USD"))
                         .multilineTextAlignment(.center)
                         .keyboardType(.decimalPad)
@@ -103,7 +97,7 @@ struct ItemDetailsView: View {
                             .foregroundStyle(self.sectionTitleColor)
                     }
                     HStack {
-                        TextField("Amount", value: Binding(get: { item.unitprice! as Decimal.FormatStyle.Currency.FormatInput }, set: { item.unitprice = $0 as NSDecimalNumber }),
+                        TextField("Amount", value: Binding(get: { item.unitprice }, set: { item.unitprice = $0 }),
                                   format: .currency(code: locale.currency?.identifier ?? "USD"))
                             .multilineTextAlignment(.center)
                             .keyboardType(.decimalPad)
@@ -176,7 +170,7 @@ struct ItemDetailsView: View {
                         .foregroundStyle(self.sectionTitleColor)
                 })
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                    Text(item.modified!, formatter: self.itemFormatter)
+                    Text(item.modified!, formatter: Formatter.dateFormatter)
                 })
                 .padding()
                 .frame(maxWidth: .infinity)

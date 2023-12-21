@@ -16,6 +16,8 @@ extension PersistenceController {
         item.name = "👹"
         item.quantity = 3
         item.total = 5
+        item.bulkprice = 4.00
+        item.unitprice = 1.00
         item.created = Date()
         item.modified = Date().addingTimeInterval(30000000)
         item.notes = "I hope this works"
@@ -39,6 +41,8 @@ extension PersistenceController {
         item.name = ""
         item.quantity = 0
         item.total = 0
+        item.bulkprice = 0.00
+        item.unitprice = 0.00
         item.created = Date()
         item.modified = Date()
         item.notes = ""

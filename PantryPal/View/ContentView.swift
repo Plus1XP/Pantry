@@ -23,13 +23,6 @@ struct ContentView: View {
     @State private var activeTabSelection: Int = 0
     @State private var previousTabSelection: Int = 0
     
-    private let itemFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter
-    }()
-    
     var body: some View {
         TabView(selection: $activeTabSelection) {
             //MARK: Item TabView
@@ -44,7 +37,7 @@ struct ContentView: View {
                                     Button(action: {
                                         self.canEditItem.toggle()
                                     }) {
-                                        Label("Edit Notes", systemImage: "applepencil.and.scribble")
+                                        Label("Edit Details", systemImage: "applepencil.and.scribble")
                                     }
                             )
                             .navigationTitle("Item Details")
@@ -173,7 +166,7 @@ struct ContentView: View {
                                     Button(action: {
                                         self.canEditNote.toggle()
                                     }) {
-                                        Label("Edit Notes", systemImage: "applepencil.and.scribble")
+                                        Label("Edit Details", systemImage: "applepencil.and.scribble")
                                     }
                             )
                             .navigationTitle("Note Details")

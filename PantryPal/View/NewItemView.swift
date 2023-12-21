@@ -12,9 +12,11 @@ struct NewItemView: View {
     @EnvironmentObject var itemStore: ItemStore
     @State var name: String = ""
     @State var total: Int64 = 0
+    @State var bulkPrice: Double = 0.00
+    @State var unitPrice: Double = 0.00
     @State var notes: String = ""
     @FocusState private var isNoteFocused: Bool
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("Add an item")
@@ -28,7 +30,19 @@ struct NewItemView: View {
                         .disableAutocorrection(false)
                 }
                 HStack {
-                    TextField("Total of new item", value: $total, formatter: Formatter.myNumberFormat)
+                    TextField("Total of new item", value: $total, formatter: Formatter.numberFormatter)
+                        .multilineTextAlignment(.leading)
+                        .keyboardType(.decimalPad)
+                }
+                HStack {
+                    Text("Bulk:")
+                    TextField("Bulk price", value: $bulkPrice, formatter: Formatter.currencyFormatter)
+                        .multilineTextAlignment(.leading)
+                        .keyboardType(.decimalPad)
+                }
+                HStack {
+                    Text("Unit:")
+                    TextField("Unit price", value: $unitPrice, formatter: Formatter.currencyFormatter)
                         .multilineTextAlignment(.leading)
                         .keyboardType(.decimalPad)
                 }
@@ -55,7 +69,7 @@ struct NewItemView: View {
             HStack{
                 Spacer()
                 Button("Add", systemImage: "plus.circle.fill", action: {
-                    itemStore.addNewEntry(name: self.name, quantity: self.total, total: self.total, notes: self.notes)
+                    itemStore.addNewEntry(name: self.name, quantity: self.total, total: self.total, bulkPrice: self.bulkPrice, unitPrice: self.unitPrice, notes: self.notes)
                     isNoteFocused = false
                     dismiss()
                 })

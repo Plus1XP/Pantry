@@ -15,15 +15,7 @@ struct NoteDetailsView: View {
     @State private var isPinnedTrigger: Bool = false
     @Binding var canEditNote: Bool
     @FocusState private var isNoteFocused: Bool
-    
     private let sectionTitleColor: Color = Color.secondary
-    
-    private let itemFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter
-    }()
     
     var body: some View {
         VStack {
@@ -95,7 +87,7 @@ struct NoteDetailsView: View {
                         .foregroundStyle(self.sectionTitleColor)
                 })
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                    Text(note.modified!, formatter: self.itemFormatter)
+                    Text(note.modified!, formatter: Formatter.dateFormatter)
                 })
                 .padding()
                 .frame(maxWidth: .infinity)

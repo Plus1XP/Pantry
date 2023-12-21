@@ -22,6 +22,8 @@ struct PersistenceController {
             newItem.name = "🥥"
             newItem.quantity = 3
             newItem.total = 5
+            newItem.bulkprice = 4.00
+            newItem.unitprice = 1.00
             newItem.created = Date()
             newItem.modified = Date()
             newItem.notes = "Some bullshit here"
