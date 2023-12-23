@@ -21,6 +21,8 @@ struct SelectAllItemsButton: View {
             }
         }) {
             Image(systemName: self.itemStore.itemSelection.isEmpty ? "checklist.unchecked" : "checklist.checked")
+                .symbolEffect(.bounce, value: self.itemStore.itemSelection.isEmpty)
+                .contentTransition(.symbolEffect(.replace))
         }
     }
 }

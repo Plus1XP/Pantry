@@ -13,6 +13,8 @@ struct ItemDetailsView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var itemStore: ItemStore
     @State var amount: Int64 = 0
+    @State var minusAnimation: Bool = false
+    @State var plusAnimation: Bool = false
     @Binding var canEditItem: Bool
     @FocusState private var isNoteFocused: Bool
     var item: Item
@@ -45,18 +47,17 @@ struct ItemDetailsView: View {
                     VStack(alignment: .center, content: {
                         Button(action: {
                             if self.amount > 0 {
+                                self.minusAnimation.toggle()
                                 self.amount -= 1
                             }
                         }) {
                             Image(systemName: "minus.circle.fill")
+                                .symbolEffect(.bounce, options: .speed(2), value: self.minusAnimation)
                         }
                         .padding()
                         .foregroundColor(.blue)
-                        .onChange(of: self.amount, {
-                            self.item.quantity = self.amount
-                        })
                     })
-                    .disabled(!self.canEditItem)
+                    .disabled(!self.canEditItem || self.amount == 0)
                 }
                 VStack {
                     HStack {
@@ -82,19 +83,18 @@ struct ItemDetailsView: View {
                     VStack(alignment: .center, content: {
                         Button(action: {
                             if self.amount < item.total {
+                                self.plusAnimation.toggle()
                                 self.amount += 1
                             }
                             
                         }) {
                             Image(systemName: "plus.circle.fill")
+                                .symbolEffect(.bounce, options: .speed(2), value: self.plusAnimation)
                         }
                         .padding()
                         .foregroundColor(.blue)
-                        .onChange(of: self.amount, {
-                            self.item.quantity = self.amount
-                        })
                     })
-                    .disabled(!self.canEditItem)
+                    .disabled(!self.canEditItem || self.amount == self.item.total)
                 }
             })
             .frame(maxWidth: .infinity)
@@ -230,7 +230,7 @@ struct ItemDetailsView: View {
             if self.canEditItem {
                 HStack{
                     Spacer()
-                    Button("Save", systemImage: "plus.circle", action: {
+                    Button("Save", systemImage: "checkmark.circle", action: {
                         self.item.modified = Date()
                         self.itemStore.saveChanges()
                         self.canEditItem = false
@@ -256,6 +256,9 @@ struct ItemDetailsView: View {
         }
         .onAppear(perform: {
             self.amount = self.item.quantity
+        })
+        .onChange(of: self.amount, {
+            self.item.quantity = self.amount
         })
         .background(setViewBackgroundColor(colorScheme: self.colorScheme))
     }

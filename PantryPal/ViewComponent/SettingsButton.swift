@@ -15,6 +15,9 @@ struct SettingButton: View {
             self.canPresentSettingsPopOver.toggle()
         }) {
             Label("Settings", systemImage: "gear")
+                .rotationEffect(.degrees(self.canPresentSettingsPopOver ? 360 : 0))
+                .scaleEffect(self.canPresentSettingsPopOver ? 1.5 : 1)
+                .animation(.easeInOut, value: self.canPresentSettingsPopOver)
         }
     }
 }

@@ -8,14 +8,21 @@
 import SwiftUI
 
 struct RestoreQuantityButton: View {
+    @State var animate: Bool = false
     @Binding var confirmRestoreQuantity: Bool
     
     var body: some View {
         Button(action: {
+            self.animate = true
             self.confirmRestoreQuantity = true
         }) {
-            Label("Repeat", systemImage: "repeat.circle")
+            Label("Repeat", systemImage: self.confirmRestoreQuantity ? "repeat.circle.fill" : "repeat.circle")
+                .symbolEffect(.pulse.wholeSymbol, options: .repeating, value: self.animate)
+                .contentTransition(.symbolEffect(.replace))
         }
+        .onDisappear(perform: {
+            self.animate = false
+        })
     }
 }
 

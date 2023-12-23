@@ -20,7 +20,7 @@ struct SettingsView: View {
     let githubURL: String = "https://github.com/Plus1XP"
     let appURL: String = "https://apps.apple.com/us/app/id"
     let reviewForwarder: String = "?action=write-review"
-
+    
     private let versionString: String = {
             let version: String = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "_error"
             let build: String = (Bundle.main.infoDictionary?["CFBundleVersion"] as? String) ?? "_error"
@@ -35,6 +35,7 @@ struct SettingsView: View {
                         HStack {
                             Image(systemName: "faceid")
                                 .foregroundStyle(.green)
+                                .symbolEffect(.bounce, value: self.biometricStore.isFaceidEnabled)
                             // Causes `kCFRunLoopCommonModes` / `CFRunLoopRunSpecific` error
                             Toggle("Enable Face ID", isOn: $biometricStore.isFaceidEnabled)
                                 .padding([.leading, .trailing])
@@ -52,6 +53,7 @@ struct SettingsView: View {
                         HStack {
                             Image(systemName: "lock.badge.clock")
                                 .foregroundStyle(.red)
+                                .symbolEffect(.bounce, value: self.biometricStore.isAutoLockEnabled)
                             // Causes `kCFRunLoopCommonModes` / `CFRunLoopRunSpecific` error
                             Toggle("Enable Auto-Lock", isOn: $biometricStore.isAutoLockEnabled)
                                 .padding([.leading, .trailing])

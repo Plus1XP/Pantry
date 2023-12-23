@@ -17,6 +17,8 @@ struct PinnedNotesButton: View {
             self.noteStore.isPinnedNotesFiltered.toggle()
         }) {
             Label("Pinned Notes", systemImage: self.noteStore.isPinnedNotesFiltered ? "pin.fill" : "pin")
+                .symbolEffect(.bounce.down, value: self.noteStore.isPinnedNotesFiltered)
+                .contentTransition(.symbolEffect(.replace))
         }
     }
 }

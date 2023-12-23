@@ -47,7 +47,9 @@ struct NewNoteView: View {
                 }
                 HStack {
                     Toggle(isOn: $isPinned) {
-                        Text(Image(systemName: self.isPinned ? "pin.fill" : "pin"))
+                        Image(systemName: self.isPinned ? "pin.fill" : "pin")
+                            .symbolEffect(.bounce.down, value: self.isPinned)
+                            .contentTransition(.symbolEffect(.replace))
                     }
                     .foregroundStyle(.orange, .orange)
                     .toggleStyle(.button)

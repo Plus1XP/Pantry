@@ -36,9 +36,12 @@ struct ContentView: View {
                             .navigationBarItems(
                                 trailing:
                                     Button(action: {
-                                        self.canEditItem.toggle()
+                                        withAnimation(.bouncy) {
+                                            self.canEditItem.toggle()
+                                        }
                                     }) {
                                         Label("Edit Details", systemImage: "applepencil.and.scribble")
+                                            .symbolEffect(.bounce, value: self.canEditItem)
                                     }
                             )
                             .navigationTitle("Item Details")
@@ -86,7 +89,7 @@ struct ContentView: View {
                                     .foregroundStyle(self.itemStore.itemSelection.isEmpty ? .gray : .red, .blue)
                                     .disabled(self.itemStore.itemSelection.isEmpty)
                                 RestoreQuantityButton(confirmRestoreQuantity: $confirmRestoreQuantity)
-                                    .foregroundStyle(self.itemStore.itemSelection.isEmpty ? .gray : .green, self.itemStore.itemSelection.isEmpty ? .gray : .green)
+                                    .foregroundStyle(self.itemStore.itemSelection.isEmpty ? .gray : self.confirmRestoreQuantity ? .white : .green, self.itemStore.itemSelection.isEmpty ? .gray : .green)
                                     .disabled(self.itemStore.itemSelection.isEmpty)
                             }
                         },
@@ -184,9 +187,12 @@ struct ContentView: View {
                             .navigationBarItems(
                                 trailing:
                                     Button(action: {
-                                        self.canEditNote.toggle()
+                                        withAnimation(.bouncy) {
+                                            self.canEditNote.toggle()
+                                        }
                                     }) {
                                         Label("Edit Details", systemImage: "applepencil.and.scribble")
+                                            .symbolEffect(.bounce, value: self.canEditItem)
                                     }
                             )
                             .navigationTitle("Note Details")
@@ -301,6 +307,7 @@ struct ContentView: View {
         })
         // This fixes navigationBarTitle LayoutConstraints issue for NavigationView
         .navigationViewStyle(.stack)
+        .animation(.easeIn, value: self.editMode)
     }
 }
         

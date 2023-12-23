@@ -27,7 +27,9 @@ struct NoteDetailsView: View {
                     .disableAutocorrection(false)
                     .disabled(!self.canEditNote)
                 Toggle(isOn: $isPinnedTrigger) {
-                    Text(Image(systemName: self.isPinnedTrigger ? "pin.fill" : "pin"))
+                    Image(systemName: self.isPinnedTrigger ? "pin.fill" : "pin")
+                        .symbolEffect(.bounce.down, value: self.isPinnedTrigger)
+                        .contentTransition(.symbolEffect(.replace))
                 }
                 .foregroundStyle(.orange, .orange)
                 .toggleStyle(.button)

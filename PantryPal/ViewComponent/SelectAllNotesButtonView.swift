@@ -21,6 +21,8 @@ struct SelectAllNotesButton: View {
             }
         }) {
             Image(systemName: self.noteStore.noteSelection.isEmpty ? "checklist.unchecked" : "checklist.checked")
+                .symbolEffect(.bounce, value: self.noteStore.noteSelection.isEmpty)
+                .contentTransition(.symbolEffect(.replace))
         }
     }
 }
