@@ -109,37 +109,37 @@ struct ContentView: View {
                     self.itemStore.fetchEntries()
                 }
                 .searchable(text: $itemStore.searchText, prompt: "Search Items..")
-                .alert(isPresented: $confirmDeletion) {
-                    Alert(title: Text("Confirm Deletion"),
-                          message:Text(deletionAlertText(selection: self.itemStore.itemSelection.count)),
-                          primaryButton: .cancel() {
+                .alert("Confirm Deletion", isPresented: $confirmDeletion) {
+                    Button("Cancel", role: .cancel) {
                         self.itemStore.itemSelection.removeAll()
                         self.editMode = .inactive
                         self.confirmDeletion = false
-                    },
-                          secondaryButton: .destructive(Text("Delete")) {
+                    }
+                    Button("Delete", role: .destructive) {
                         let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
                         feedbackGenerator?.notificationOccurred(.success)
                         self.itemStore.deleteItemSelectionEntries()
                         self.editMode = .inactive
                         self.confirmDeletion = false
-                    })
+                    }
+                } message: {
+                    Text(deletionAlertText(selection: self.itemStore.itemSelection.count))
                 }
-                .alert(isPresented: $confirmRestoreQuantity) {
-                    Alert(title: Text("Restore Item Quantity?"),
-                          message:Text(restoreQuantityAlertText(selection: self.itemStore.itemSelection.count)),
-                          primaryButton: .cancel() {
+                .alert("Restore Item Quantity?", isPresented: $confirmRestoreQuantity) {
+                    Button("Cancel", role: .cancel) {
                         self.itemStore.itemSelection.removeAll()
                         self.editMode = .inactive
                         self.confirmRestoreQuantity = false
-                    },
-                          secondaryButton: .destructive(Text("Restore Quantity")) {
+                    }
+                    Button("Restore Quantity", role: .destructive) {
                         let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
                         feedbackGenerator?.notificationOccurred(.success)
                         self.itemStore.restoreQuantityItemSelectionEntries()
                         self.editMode = .inactive
                         self.confirmRestoreQuantity = false
-                    })
+                    }
+                } message: {
+                        Text(restoreQuantityAlertText(selection: self.itemStore.itemSelection.count))
                 }
             }
             .tabItem {
@@ -261,21 +261,21 @@ struct ContentView: View {
                     self.noteStore.fetchEntries()
                 }
                 .searchable(text: $noteStore.searchText, prompt: "Search Notes..")
-                .alert(isPresented: $confirmDeletion) {
-                    Alert(title: Text("Confirm Deletion"),
-                          message:Text(deletionAlertText(selection: self.noteStore.noteSelection.count)),
-                          primaryButton: .cancel() {
+                .alert("Confirm Deletion", isPresented: $confirmDeletion) {
+                    Button("Cancel", role: .cancel) {
                         self.noteStore.noteSelection.removeAll()
                         self.editMode = .inactive
                         self.confirmDeletion = false
-                    },
-                          secondaryButton: .destructive(Text("Delete")) {
+                    }
+                    Button("Delete", role: .destructive) {
                         let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
                         feedbackGenerator?.notificationOccurred(.success)
                         self.noteStore.deleteNoteSelectionEntries()
                         self.editMode = .inactive
                         self.confirmDeletion = false
-                    })
+                    }
+                } message: {
+                    Text(deletionAlertText(selection: self.noteStore.noteSelection.count))
                 }
             }
             .tabItem {
