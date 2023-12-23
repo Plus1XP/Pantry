@@ -127,6 +127,15 @@ class ItemStore: ObservableObject {
         self.saveChanges()
     }
     
+    func restoreQuantityItemSelectionEntries() {
+        for entry in self.itemSelection {
+            entry.quantity = entry.total
+        }
+        self.itemSelection.removeAll()
+        self.sortEntries()
+        self.saveChanges()
+    }
+    
     func discardChanges() {
         PersistenceController.shared.container.viewContext.rollback()
         self.fetchEntries()

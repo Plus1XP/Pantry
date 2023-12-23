@@ -19,6 +19,7 @@
 		2F66E1672AF5671C00A007F4 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1662AF5671C00A007F4 /* PersistenceController.swift */; };
 		2F7F0E262AF96EF700979951 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F0E252AF96EF700979951 /* Color.swift */; };
 		2F7F0E282AF98BC900979951 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F0E272AF98BC900979951 /* SettingsView.swift */; };
+		2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */; };
 		2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB558EB2AF3D77F002362AB /* TextEditor.swift */; };
 		2FB81D3F2AF30CA300ECD374 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB81D3E2AF30CA300ECD374 /* Binding.swift */; };
 		2FBD25702AF2878300C26DA3 /* PantryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD256F2AF2878300C26DA3 /* PantryApp.swift */; };
@@ -61,6 +62,7 @@
 		2F66E1662AF5671C00A007F4 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		2F7F0E252AF96EF700979951 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2F7F0E272AF98BC900979951 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreQuantityButton.swift; sourceTree = "<group>"; };
 		2FB558EB2AF3D77F002362AB /* TextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
 		2FB81D3E2AF30CA300ECD374 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		2FBD256C2AF2878300C26DA3 /* PantryPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PantryPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +142,7 @@
 				2FCEF3762B1E64CE00E5DCCA /* ItemDebugButtons.swift */,
 				2FCEF37C2B1E70CD00E5DCCA /* SelectAllItemsButton.swift */,
 				2FCEF37E2B1E70D900E5DCCA /* ItemDeleteButton.swift */,
+				2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */,
 				2FCEF36D2B1E59A100E5DCCA /* EditModeButton.swift */,
 				2FCEF3692B1E1F3700E5DCCA /* SettingsButton.swift */,
 				2FCEF3802B1E730C00E5DCCA /* PinnedNotesButton.swift */,
@@ -338,6 +341,7 @@
 				2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */,
 				2F1B6D142AFD94FA00377207 /* ItemStore.swift in Sources */,
 				2F1B6D122AFD445A00377207 /* ItemDetailsView.swift in Sources */,
+				2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */,
 				2F1B6D1C2B01371900377207 /* NoteDetailsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -471,7 +475,7 @@
 				CODE_SIGN_ENTITLEMENTS = PantryPal/Pantry.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"PantryPal/Preview Content\"";
 				DEVELOPMENT_TEAM = L4UU7WP4CE;
@@ -480,7 +484,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PantryPal/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "Required to unlock app.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -495,7 +498,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.pantry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -516,7 +519,7 @@
 				CODE_SIGN_ENTITLEMENTS = PantryPal/Pantry.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"PantryPal/Preview Content\"";
 				DEVELOPMENT_TEAM = L4UU7WP4CE;
@@ -525,7 +528,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PantryPal/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "Required to unlock app.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -540,7 +542,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.pantry;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

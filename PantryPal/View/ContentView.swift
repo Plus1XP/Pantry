@@ -20,6 +20,7 @@ struct ContentView: View {
     @State private var canEditItem: Bool = false
     @State private var canEditNote: Bool = false
     @State private var confirmDeletion: Bool = false
+    @State private var confirmRestoreQuantity: Bool = false
     @State private var activeTabSelection: Int = 0
     @State private var previousTabSelection: Int = 0
     
@@ -84,6 +85,9 @@ struct ContentView: View {
                                 ItemDeleteButton(confirmDeletion: $confirmDeletion)
                                     .foregroundStyle(self.itemStore.itemSelection.isEmpty ? .gray : .red, .blue)
                                     .disabled(self.itemStore.itemSelection.isEmpty)
+                                RestoreQuantityButton(confirmRestoreQuantity: $confirmRestoreQuantity)
+                                    .foregroundStyle(self.itemStore.itemSelection.isEmpty ? .gray : .green, self.itemStore.itemSelection.isEmpty ? .gray : .green)
+                                    .disabled(self.itemStore.itemSelection.isEmpty)
                             }
                         },
                     trailing:
@@ -119,6 +123,22 @@ struct ContentView: View {
                         self.itemStore.deleteItemSelectionEntries()
                         self.editMode = .inactive
                         self.confirmDeletion = false
+                    })
+                }
+                .alert(isPresented: $confirmRestoreQuantity) {
+                    Alert(title: Text("Restore Item Quantity?"),
+                          message:Text(restoreQuantityAlertText(selection: self.itemStore.itemSelection.count)),
+                          primaryButton: .cancel() {
+                        self.itemStore.itemSelection.removeAll()
+                        self.editMode = .inactive
+                        self.confirmRestoreQuantity = false
+                    },
+                          secondaryButton: .destructive(Text("Restore Quantity")) {
+                        let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+                        feedbackGenerator?.notificationOccurred(.success)
+                        self.itemStore.restoreQuantityItemSelectionEntries()
+                        self.editMode = .inactive
+                        self.confirmRestoreQuantity = false
                     })
                 }
             }
@@ -292,6 +312,16 @@ private func deletionAlertText(selection: Int) -> String {
         return "Are you sure you want to delete \(selection) Entry?"
     } else {
         return "Are you sure you want to delete \(selection) Entries?"
+    }
+}
+                          
+private func restoreQuantityAlertText(selection: Int) -> String {
+    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+    feedbackGenerator?.notificationOccurred(.warning)
+    if selection == 1 {
+        return "Are you sure you want to restore maximum quantity of \(selection) Entry?"
+    } else {
+        return "Are you sure you want to restore maximum quantities \(selection) Entries?"
     }
 }
 
