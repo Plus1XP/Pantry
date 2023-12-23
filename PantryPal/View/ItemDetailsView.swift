@@ -12,11 +12,12 @@ struct ItemDetailsView: View {
     @Environment(\.locale) private var locale
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var itemStore: ItemStore
-    @State var item: Item
+    @State var amount: Int64 = 0
     @Binding var canEditItem: Bool
     @FocusState private var isNoteFocused: Bool
+    var item: Item
     private let sectionTitleColor: Color = Color.secondary
-    
+
     var body: some View {
         VStack {
             //FIXME: EmojionField icon size
@@ -40,24 +41,63 @@ struct ItemDetailsView: View {
                     .foregroundStyle(self.sectionTitleColor)
             })
             HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                TextField("Quantity", text: Binding(get: {"\(item.quantity)"}, set: {item.quantity = Int64($0) ?? 0}), prompt: Text("Current"))
-                    .multilineTextAlignment(.trailing)
+                if self.canEditItem {
+                    VStack(alignment: .center, content: {
+                        Button(action: {
+                            if self.amount > 0 {
+                                self.amount -= 1
+                            }
+                        }) {
+                            Image(systemName: "minus.circle.fill")
+                        }
+                        .padding()
+                        .foregroundColor(.blue)
+                        .onChange(of: self.amount, {
+                            self.item.quantity = self.amount
+                        })
+                    })
                     .disabled(!self.canEditItem)
-                Text("of")
-                TextField("Total", text: Binding(get: {"\(item.total)"}, set: {item.total = Int64($0) ?? 0}), prompt: Text("Total"))
-                    .multilineTextAlignment(.leading)
+                }
+                VStack {
+                    HStack {
+                        TextField("Quantity", text: Binding(get: {"\(self.amount)"}, set: {self.amount = Int64($0) ?? 0}), prompt: Text("Current"))
+                            .multilineTextAlignment(.trailing)
+                            .disabled(!self.canEditItem)
+                        Text("of")
+                        TextField("Total", text: Binding(get: {"\(item.total)"}, set: {item.total = Int64($0) ?? 0}), prompt: Text("Total"))
+                            .multilineTextAlignment(.leading)
+                            .disabled(!self.canEditItem)
+                    }
+                    .padding()
+                    .foregroundColor(.primary)
+                    .background(
+                        RoundedRectangle(
+                            cornerRadius: 12,
+                            style: .continuous
+                        )
+                        .fill(setFieldBackgroundColor(colorScheme: self.colorScheme))
+                    )
+                }
+                if self.canEditItem {
+                    VStack(alignment: .center, content: {
+                        Button(action: {
+                            if self.amount < item.total {
+                                self.amount += 1
+                            }
+                            
+                        }) {
+                            Image(systemName: "plus.circle.fill")
+                        }
+                        .padding()
+                        .foregroundColor(.blue)
+                        .onChange(of: self.amount, {
+                            self.item.quantity = self.amount
+                        })
+                    })
                     .disabled(!self.canEditItem)
-            }) 
-            .padding()
+                }
+            })
             .frame(maxWidth: .infinity)
-            .foregroundColor(.primary)
-            .background(
-                RoundedRectangle(
-                    cornerRadius: 12,
-                    style: .continuous
-                )
-                .fill(setFieldBackgroundColor(colorScheme: self.colorScheme))
-            )
             .padding(.leading)
             .padding(.trailing)
             .padding(.bottom)
@@ -214,6 +254,9 @@ struct ItemDetailsView: View {
                 .disabled(!self.canEditItem)
             }
         }
+        .onAppear(perform: {
+            self.amount = self.item.quantity
+        })
         .background(setViewBackgroundColor(colorScheme: self.colorScheme))
     }
 }
@@ -227,13 +270,13 @@ private func setFieldBackgroundColor(colorScheme: ColorScheme) -> Color {
 }
 
 #Preview {
-    ItemDetailsView(item: PersistenceController.shared.sampleItem, canEditItem: .constant(false))
+    ItemDetailsView(canEditItem: .constant(false), item: PersistenceController.shared.sampleItem)
         .environmentObject(ItemStore())
         .preferredColorScheme(.light)
 }
 
 #Preview {
-    ItemDetailsView(item: PersistenceController.shared.sampleItem, canEditItem: .constant(false))
+    ItemDetailsView(canEditItem: .constant(false), item: PersistenceController.shared.sampleItem)
         .environmentObject(ItemStore())
         .preferredColorScheme(.dark)
 }

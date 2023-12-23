@@ -11,10 +11,10 @@ struct NoteDetailsView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var noteStore: NoteStore
-    @State var note: Note
     @State private var isPinnedTrigger: Bool = false
     @Binding var canEditNote: Bool
     @FocusState private var isNoteFocused: Bool
+    var note: Note
     private let sectionTitleColor: Color = Color.secondary
     
     var body: some View {
@@ -147,13 +147,13 @@ private func setFieldBackgroundColor(colorScheme: ColorScheme) -> Color {
 }
 
 #Preview {
-    NoteDetailsView(note: PersistenceController.shared.sampleNote, canEditNote: .constant(false))
+    NoteDetailsView(canEditNote: .constant(false), note: PersistenceController.shared.sampleNote)
         .environmentObject(NoteStore())
         .preferredColorScheme(.light)
 }
 
 #Preview {
-    NoteDetailsView(note: PersistenceController.shared.sampleNote, canEditNote: .constant(false))
+    NoteDetailsView(canEditNote: .constant(false), note: PersistenceController.shared.sampleNote)
         .environmentObject(NoteStore())
         .preferredColorScheme(.dark)
 }

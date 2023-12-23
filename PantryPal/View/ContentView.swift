@@ -31,7 +31,7 @@ struct ContentView: View {
                     ForEach(self.itemStore.searchResults, id: \.self) { item in
                         //MARK: Item Information
                         NavigationLink {
-                            ItemDetailsView(item: item, canEditItem: $canEditItem)
+                            ItemDetailsView(canEditItem: $canEditItem, item: item)
                             .navigationBarItems(
                                 trailing:
                                     Button(action: {
@@ -160,7 +160,7 @@ struct ContentView: View {
                     ForEach(self.noteStore.combinedResults, id: \.self) { note in
                         //MARK: Note Information
                         NavigationLink {
-                            NoteDetailsView(note: note, canEditNote: $canEditNote)
+                            NoteDetailsView(canEditNote: $canEditNote, note: note)
                             .navigationBarItems(
                                 trailing:
                                     Button(action: {
