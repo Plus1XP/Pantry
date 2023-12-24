@@ -305,6 +305,14 @@ struct ContentView: View {
             self.canEditEmojis = false
             self.noteStore.isPinnedNotesFiltered = false
         })
+        .onChange(of: self.confirmDeletion, {
+            let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+            feedbackGenerator?.notificationOccurred(.warning)
+        })
+        .onChange(of: self.confirmRestoreQuantity, {
+            let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+            feedbackGenerator?.notificationOccurred(.warning)
+        })
         // This fixes navigationBarTitle LayoutConstraints issue for NavigationView
         .navigationViewStyle(.stack)
         .animation(.easeIn, value: self.editMode)
@@ -313,8 +321,6 @@ struct ContentView: View {
         
 //MARK: Functions
 private func deletionAlertText(selection: Int) -> String {
-    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-    feedbackGenerator?.notificationOccurred(.warning)
     if selection == 1 {
         return "Are you sure you want to delete \(selection) Entry?"
     } else {
@@ -323,8 +329,6 @@ private func deletionAlertText(selection: Int) -> String {
 }
                           
 private func restoreQuantityAlertText(selection: Int) -> String {
-    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-    feedbackGenerator?.notificationOccurred(.warning)
     if selection == 1 {
         return "Are you sure you want to restore maximum quantity of \(selection) Entry?"
     } else {
