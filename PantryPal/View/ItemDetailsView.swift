@@ -27,7 +27,6 @@ struct ItemDetailsView: View {
                 if self.canEditItem {
                     EmojiTextField(text: Binding(get: {item.name ?? ""}, set: {item.name = $0}), placeholder: "Untitled Item", alignment: .center)
                         .fixedSize(horizontal: true, vertical: true)
-                        .border(Color.red)
                 } else {
                     Text(item.name ?? "")
                         .frame(maxWidth: .infinity)

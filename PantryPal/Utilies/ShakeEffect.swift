@@ -15,11 +15,11 @@ struct Shake<Content: View>: View {
     /// Duration in seconds
     var duration = 0.25
     /// Range in pixels to go back and forth
-    var offsetRange = 1.0
+    var offsetRange = 0.5
     /// Range in pixels to rotate axis
-    var degreesRange = 2.5
+    var degreesRange = 2.0
     /// Range in pixels to increase and decrease
-    var scaleRange = 1.05
+    var scaleRange = 1.025
 
     @ViewBuilder let content: Content
     var onCompletion: (() -> Void)?
@@ -83,9 +83,9 @@ extension View {
     func shake(_ shake: Binding<Bool>,
                repeatCount: Int = 2,
                duration: CGFloat = 0.25,
-               offsetRange: CGFloat = 1.0,
-               degreesRange: Double = 2.5,
-               scaleRange: CGFloat = 1.05,
+               offsetRange: CGFloat = 0.5,
+               degreesRange: Double = 2.0,
+               scaleRange: CGFloat = 1.025,
                onCompletion: (() -> Void)? = nil) -> some View {
         Shake(shake: shake,
               repeatCount: repeatCount,
