@@ -20,6 +20,7 @@
 		2F7F0E262AF96EF700979951 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F0E252AF96EF700979951 /* Color.swift */; };
 		2F7F0E282AF98BC900979951 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F0E272AF98BC900979951 /* SettingsView.swift */; };
 		2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */; };
+		2FA93C022B38555F00A1F994 /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93C012B38555F00A1F994 /* ShakeEffect.swift */; };
 		2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB558EB2AF3D77F002362AB /* TextEditor.swift */; };
 		2FB81D3F2AF30CA300ECD374 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB81D3E2AF30CA300ECD374 /* Binding.swift */; };
 		2FBD25702AF2878300C26DA3 /* PantryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD256F2AF2878300C26DA3 /* PantryApp.swift */; };
@@ -63,6 +64,7 @@
 		2F7F0E252AF96EF700979951 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2F7F0E272AF98BC900979951 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreQuantityButton.swift; sourceTree = "<group>"; };
+		2FA93C012B38555F00A1F994 /* ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffect.swift; sourceTree = "<group>"; };
 		2FB558EB2AF3D77F002362AB /* TextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
 		2FB81D3E2AF30CA300ECD374 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		2FBD256C2AF2878300C26DA3 /* PantryPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PantryPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,6 +191,7 @@
 				2FCEF3632B168F4700E5DCCA /* TextField.swift */,
 				2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */,
 				2FB558EB2AF3D77F002362AB /* TextEditor.swift */,
+				2FA93C012B38555F00A1F994 /* ShakeEffect.swift */,
 			);
 			path = Utilies;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				2F1B6D142AFD94FA00377207 /* ItemStore.swift in Sources */,
 				2F1B6D122AFD445A00377207 /* ItemDetailsView.swift in Sources */,
 				2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */,
+				2FA93C022B38555F00A1F994 /* ShakeEffect.swift in Sources */,
 				2F1B6D1C2B01371900377207 /* NoteDetailsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

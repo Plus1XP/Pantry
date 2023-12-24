@@ -17,13 +17,13 @@ struct EmojiEditLockButton: View {
             let selectionFeedback = UISelectionFeedbackGenerator()
             selectionFeedback.selectionChanged()
             self.canEditEmojis.toggle()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.animate.toggle()
             }
         }) {
             Label("Lock Emojis", systemImage: self.animate ? "hand.tap.fill" : "hand.tap")
-                .symbolEffect(.bounce, value: self.canEditEmojis)
                 .contentTransition(.symbolEffect(.replace))
+                .symbolEffect(.bounce, value: self.canEditEmojis)
         }
     }
 }
