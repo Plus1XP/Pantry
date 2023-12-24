@@ -25,8 +25,9 @@ struct ItemDetailsView: View {
             //FIXME: EmojionField icon size
             HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
                 if self.canEditItem {
-                    EmojiTextField(text: Binding(get: {item.name ?? ""}, set: {item.name = $0}), placeholder: "Untitled Item")
+                    EmojiTextField(text: Binding(get: {item.name ?? ""}, set: {item.name = $0}), placeholder: "Untitled Item", alignment: .center)
                         .fixedSize(horizontal: true, vertical: true)
+                        .border(Color.red)
                 } else {
                     Text(item.name ?? "")
                         .frame(maxWidth: .infinity)

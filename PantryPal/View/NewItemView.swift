@@ -25,7 +25,7 @@ struct NewItemView: View {
             Divider()
             Group {
                 HStack {
-                    EmojiTextField(text: $name, placeholder: "Emoji of new item")
+                    EmojiTextField(text: $name, placeholder: "Emoji of new item", alignment: .left)
                         .multilineTextAlignment(.leading)
                         .disableAutocorrection(false)
                 }

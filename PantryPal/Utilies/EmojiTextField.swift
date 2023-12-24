@@ -10,12 +10,14 @@ import SwiftUI
 struct EmojiTextField: UIViewRepresentable {
     @Binding var text: String
     var placeholder: String = ""
+    var alignment: NSTextAlignment = .left
     
     func makeUIView(context: Context) -> UIEmojiTextField {
         let emojiTextField = UIEmojiTextField()
         emojiTextField.placeholder = placeholder
         emojiTextField.text = text
         emojiTextField.delegate = context.coordinator
+        emojiTextField.textAlignment = alignment
         return emojiTextField
     }
     
