@@ -13,6 +13,8 @@ struct NewNoteView: View {
     @State var name: String = ""
     @State var isPinned: Bool = false
     @State var noteBody: String = ""
+    @State var customFieldTitle: String = ""
+    @State var customFieldToggle: Bool = false
     @FocusState private var isNoteFocused: Bool
     
     var body: some View {
@@ -46,11 +48,19 @@ struct NewNoteView: View {
                     }
                 }
                 HStack {
+                    Toggle(isOn: $customFieldToggle) {
+                        TextField("Name Switch", text: $customFieldTitle)
+                            .multilineTextAlignment(.leading)
+                            .disableAutocorrection(false)
+                    }
+                }
+                HStack {
                     Toggle(isOn: $isPinned) {
                         Image(systemName: self.isPinned ? "pin.fill" : "pin")
                             .symbolEffect(.bounce.down, value: self.isPinned)
                             .contentTransition(.symbolEffect(.replace))
                     }
+                    .font(.title2)
                     .foregroundStyle(.orange, .orange)
                     .toggleStyle(.button)
                     .tint(.clear)
@@ -61,7 +71,7 @@ struct NewNoteView: View {
             HStack{
                 Spacer()
                 Button("Add", systemImage: "plus.circle.fill", action: {
-                    noteStore.addNewEntry(name: self.name, noteBody: self.noteBody, isPinned: self.isPinned)
+                    noteStore.addNewEntry(name: self.name, noteBody: self.noteBody, customFieldTitle: self.customFieldTitle, customFieldToggle: self.customFieldToggle, isPinned: self.isPinned)
                     isNoteFocused = false
                     dismiss()
                 })

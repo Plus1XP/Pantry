@@ -12,6 +12,7 @@ struct NoteDetailsView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var noteStore: NoteStore
     @State private var isPinnedTrigger: Bool = false
+    @State private var isCustomFieldTrigger: Bool = false
     @Binding var canEditNote: Bool
     @FocusState private var isNoteFocused: Bool
     var note: Note
@@ -36,9 +37,11 @@ struct NoteDetailsView: View {
                 .tint(.clear)
                 .font(.title3)
                 .frame(maxWidth: .infinity, alignment: .trailing)
-                .disabled(!self.canEditNote)
+//                .disabled(!self.canEditNote)
                 .onChange(of: self.isPinnedTrigger, {
                     note.isPinned = self.isPinnedTrigger
+                    self.note.modified = Date()
+                    self.noteStore.saveChanges()
                 })
             }
             .padding(.leading)
@@ -77,6 +80,26 @@ struct NoteDetailsView: View {
                 )
                 .fill(setFieldBackgroundColor(colorScheme: self.colorScheme))
             )
+            .padding(.leading)
+            .padding(.trailing)
+            .padding(.bottom)
+            
+            HStack {
+                Toggle(isOn: $isCustomFieldTrigger) {
+                    TextField("Untitled Switch", text: Binding(get: {note.customFieldTitle ?? ""}, set: {note.customFieldTitle = $0}))
+                        .multilineTextAlignment(.leading)
+                        .textCase(nil)
+                        .disableAutocorrection(false)
+                        .disabled(!self.canEditNote)
+                }
+                .padding([.leading, .trailing], 20)
+//                .disabled(!self.canEditNote)
+                .onChange(of: self.isCustomFieldTrigger, {
+                    note.isCustomFieldToggled = self.isCustomFieldTrigger
+                    self.note.modified = Date()
+                    self.noteStore.saveChanges()
+                })
+            }
             .padding(.leading)
             .padding(.trailing)
             .padding(.bottom)
@@ -136,6 +159,8 @@ struct NoteDetailsView: View {
         .background(setViewBackgroundColor(colorScheme: self.colorScheme))
         .onAppear(perform: {
             self.isPinnedTrigger = note.isPinned
+            self.isCustomFieldTrigger = note.isCustomFieldToggled
+
         })
     }
 }

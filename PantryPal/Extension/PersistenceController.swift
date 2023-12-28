@@ -30,6 +30,8 @@ extension PersistenceController {
         note.name = "Things to do"
         note.body = "Get a job!"
         note.isPinned = true
+        note.customFieldTitle = "Task Completed?"
+        note.isCustomFieldToggled = false
         note.created = Date()
         note.modified = Date().addingTimeInterval(30000000)
         return note

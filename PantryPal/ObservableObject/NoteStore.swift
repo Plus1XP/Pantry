@@ -46,13 +46,15 @@ class NoteStore: ObservableObject {
         }
     }
     
-    func addNewEntry(name: String?, noteBody: String?, isPinned: Bool?) {
+    func addNewEntry(name: String?, noteBody: String?, customFieldTitle: String, customFieldToggle: Bool, isPinned: Bool?) {
         let newNote = Note(context: PersistenceController.shared.container.viewContext)
         newNote.id = UUID()
         newNote.position = Int64(notes.count == 0 ? 0 : notes.count + 1)
         newNote.name = name
         newNote.body = noteBody
         newNote.isPinned = isPinned ?? false
+        newNote.customFieldTitle = customFieldTitle
+        newNote.isCustomFieldToggled = customFieldToggle
         newNote.created = Date()
         newNote.modified = Date()
         self.saveChanges()
@@ -159,6 +161,8 @@ class NoteStore: ObservableObject {
             note.name = name.randomElement()
             note.body = body.randomElement()
             note.isPinned = isPinned.randomElement() ?? false
+            note.customFieldTitle = "Task Completed?"
+            note.isCustomFieldToggled = true
             note.created = Date()
             note.modified = Date().addingTimeInterval(30000000)
             loopCount += 1

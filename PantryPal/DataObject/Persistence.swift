@@ -33,6 +33,8 @@ struct PersistenceController {
             newNote.name = "my Secret"
             newNote.body = "Im really happy!"
             newNote.isPinned = false
+            newNote.customFieldTitle = "Task Completed?"
+            newNote.isCustomFieldToggled = false
             newNote.created = Date()
             newNote.modified = Date()
             count += 1
