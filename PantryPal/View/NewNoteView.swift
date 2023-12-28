@@ -17,13 +17,13 @@ struct NewNoteView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Add a Note")
+            Text("Add Note")
                 .font(.title3)
                 .padding(.horizontal)
             Divider()
             Group {
                 HStack {
-                    TextField("Name of new note", text: $name)
+                    TextField("Name Note", text: $name)
                         .multilineTextAlignment(.leading)
                         .disableAutocorrection(false)
                 }
@@ -36,7 +36,7 @@ struct NewNoteView: View {
                             .multilineTextAlignment(.leading)
                             .disableAutocorrection(false)
                         if !isNoteFocused && noteBody.isEmpty {
-                            Text("Notes of new item")
+                            Text("Enter Contents")
                                 .multilineTextAlignment(.leading)
                                 .disableAutocorrection(false)
                                 .foregroundColor(Color(uiColor: .placeholderText))

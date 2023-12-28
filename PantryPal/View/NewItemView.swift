@@ -19,18 +19,18 @@ struct NewItemView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Add an item")
+            Text("Add item")
                 .font(.title3)
                 .padding(.horizontal)
             Divider()
             Group {
                 HStack {
-                    EmojiTextField(text: $name, placeholder: "Emoji of new item", alignment: .left)
+                    EmojiTextField(text: $name, placeholder: "Pick Emoji", alignment: .left)
                         .multilineTextAlignment(.leading)
                         .disableAutocorrection(false)
                 }
                 HStack {
-                    TextField("Total of new item", value: $total, formatter: Formatter.numberFormatter)
+                    TextField("Enter Quantity", value: $total, formatter: Formatter.numberFormatter)
                         .multilineTextAlignment(.leading)
                         .keyboardType(.decimalPad)
                 }
@@ -55,7 +55,7 @@ struct NewItemView: View {
                             .multilineTextAlignment(.leading)
                             .disableAutocorrection(false)
                         if !isNoteFocused && notes.isEmpty {
-                            Text("Notes of new item")
+                            Text("Quick Notes")
                                 .multilineTextAlignment(.leading)
                                 .disableAutocorrection(false)
                                 .foregroundColor(Color(uiColor: .placeholderText))
