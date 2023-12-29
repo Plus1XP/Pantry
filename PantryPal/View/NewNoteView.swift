@@ -13,8 +13,8 @@ struct NewNoteView: View {
     @State var name: String = ""
     @State var isPinned: Bool = false
     @State var noteBody: String = ""
-    @State var customFieldTitle: String = ""
-    @State var customFieldToggle: Bool = false
+    @State var switchTitle: String = ""
+    @State var isSwitchOn: Bool = false
     @FocusState private var isNoteFocused: Bool
     
     var body: some View {
@@ -48,8 +48,8 @@ struct NewNoteView: View {
                     }
                 }
                 HStack {
-                    Toggle(isOn: $customFieldToggle) {
-                        TextField("Name Switch", text: $customFieldTitle)
+                    Toggle(isOn: $isSwitchOn) {
+                        TextField("Name Switch", text: $switchTitle)
                             .multilineTextAlignment(.leading)
                             .disableAutocorrection(false)
                     }
@@ -71,7 +71,7 @@ struct NewNoteView: View {
             HStack{
                 Spacer()
                 Button("Add", systemImage: "plus.circle.fill", action: {
-                    noteStore.addNewEntry(name: self.name, noteBody: self.noteBody, customFieldTitle: self.customFieldTitle, customFieldToggle: self.customFieldToggle, isPinned: self.isPinned)
+                    noteStore.addNewEntry(name: self.name, body: self.noteBody, switchTitle: self.switchTitle, isSwitchOn: self.isSwitchOn, isPinned: self.isPinned)
                     isNoteFocused = false
                     dismiss()
                 })

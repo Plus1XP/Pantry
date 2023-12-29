@@ -9,6 +9,8 @@ import Foundation
 
 // demo data
 extension PersistenceController {
+    
+    
     var sampleItem: Item {
         let context = PersistenceController.preview.container.viewContext
         let item = Item(context: context)
@@ -20,7 +22,7 @@ extension PersistenceController {
         item.unitprice = 1.00
         item.created = Date()
         item.modified = Date().addingTimeInterval(30000000)
-        item.notes = "I hope this works"
+        item.note = "I hope this works"
         return item
     }
     var sampleNote: Note {
@@ -30,8 +32,8 @@ extension PersistenceController {
         note.name = "Things to do"
         note.body = "Get a job!"
         note.isPinned = true
-        note.customFieldTitle = "Task Completed?"
-        note.isCustomFieldToggled = false
+        note.switchTitle = "Task Completed?"
+        note.isSwitchOn = false
         note.created = Date()
         note.modified = Date().addingTimeInterval(30000000)
         return note
@@ -47,7 +49,7 @@ extension PersistenceController {
         item.unitprice = 0.00
         item.created = Date()
         item.modified = Date()
-        item.notes = ""
+        item.note = ""
         return item
     }
 }

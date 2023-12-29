@@ -12,7 +12,7 @@ struct NoteDetailsView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var noteStore: NoteStore
     @State private var isPinnedTrigger: Bool = false
-    @State private var isCustomFieldTrigger: Bool = false
+    @State private var isSwitchOnTrigger: Bool = false
     @Binding var canEditNote: Bool
     @FocusState private var isNoteFocused: Bool
     var note: Note
@@ -40,7 +40,6 @@ struct NoteDetailsView: View {
 //                .disabled(!self.canEditNote)
                 .onChange(of: self.isPinnedTrigger, {
                     note.isPinned = self.isPinnedTrigger
-                    self.note.modified = Date()
                     self.noteStore.saveChanges()
                 })
             }
@@ -85,17 +84,16 @@ struct NoteDetailsView: View {
             .padding(.bottom)
             
             HStack {
-                Toggle(isOn: $isCustomFieldTrigger) {
-                    TextField("Untitled Switch", text: Binding(get: {note.customFieldTitle ?? ""}, set: {note.customFieldTitle = $0}))
+                Toggle(isOn: $isSwitchOnTrigger) {
+                    TextField("Untitled Switch", text: Binding(get: {note.switchTitle ?? ""}, set: {note.switchTitle = $0}))
                         .multilineTextAlignment(.leading)
                         .textCase(nil)
                         .disableAutocorrection(false)
                         .disabled(!self.canEditNote)
                 }
                 .padding([.leading, .trailing], 20)
-//                .disabled(!self.canEditNote)
-                .onChange(of: self.isCustomFieldTrigger, {
-                    note.isCustomFieldToggled = self.isCustomFieldTrigger
+                .onChange(of: self.isSwitchOnTrigger, {
+                    note.isSwitchOn = self.isSwitchOnTrigger
                     self.note.modified = Date()
                     self.noteStore.saveChanges()
                 })
@@ -159,7 +157,7 @@ struct NoteDetailsView: View {
         .background(setViewBackgroundColor(colorScheme: self.colorScheme))
         .onAppear(perform: {
             self.isPinnedTrigger = note.isPinned
-            self.isCustomFieldTrigger = note.isCustomFieldToggled
+            self.isSwitchOnTrigger = note.isSwitchOn
 
         })
     }

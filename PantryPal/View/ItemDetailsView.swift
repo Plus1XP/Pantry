@@ -170,19 +170,19 @@ struct ItemDetailsView: View {
             // ZStack & FocusState as a work around.
             ZStack(alignment: .topLeading, content: {
                 if self.canEditItem {
-                    TextEditor(text: Binding(get: {item.notes ?? ""}, set: {item.notes = $0}))
+                    TextEditor(text: Binding(get: {item.note ?? ""}, set: {item.note = $0}))
                         .scrollContentBackground(.hidden) // <- Hide it
                         .background(.clear) // To see this
                         .focused($isNoteFocused)
                 } else {
                     ScrollView { // <-- add scroll around Text
-                        Text(item.notes ?? "")
+                        Text(item.note ?? "")
                             .lineLimit(nil) // <-- tell Text to use as many lines as it needs (so no truncating)
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading) // <-- tell Text to take the entire space available for ScrollView
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity) // <-- if needed, tell ScrollView to use the full size of its parent too
                 }
-                if !self.isNoteFocused && (item.notes == "") {
+                if !self.isNoteFocused && (item.note == "") {
                     Text("No additional text")
                         .foregroundColor(Color(uiColor: .placeholderText))
                         .multilineTextAlignment(.leading)

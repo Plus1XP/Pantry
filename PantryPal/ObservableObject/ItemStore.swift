@@ -46,7 +46,7 @@ class ItemStore: ObservableObject {
     }
 //    #endif
     
-    func addNewEntry(name: String?, quantity: Int64?, total: Int64?, bulkPrice: Double?, unitPrice: Double?, notes: String?) {
+    func addNewEntry(name: String?, quantity: Int64?, total: Int64?, bulkPrice: Double?, unitPrice: Double?, note: String?) {
         let newItem = Item(context: PersistenceController.shared.container.viewContext)
         newItem.id = UUID()
         newItem.position = Int64(items.count == 0 ? 0 : items.count + 1)
@@ -55,7 +55,7 @@ class ItemStore: ObservableObject {
         newItem.total = total ?? 0
         newItem.bulkprice = bulkPrice ?? 0.00
         newItem.unitprice = unitPrice ?? 0.00
-        newItem.notes = notes
+        newItem.note = note
         newItem.created = Date()
         newItem.modified = Date()
         self.saveChanges()
@@ -167,7 +167,7 @@ class ItemStore: ObservableObject {
             item.total = Int64(total[0 + loopCount])
             item.bulkprice = 4.00
             item.unitprice = 1.00
-            item.notes = "We live as we die, Alone.."
+            item.note = "We live as we die, Alone.."
             item.created = Date()
             item.modified = Date().addingTimeInterval(30000000)
             loopCount += 1

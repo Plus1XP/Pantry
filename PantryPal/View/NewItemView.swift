@@ -14,7 +14,7 @@ struct NewItemView: View {
     @State var total: Int64 = 0
     @State var bulkPrice: Double = 0.00
     @State var unitPrice: Double = 0.00
-    @State var notes: String = ""
+    @State var note: String = ""
     @FocusState private var isNoteFocused: Bool
 
     var body: some View {
@@ -50,11 +50,11 @@ struct NewItemView: View {
                     // TextEditor does not have a placeholder
                     // Using a ZStack & FocusState as a work around.
                     ZStack(alignment: .topLeading) {
-                        TextEditor(text: $notes)
+                        TextEditor(text: $note)
                             .focused($isNoteFocused)
                             .multilineTextAlignment(.leading)
                             .disableAutocorrection(false)
-                        if !isNoteFocused && notes.isEmpty {
+                        if !isNoteFocused && note.isEmpty {
                             Text("Quick Notes")
                                 .multilineTextAlignment(.leading)
                                 .disableAutocorrection(false)
@@ -69,7 +69,7 @@ struct NewItemView: View {
             HStack{
                 Spacer()
                 Button("Add", systemImage: "plus.circle.fill", action: {
-                    itemStore.addNewEntry(name: self.name, quantity: self.total, total: self.total, bulkPrice: self.bulkPrice, unitPrice: self.unitPrice, notes: self.notes)
+                    itemStore.addNewEntry(name: self.name, quantity: self.total, total: self.total, bulkPrice: self.bulkPrice, unitPrice: self.unitPrice, note: self.note)
                     isNoteFocused = false
                     dismiss()
                 })
