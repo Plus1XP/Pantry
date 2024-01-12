@@ -55,7 +55,7 @@ struct ItemDetailsView: View {
                                 .symbolEffect(.bounce, options: .speed(2), value: self.minusAnimation)
                         }
                         .padding()
-                        .foregroundColor(.blue)
+                        .foregroundStyle(.white, .blue)
                     })
                     .disabled(!self.canEditItem || self.amount == 0)
                 }
@@ -92,7 +92,7 @@ struct ItemDetailsView: View {
                                 .symbolEffect(.bounce, options: .speed(2), value: self.plusAnimation)
                         }
                         .padding()
-                        .foregroundColor(.blue)
+                        .foregroundStyle(.white, .blue)
                     })
                     .disabled(!self.canEditItem || self.amount == self.item.total)
                 }
