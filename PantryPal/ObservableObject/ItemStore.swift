@@ -130,6 +130,7 @@ class ItemStore: ObservableObject {
     func restoreQuantityItemSelectionEntries() {
         for entry in self.itemSelection {
             entry.quantity = entry.total
+            entry.modified = Date()
         }
         self.itemSelection.removeAll()
         self.sortEntries()
