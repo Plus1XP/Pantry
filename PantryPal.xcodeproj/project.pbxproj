@@ -47,6 +47,10 @@
 		2FE1834F2B03E35000F7CEF7 /* BiometricStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */; };
 		2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */; };
 		2FE30D632B04309E00927FC6 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE30D622B04309E00927FC6 /* LoginView.swift */; };
+		2FEF11182B44B7B40066DE69 /* AppLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEF11172B44B7B40066DE69 /* AppLogoView.swift */; };
+		2FEF111A2B44B9340066DE69 /* basket.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FEF11192B44B9340066DE69 /* basket.png */; };
+		2FEF111D2B44BB340066DE69 /* app-store-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FEF111B2B44BB340066DE69 /* app-store-2.png */; };
+		2FEF111E2B44BB340066DE69 /* app-store.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FEF111C2B44BB340066DE69 /* app-store.png */; };
 		2FF4C2B72B04408800D7700E /* SyncMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF4C2B62B04408800D7700E /* SyncMonitor.swift */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +98,10 @@
 		2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		2FE183522B03E96700F7CEF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2FE30D622B04309E00927FC6 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		2FEF11172B44B7B40066DE69 /* AppLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoView.swift; sourceTree = "<group>"; };
+		2FEF11192B44B9340066DE69 /* basket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = basket.png; sourceTree = "<group>"; };
+		2FEF111B2B44BB340066DE69 /* app-store-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-store-2.png"; sourceTree = "<group>"; };
+		2FEF111C2B44BB340066DE69 /* app-store.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-store.png"; sourceTree = "<group>"; };
 		2FF4C2B62B04408800D7700E /* SyncMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMonitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,6 +131,7 @@
 		2F66E1562AF3F64400A007F4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2FEF11172B44B7B40066DE69 /* AppLogoView.swift */,
 				2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */,
 				2FE30D622B04309E00927FC6 /* LoginView.swift */,
 				2FBD25762AF2878300C26DA3 /* ContentView.swift */,
@@ -180,6 +189,9 @@
 			isa = PBXGroup;
 			children = (
 				2FBD25782AF2878400C26DA3 /* Assets.xcassets */,
+				2FEF111B2B44BB340066DE69 /* app-store-2.png */,
+				2FEF111C2B44BB340066DE69 /* app-store.png */,
+				2FEF11192B44B9340066DE69 /* basket.png */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -296,7 +308,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FEF111D2B44BB340066DE69 /* app-store-2.png in Resources */,
+				2FEF111A2B44B9340066DE69 /* basket.png in Resources */,
 				2FBD257D2AF2878400C26DA3 /* Preview Assets.xcassets in Resources */,
+				2FEF111E2B44BB340066DE69 /* app-store.png in Resources */,
 				2FBD25792AF2878400C26DA3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,6 +324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F66E1672AF5671C00A007F4 /* PersistenceController.swift in Sources */,
+				2FEF11182B44B7B40066DE69 /* AppLogoView.swift in Sources */,
 				2FCEF3832B1E739900E5DCCA /* NoteDebugButtons.swift in Sources */,
 				2FCEF3662B168F4700E5DCCA /* EmojiTextField.swift in Sources */,
 				2F66E15C2AF3F7DC00A007F4 /* NewItemView.swift in Sources */,

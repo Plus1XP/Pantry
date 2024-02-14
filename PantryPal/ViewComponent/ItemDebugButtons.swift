@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ItemDebugButtons: View {
+    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject var itemStore: ItemStore
+    @State var canShowAppLogo: Bool = false
     
     var body: some View {
         Button(action: {
@@ -23,6 +25,13 @@ struct ItemDebugButtons: View {
             Label("Mock Data", systemImage: "minus.circle.fill")
                 .foregroundStyle(.white, .red)
         }
+        Button(action: {
+            self.canShowAppLogo.toggle()
+        }) {
+            Label("AppLogo", systemImage: "apps.iphone")
+                .foregroundStyle(setFontColor(colorScheme: self.colorScheme), .blue)
+        }
+        .fullScreenCover(isPresented: $canShowAppLogo, content: {AppLogoView(canShowAppLogo: $canShowAppLogo)})
     }
 }
 
