@@ -20,6 +20,7 @@ class ItemStore: ObservableObject {
     
     init() {
         fetchEntries()
+//        deleteCoreData()
     }
     
 //    #if DEBUG
@@ -125,6 +126,16 @@ class ItemStore: ObservableObject {
             PersistenceController.shared.container.viewContext.delete(item)
         }
         self.saveChanges()
+    }
+    
+    func deleteCoreData() {
+        PersistenceController.shared.RemoveiCloudData() { (result) in
+            if result {
+                debugPrint("Core Data delete Sucess")
+            } else {
+                debugPrint("Core Data delete Fail")
+            }
+        }
     }
     
     func restoreQuantityItemSelectionEntries() {
