@@ -20,7 +20,6 @@ class ItemStore: ObservableObject {
     
     init() {
         fetchEntries()
-//        deleteCoreData()
     }
     
 //    #if DEBUG

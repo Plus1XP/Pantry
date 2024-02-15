@@ -26,6 +26,12 @@ struct ItemDebugButtons: View {
                 .foregroundStyle(.white, .red)
         }
         Button(action: {
+            self.itemStore.deleteCoreData()
+        }) {
+            Label("Delete CoreData", systemImage: "xmark.icloud.fill")
+                .foregroundStyle(.white, .red)
+        }
+        Button(action: {
             self.canShowAppLogo.toggle()
         }) {
             Label("AppLogo", systemImage: "apps.iphone")
