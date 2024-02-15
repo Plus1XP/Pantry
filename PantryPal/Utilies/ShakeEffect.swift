@@ -34,8 +34,8 @@ struct Shake<Content: View>: View {
             .offset(x: xOffset)
             .rotationEffect(.degrees(xDegrees))
             .scaleEffect(xScale)
-            .onChange(of: shake) { shouldShake in
-                guard shouldShake else { return }
+            .onChange(of: shake) {
+                guard shake else { return }
                 Task {
                     let start = Date()
                     await animate()
