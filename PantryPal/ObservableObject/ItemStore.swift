@@ -11,7 +11,9 @@ class ItemStore: ObservableObject {
     @Published var items: [Item] = []
     @Published var itemSelection: Set<Item> = []
     @Published var searchText: String = ""
-
+    
+    var hasRestoredItemQuantity: Bool = false
+    var itemCache: [ItemCache] = []
     var searchResults: [Item] {
         guard !self.searchText.isEmpty else { return self.items }
         return self.items.filter { $0.name!.contains(self.searchText)
@@ -61,11 +63,35 @@ class ItemStore: ObservableObject {
         self.saveChanges()
     }
     
+    func addNewEntryFromCache(id: UUID?, position: Int64?, name: String?, quantity: Int64?, total: Int64?, bulkprice: Double?, unitprice: Double?, note: String?, created: Date?, modified: Date?) {
+        let cachedItem = Item(context: PersistenceController.shared.container.viewContext)
+        cachedItem.id = id
+        cachedItem.position = ((position ?? Int64(items.count == 0 ? 0 : items.count + 1)) - 1)
+        cachedItem.name = name
+        cachedItem.quantity = quantity ?? 0
+        cachedItem.total = total ?? 0
+        cachedItem.bulkprice = bulkprice ?? 0.00
+        cachedItem.unitprice = unitprice ?? 0.00
+        cachedItem.note = note
+        cachedItem.created = created
+        cachedItem.modified = modified
+        self.saveChanges()
+    }
+    
     func updateEntry(entry: Item) {
 //        entry.updated = Date()
 //        if list.value(forKey: "createdAt") == nil {
 //                list.setValue(Date(), forKey: "createdAt")
 //            }
+        self.saveChanges()
+    }
+    
+    func updateEntryQuantity(entry: Item, entryQuantity: Int64) -> Void {
+        self.hasRestoredItemQuantity = true
+        self.itemCache.removeAll()
+        self.cacheChanges(entry: entry)
+        entry.quantity = entryQuantity
+        entry.modified = Date()
         self.saveChanges()
     }
     
@@ -92,6 +118,9 @@ class ItemStore: ObservableObject {
     }
     
     func deleteEntry(entry: Item) {
+        self.hasRestoredItemQuantity = false
+        self.itemCache.removeAll()
+        self.cacheChanges(entry: entry)
         PersistenceController.shared.container.viewContext.delete(entry)
         self.sortEntries()
         self.saveChanges()
@@ -112,7 +141,10 @@ class ItemStore: ObservableObject {
     }
     
     func deleteItemSelectionEntries() {
+        self.hasRestoredItemQuantity = false
+        self.itemCache.removeAll()
         for entry in self.itemSelection {
+            self.cacheChanges(entry: entry)
             PersistenceController.shared.container.viewContext.delete(entry)
         }
         self.itemSelection.removeAll()
@@ -121,7 +153,10 @@ class ItemStore: ObservableObject {
     }
     
     func deleteAll() {
+        self.hasRestoredItemQuantity = false
+        self.itemCache.removeAll()
         for item in self.items {
+            self.cacheChanges(entry: item)
             PersistenceController.shared.container.viewContext.delete(item)
         }
         self.saveChanges()
@@ -138,13 +173,54 @@ class ItemStore: ObservableObject {
     }
     
     func restoreQuantityItemSelectionEntries() {
+        self.hasRestoredItemQuantity = true
+        self.itemCache.removeAll()
         for entry in self.itemSelection {
+            self.cacheChanges(entry: entry)
             entry.quantity = entry.total
             entry.modified = Date()
         }
         self.itemSelection.removeAll()
         self.sortEntries()
         self.saveChanges()
+    }
+    
+    func cacheChanges(entry: Item) -> Void {
+        itemCache.append(ItemCache(id: entry.id, position: entry.position, name: entry.name, quantity: entry.quantity, total: entry.total, bulkprice: entry.bulkprice, unitprice: entry.unitprice, note: entry.note, created: entry.created, modified: entry.modified))
+        self.saveChanges()
+    }
+    
+    func undoDeleteChanges() -> Void {
+        self.hasRestoredItemQuantity = false
+        for entry in itemCache {
+            addNewEntryFromCache(id: entry.id, position: entry.position, name: entry.name, quantity: entry.quantity, total: entry.total, bulkprice: entry.bulkprice, unitprice: entry.unitprice, note: entry.note, created: entry.created, modified: entry.modified)
+        }
+        self.itemCache.removeAll()
+        self.sortEntries()
+        self.saveChanges()
+    }
+    
+    func undoRestoreChanges() -> Void {
+        self.hasRestoredItemQuantity = false
+        for entry in itemCache {
+//            let unrestoredItems = items.filter { $0.id == entry.id }
+            for item in items {
+                if item.id == entry.id {
+                    item.quantity = entry.quantity ?? 0
+                    item.modified = entry.modified
+                }
+            }
+        }
+        self.itemCache.removeAll()
+        self.saveChanges()
+    }
+    
+    func validateUndoMethod() -> Void {
+        if hasRestoredItemQuantity {
+            undoRestoreChanges()
+        } else {
+            undoDeleteChanges()
+        }
     }
     
     func discardChanges() {

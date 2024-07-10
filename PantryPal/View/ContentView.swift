@@ -98,6 +98,7 @@ struct ContentView: View {
                         },
                     trailing:
                         HStack {
+                            ItemUndoButton()
                             EditModeButton(editMode: $editMode)
                             SettingButton(canPresentSettingsPopOver: $isSettingsPopoverPresented)
                         }

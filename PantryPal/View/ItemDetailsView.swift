@@ -319,7 +319,7 @@ struct ItemDetailsView: View {
                         .foregroundStyle(self.sectionTitleColor)
                 })
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                    Text(item.modified!, formatter: Formatter.dateFormatter)
+                    Text(item.modified ?? Date.distantFuture, formatter: Formatter.dateFormatter)
                 })
                 .padding()
                 .frame(maxWidth: .infinity)

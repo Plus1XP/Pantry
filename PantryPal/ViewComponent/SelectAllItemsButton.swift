@@ -31,5 +31,5 @@ struct SelectAllItemsButton: View {
     @State var items: Set<Item> = [PersistenceController.preview.sampleItem]
     
     return SelectAllItemsButton()
-        .environmentObject(NoteStore())
+        .environmentObject(ItemStore())
 }

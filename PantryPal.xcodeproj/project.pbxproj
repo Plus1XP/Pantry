@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F11E04A2C3F10E300A3629C /* ItemUndoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD840592C3F0D780030C443 /* ItemUndoButton.swift */; };
+		2F11E04C2C3F1ABC00A3629C /* ItemCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F11E04B2C3F1ABC00A3629C /* ItemCache.swift */; };
+		2F11E04D2C3F1AC000A3629C /* ItemCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F11E04B2C3F1ABC00A3629C /* ItemCache.swift */; };
 		2F1B6CF02AFBD9C500377207 /* NewNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6CEF2AFBD9C500377207 /* NewNoteView.swift */; };
 		2F1B6D122AFD445A00377207 /* ItemDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6D112AFD445A00377207 /* ItemDetailsView.swift */; };
 		2F1B6D142AFD94FA00377207 /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6D132AFD94FA00377207 /* ItemStore.swift */; };
@@ -88,6 +91,7 @@
 		2FD840512C3D71DD0030C443 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FBD257C2AF2878400C26DA3 /* Preview Assets.xcassets */; };
 		2FD840522C3D71DD0030C443 /* app-store.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FEF111C2B44BB340066DE69 /* app-store.png */; };
 		2FD840532C3D71DD0030C443 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FBD25782AF2878400C26DA3 /* Assets.xcassets */; };
+		2FD8405A2C3F0D780030C443 /* ItemUndoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD840592C3F0D780030C443 /* ItemUndoButton.swift */; };
 		2FE1834D2B03E2E000F7CEF7 /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */; };
 		2FE1834F2B03E35000F7CEF7 /* BiometricStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */; };
 		2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */; };
@@ -100,6 +104,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F11E04B2C3F1ABC00A3629C /* ItemCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCache.swift; sourceTree = "<group>"; };
 		2F1B6CEF2AFBD9C500377207 /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
 		2F1B6D112AFD445A00377207 /* ItemDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailsView.swift; sourceTree = "<group>"; };
 		2F1B6D132AFD94FA00377207 /* ItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
@@ -140,6 +145,7 @@
 		2FCEF3822B1E739900E5DCCA /* NoteDebugButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDebugButtons.swift; sourceTree = "<group>"; };
 		2FD840572C3D71DD0030C443 /* PantryPal Proto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PantryPal Proto.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD840582C3D71DD0030C443 /* PantryPal copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PantryPal copy-Info.plist"; path = "/Users/nabbit/Library/CloudStorage/OneDrive-Personal/Development/Repositories/PantryPal/PantryPal copy-Info.plist"; sourceTree = "<absolute>"; };
+		2FD840592C3F0D780030C443 /* ItemUndoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemUndoButton.swift; sourceTree = "<group>"; };
 		2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricService.swift; sourceTree = "<group>"; };
 		2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStore.swift; sourceTree = "<group>"; };
 		2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
@@ -209,6 +215,7 @@
 				2FCEF37C2B1E70CD00E5DCCA /* SelectAllItemsButton.swift */,
 				2FCEF37E2B1E70D900E5DCCA /* ItemDeleteButton.swift */,
 				2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */,
+				2FD840592C3F0D780030C443 /* ItemUndoButton.swift */,
 				2FCEF36D2B1E59A100E5DCCA /* EditModeButton.swift */,
 				2FCEF3692B1E1F3700E5DCCA /* SettingsButton.swift */,
 				2FCEF3802B1E730C00E5DCCA /* PinnedNotesButton.swift */,
@@ -236,6 +243,7 @@
 				2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */,
 				2FBD25712AF2878300C26DA3 /* Persistence.swift */,
 				2FBD25732AF2878300C26DA3 /* Pantry.xcdatamodeld */,
+				2F11E04B2C3F1ABC00A3629C /* ItemCache.swift */,
 			);
 			path = DataObject;
 			sourceTree = "<group>";
@@ -424,6 +432,7 @@
 				2FCEF3742B1E614300E5DCCA /* NoteDeleteButton.swift in Sources */,
 				2F1B6D182B0134C300377207 /* NoteStore.swift in Sources */,
 				2FCEF37F2B1E70D900E5DCCA /* ItemDeleteButton.swift in Sources */,
+				2FD8405A2C3F0D780030C443 /* ItemUndoButton.swift in Sources */,
 				2FB81D3F2AF30CA300ECD374 /* Binding.swift in Sources */,
 				2FE1834F2B03E35000F7CEF7 /* BiometricStore.swift in Sources */,
 				2F7F0E262AF96EF700979951 /* Color.swift in Sources */,
@@ -441,6 +450,7 @@
 				2FF4C2B72B04408800D7700E /* SyncMonitor.swift in Sources */,
 				2F216D582C333E43008CA3D4 /* Character.swift in Sources */,
 				2FCEF3792B1E657800E5DCCA /* EmojiEditLockButton.swift in Sources */,
+				2F11E04C2C3F1ABC00A3629C /* ItemCache.swift in Sources */,
 				2F1B6D1A2B01370100377207 /* NoteRowView.swift in Sources */,
 				2FCEF36E2B1E59A100E5DCCA /* EditModeButton.swift in Sources */,
 				2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */,
@@ -471,6 +481,7 @@
 				2FD840312C3D71DD0030C443 /* NoteDeleteButton.swift in Sources */,
 				2FD840322C3D71DD0030C443 /* NoteStore.swift in Sources */,
 				2FD840332C3D71DD0030C443 /* ItemDeleteButton.swift in Sources */,
+				2F11E04A2C3F10E300A3629C /* ItemUndoButton.swift in Sources */,
 				2FD840342C3D71DD0030C443 /* Binding.swift in Sources */,
 				2FD840352C3D71DD0030C443 /* BiometricStore.swift in Sources */,
 				2FD840362C3D71DD0030C443 /* Color.swift in Sources */,
@@ -488,6 +499,7 @@
 				2FD840422C3D71DD0030C443 /* SyncMonitor.swift in Sources */,
 				2FD840432C3D71DD0030C443 /* Character.swift in Sources */,
 				2FD840442C3D71DD0030C443 /* EmojiEditLockButton.swift in Sources */,
+				2F11E04D2C3F1AC000A3629C /* ItemCache.swift in Sources */,
 				2FD840452C3D71DD0030C443 /* NoteRowView.swift in Sources */,
 				2FD840462C3D71DD0030C443 /* EditModeButton.swift in Sources */,
 				2FD840472C3D71DD0030C443 /* AuthenticationView.swift in Sources */,

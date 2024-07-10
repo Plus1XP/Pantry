@@ -25,13 +25,9 @@ struct ItemRowView: View {
                         impactFeedback.impactOccurred()
                         self.animate.toggle()
                         if !(image == 0 && item.quantity == 1) {
-                            item.quantity = setItemQuantityWithOffset(quantity: Int64(image))
-                            item.modified = Date()
-                            itemStore.saveChanges()
+                            self.itemStore.updateEntryQuantity(entry: item, entryQuantity: setItemQuantityWithOffset(quantity: Int64(image)))
                         } else {
-                            item.quantity = 0
-                            item.modified = Date()
-                            itemStore.saveChanges()
+                            self.itemStore.updateEntryQuantity(entry: item, entryQuantity: 0)
                         }
                     }
                     .shake($animate) {
