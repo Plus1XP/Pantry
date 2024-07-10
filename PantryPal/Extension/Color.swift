@@ -18,4 +18,12 @@ public extension Color {
     static let secondaryBackground = Color(UIColor.secondarySystemBackground)
     static let tertiaryBackground = Color(UIColor.tertiarySystemBackground)
     #endif
+    
+    static func setViewBackgroundColor(colorScheme: ColorScheme) -> Color {
+        return colorScheme == .light ? Color.secondaryBackground : Color.background
+    }
+
+    static func setFieldBackgroundColor(colorScheme: ColorScheme) -> Color {
+        return colorScheme == .light ? Color.background : Color.secondaryBackground
+    }
 }

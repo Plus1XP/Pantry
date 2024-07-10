@@ -14,6 +14,7 @@
 		2F1B6D182B0134C300377207 /* NoteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6D172B0134C200377207 /* NoteStore.swift */; };
 		2F1B6D1A2B01370100377207 /* NoteRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6D192B01370100377207 /* NoteRowView.swift */; };
 		2F1B6D1C2B01371900377207 /* NoteDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6D1B2B01371900377207 /* NoteDetailsView.swift */; };
+		2F216D582C333E43008CA3D4 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F216D572C333E43008CA3D4 /* Character.swift */; };
 		2F66E15C2AF3F7DC00A007F4 /* NewItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E15B2AF3F7DC00A007F4 /* NewItemView.swift */; };
 		2F66E1612AF3FA2300A007F4 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */; };
 		2F66E1672AF5671C00A007F4 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1662AF5671C00A007F4 /* PersistenceController.swift */; };
@@ -31,8 +32,7 @@
 		2FBD257D2AF2878400C26DA3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FBD257C2AF2878400C26DA3 /* Preview Assets.xcassets */; };
 		2FBD25842AF290AE00C26DA3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD25832AF290AE00C26DA3 /* String.swift */; };
 		2FBD25862AF2C3A600C26DA3 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD25852AF2C3A600C26DA3 /* Formatter.swift */; };
-		2FCEF3652B168F4700E5DCCA /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3632B168F4700E5DCCA /* TextField.swift */; };
-		2FCEF3662B168F4700E5DCCA /* EmojiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3642B168F4700E5DCCA /* EmojiTextField.swift */; };
+		2FCEF3662B168F4700E5DCCA /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3642B168F4700E5DCCA /* UITextField.swift */; };
 		2FCEF36A2B1E1F3700E5DCCA /* SettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3692B1E1F3700E5DCCA /* SettingsButton.swift */; };
 		2FCEF36E2B1E59A100E5DCCA /* EditModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF36D2B1E59A100E5DCCA /* EditModeButton.swift */; };
 		2FCEF3722B1E601900E5DCCA /* SelectAllNotesButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3712B1E601900E5DCCA /* SelectAllNotesButtonView.swift */; };
@@ -43,6 +43,51 @@
 		2FCEF37F2B1E70D900E5DCCA /* ItemDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF37E2B1E70D900E5DCCA /* ItemDeleteButton.swift */; };
 		2FCEF3812B1E730C00E5DCCA /* PinnedNotesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3802B1E730C00E5DCCA /* PinnedNotesButton.swift */; };
 		2FCEF3832B1E739900E5DCCA /* NoteDebugButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3822B1E739900E5DCCA /* NoteDebugButtons.swift */; };
+		2FD840242C3D71DD0030C443 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1662AF5671C00A007F4 /* PersistenceController.swift */; };
+		2FD840252C3D71DD0030C443 /* AppLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEF11172B44B7B40066DE69 /* AppLogoView.swift */; };
+		2FD840262C3D71DD0030C443 /* NoteDebugButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3822B1E739900E5DCCA /* NoteDebugButtons.swift */; };
+		2FD840272C3D71DD0030C443 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3642B168F4700E5DCCA /* UITextField.swift */; };
+		2FD840282C3D71DD0030C443 /* NewItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E15B2AF3F7DC00A007F4 /* NewItemView.swift */; };
+		2FD840292C3D71DD0030C443 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD25852AF2C3A600C26DA3 /* Formatter.swift */; };
+		2FD8402A2C3D71DD0030C443 /* ItemDebugButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3762B1E64CE00E5DCCA /* ItemDebugButtons.swift */; };
+		2FD8402B2C3D71DD0030C443 /* PantryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD256F2AF2878300C26DA3 /* PantryApp.swift */; };
+		2FD8402C2C3D71DD0030C443 /* NewNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6CEF2AFBD9C500377207 /* NewNoteView.swift */; };
+		2FD8402D2C3D71DD0030C443 /* SelectAllNotesButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3712B1E601900E5DCCA /* SelectAllNotesButtonView.swift */; };
+		2FD8402F2C3D71DD0030C443 /* PinnedNotesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3802B1E730C00E5DCCA /* PinnedNotesButton.swift */; };
+		2FD840302C3D71DD0030C443 /* Pantry.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD25732AF2878300C26DA3 /* Pantry.xcdatamodeld */; };
+		2FD840312C3D71DD0030C443 /* NoteDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3732B1E614300E5DCCA /* NoteDeleteButton.swift */; };
+		2FD840322C3D71DD0030C443 /* NoteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6D172B0134C200377207 /* NoteStore.swift */; };
+		2FD840332C3D71DD0030C443 /* ItemDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF37E2B1E70D900E5DCCA /* ItemDeleteButton.swift */; };
+		2FD840342C3D71DD0030C443 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB81D3E2AF30CA300ECD374 /* Binding.swift */; };
+		2FD840352C3D71DD0030C443 /* BiometricStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */; };
+		2FD840362C3D71DD0030C443 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F0E252AF96EF700979951 /* Color.swift */; };
+		2FD840372C3D71DD0030C443 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F0E272AF98BC900979951 /* SettingsView.swift */; };
+		2FD840382C3D71DD0030C443 /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */; };
+		2FD840392C3D71DD0030C443 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD25832AF290AE00C26DA3 /* String.swift */; };
+		2FD8403A2C3D71DD0030C443 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD25762AF2878300C26DA3 /* ContentView.swift */; };
+		2FD8403B2C3D71DD0030C443 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE30D622B04309E00927FC6 /* LoginView.swift */; };
+		2FD8403C2C3D71DD0030C443 /* ItemRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6D152AFFCBA600377207 /* ItemRowView.swift */; };
+		2FD8403D2C3D71DD0030C443 /* SettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3692B1E1F3700E5DCCA /* SettingsButton.swift */; };
+		2FD8403E2C3D71DD0030C443 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD25712AF2878300C26DA3 /* Persistence.swift */; };
+		2FD8403F2C3D71DD0030C443 /* SelectAllItemsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF37C2B1E70CD00E5DCCA /* SelectAllItemsButton.swift */; };
+		2FD840402C3D71DD0030C443 /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB558EB2AF3D77F002362AB /* TextEditor.swift */; };
+		2FD840412C3D71DD0030C443 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */; };
+		2FD840422C3D71DD0030C443 /* SyncMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF4C2B62B04408800D7700E /* SyncMonitor.swift */; };
+		2FD840432C3D71DD0030C443 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F216D572C333E43008CA3D4 /* Character.swift */; };
+		2FD840442C3D71DD0030C443 /* EmojiEditLockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3782B1E657800E5DCCA /* EmojiEditLockButton.swift */; };
+		2FD840452C3D71DD0030C443 /* NoteRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6D192B01370100377207 /* NoteRowView.swift */; };
+		2FD840462C3D71DD0030C443 /* EditModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF36D2B1E59A100E5DCCA /* EditModeButton.swift */; };
+		2FD840472C3D71DD0030C443 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */; };
+		2FD840482C3D71DD0030C443 /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6D132AFD94FA00377207 /* ItemStore.swift */; };
+		2FD840492C3D71DD0030C443 /* ItemDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6D112AFD445A00377207 /* ItemDetailsView.swift */; };
+		2FD8404A2C3D71DD0030C443 /* RestoreQuantityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */; };
+		2FD8404B2C3D71DD0030C443 /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93C012B38555F00A1F994 /* ShakeEffect.swift */; };
+		2FD8404C2C3D71DD0030C443 /* NoteDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6D1B2B01371900377207 /* NoteDetailsView.swift */; };
+		2FD8404F2C3D71DD0030C443 /* app-store-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FEF111B2B44BB340066DE69 /* app-store-2.png */; };
+		2FD840502C3D71DD0030C443 /* basket.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FEF11192B44B9340066DE69 /* basket.png */; };
+		2FD840512C3D71DD0030C443 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FBD257C2AF2878400C26DA3 /* Preview Assets.xcassets */; };
+		2FD840522C3D71DD0030C443 /* app-store.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FEF111C2B44BB340066DE69 /* app-store.png */; };
+		2FD840532C3D71DD0030C443 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FBD25782AF2878400C26DA3 /* Assets.xcassets */; };
 		2FE1834D2B03E2E000F7CEF7 /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */; };
 		2FE1834F2B03E35000F7CEF7 /* BiometricStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */; };
 		2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */; };
@@ -62,6 +107,7 @@
 		2F1B6D172B0134C200377207 /* NoteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStore.swift; sourceTree = "<group>"; };
 		2F1B6D192B01370100377207 /* NoteRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRowView.swift; sourceTree = "<group>"; };
 		2F1B6D1B2B01371900377207 /* NoteDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailsView.swift; sourceTree = "<group>"; };
+		2F216D572C333E43008CA3D4 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		2F66E15B2AF3F7DC00A007F4 /* NewItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewItemView.swift; sourceTree = "<group>"; };
 		2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		2F66E1662AF5671C00A007F4 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
@@ -81,8 +127,7 @@
 		2FBD257C2AF2878400C26DA3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2FBD25832AF290AE00C26DA3 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2FBD25852AF2C3A600C26DA3 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
-		2FCEF3632B168F4700E5DCCA /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
-		2FCEF3642B168F4700E5DCCA /* EmojiTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiTextField.swift; sourceTree = "<group>"; };
+		2FCEF3642B168F4700E5DCCA /* UITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		2FCEF3692B1E1F3700E5DCCA /* SettingsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButton.swift; sourceTree = "<group>"; };
 		2FCEF36D2B1E59A100E5DCCA /* EditModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeButton.swift; sourceTree = "<group>"; };
 		2FCEF3712B1E601900E5DCCA /* SelectAllNotesButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAllNotesButtonView.swift; sourceTree = "<group>"; };
@@ -93,6 +138,8 @@
 		2FCEF37E2B1E70D900E5DCCA /* ItemDeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDeleteButton.swift; sourceTree = "<group>"; };
 		2FCEF3802B1E730C00E5DCCA /* PinnedNotesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedNotesButton.swift; sourceTree = "<group>"; };
 		2FCEF3822B1E739900E5DCCA /* NoteDebugButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDebugButtons.swift; sourceTree = "<group>"; };
+		2FD840572C3D71DD0030C443 /* PantryPal Proto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PantryPal Proto.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FD840582C3D71DD0030C443 /* PantryPal copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PantryPal copy-Info.plist"; path = "/Users/nabbit/Library/CloudStorage/OneDrive-Personal/Development/Repositories/PantryPal/PantryPal copy-Info.plist"; sourceTree = "<absolute>"; };
 		2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricService.swift; sourceTree = "<group>"; };
 		2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStore.swift; sourceTree = "<group>"; };
 		2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
@@ -113,6 +160,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2FD8404D2C3D71DD0030C443 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -120,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				2FB81D3E2AF30CA300ECD374 /* Binding.swift */,
+				2F216D572C333E43008CA3D4 /* Character.swift */,
 				2F7F0E252AF96EF700979951 /* Color.swift */,
 				2FBD25852AF2C3A600C26DA3 /* Formatter.swift */,
 				2F66E1662AF5671C00A007F4 /* PersistenceController.swift */,
@@ -199,11 +254,10 @@
 		2F66E15F2AF3F9EE00A007F4 /* Utilies */ = {
 			isa = PBXGroup;
 			children = (
-				2FCEF3642B168F4700E5DCCA /* EmojiTextField.swift */,
-				2FCEF3632B168F4700E5DCCA /* TextField.swift */,
 				2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */,
-				2FB558EB2AF3D77F002362AB /* TextEditor.swift */,
 				2FA93C012B38555F00A1F994 /* ShakeEffect.swift */,
+				2FB558EB2AF3D77F002362AB /* TextEditor.swift */,
+				2FCEF3642B168F4700E5DCCA /* UITextField.swift */,
 			);
 			path = Utilies;
 			sourceTree = "<group>";
@@ -213,6 +267,7 @@
 			children = (
 				2FBD256E2AF2878300C26DA3 /* PantryPal */,
 				2FBD256D2AF2878300C26DA3 /* Products */,
+				2FD840582C3D71DD0030C443 /* PantryPal copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -220,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				2FBD256C2AF2878300C26DA3 /* PantryPal.app */,
+				2FD840572C3D71DD0030C443 /* PantryPal Proto.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -270,6 +326,23 @@
 			productReference = 2FBD256C2AF2878300C26DA3 /* PantryPal.app */;
 			productType = "com.apple.product-type.application";
 		};
+		2FD840222C3D71DD0030C443 /* PantryPal Proto */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2FD840542C3D71DD0030C443 /* Build configuration list for PBXNativeTarget "PantryPal Proto" */;
+			buildPhases = (
+				2FD840232C3D71DD0030C443 /* Sources */,
+				2FD8404D2C3D71DD0030C443 /* Frameworks */,
+				2FD8404E2C3D71DD0030C443 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PantryPal Proto";
+			productName = Pantry;
+			productReference = 2FD840572C3D71DD0030C443 /* PantryPal Proto.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -299,6 +372,7 @@
 			projectRoot = "";
 			targets = (
 				2FBD256B2AF2878300C26DA3 /* PantryPal */,
+				2FD840222C3D71DD0030C443 /* PantryPal Proto */,
 			);
 		};
 /* End PBXProject section */
@@ -316,6 +390,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2FD8404E2C3D71DD0030C443 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FD8404F2C3D71DD0030C443 /* app-store-2.png in Resources */,
+				2FD840502C3D71DD0030C443 /* basket.png in Resources */,
+				2FD840512C3D71DD0030C443 /* Preview Assets.xcassets in Resources */,
+				2FD840522C3D71DD0030C443 /* app-store.png in Resources */,
+				2FD840532C3D71DD0030C443 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -326,14 +412,13 @@
 				2F66E1672AF5671C00A007F4 /* PersistenceController.swift in Sources */,
 				2FEF11182B44B7B40066DE69 /* AppLogoView.swift in Sources */,
 				2FCEF3832B1E739900E5DCCA /* NoteDebugButtons.swift in Sources */,
-				2FCEF3662B168F4700E5DCCA /* EmojiTextField.swift in Sources */,
+				2FCEF3662B168F4700E5DCCA /* UITextField.swift in Sources */,
 				2F66E15C2AF3F7DC00A007F4 /* NewItemView.swift in Sources */,
 				2FBD25862AF2C3A600C26DA3 /* Formatter.swift in Sources */,
 				2FCEF3772B1E64CE00E5DCCA /* ItemDebugButtons.swift in Sources */,
 				2FBD25702AF2878300C26DA3 /* PantryApp.swift in Sources */,
 				2F1B6CF02AFBD9C500377207 /* NewNoteView.swift in Sources */,
 				2FCEF3722B1E601900E5DCCA /* SelectAllNotesButtonView.swift in Sources */,
-				2FCEF3652B168F4700E5DCCA /* TextField.swift in Sources */,
 				2FCEF3812B1E730C00E5DCCA /* PinnedNotesButton.swift in Sources */,
 				2FBD25752AF2878300C26DA3 /* Pantry.xcdatamodeld in Sources */,
 				2FCEF3742B1E614300E5DCCA /* NoteDeleteButton.swift in Sources */,
@@ -354,6 +439,7 @@
 				2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */,
 				2F66E1612AF3FA2300A007F4 /* ButtonStyle.swift in Sources */,
 				2FF4C2B72B04408800D7700E /* SyncMonitor.swift in Sources */,
+				2F216D582C333E43008CA3D4 /* Character.swift in Sources */,
 				2FCEF3792B1E657800E5DCCA /* EmojiEditLockButton.swift in Sources */,
 				2F1B6D1A2B01370100377207 /* NoteRowView.swift in Sources */,
 				2FCEF36E2B1E59A100E5DCCA /* EditModeButton.swift in Sources */,
@@ -363,6 +449,53 @@
 				2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */,
 				2FA93C022B38555F00A1F994 /* ShakeEffect.swift in Sources */,
 				2F1B6D1C2B01371900377207 /* NoteDetailsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FD840232C3D71DD0030C443 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FD840242C3D71DD0030C443 /* PersistenceController.swift in Sources */,
+				2FD840252C3D71DD0030C443 /* AppLogoView.swift in Sources */,
+				2FD840262C3D71DD0030C443 /* NoteDebugButtons.swift in Sources */,
+				2FD840272C3D71DD0030C443 /* UITextField.swift in Sources */,
+				2FD840282C3D71DD0030C443 /* NewItemView.swift in Sources */,
+				2FD840292C3D71DD0030C443 /* Formatter.swift in Sources */,
+				2FD8402A2C3D71DD0030C443 /* ItemDebugButtons.swift in Sources */,
+				2FD8402B2C3D71DD0030C443 /* PantryApp.swift in Sources */,
+				2FD8402C2C3D71DD0030C443 /* NewNoteView.swift in Sources */,
+				2FD8402D2C3D71DD0030C443 /* SelectAllNotesButtonView.swift in Sources */,
+				2FD8402F2C3D71DD0030C443 /* PinnedNotesButton.swift in Sources */,
+				2FD840302C3D71DD0030C443 /* Pantry.xcdatamodeld in Sources */,
+				2FD840312C3D71DD0030C443 /* NoteDeleteButton.swift in Sources */,
+				2FD840322C3D71DD0030C443 /* NoteStore.swift in Sources */,
+				2FD840332C3D71DD0030C443 /* ItemDeleteButton.swift in Sources */,
+				2FD840342C3D71DD0030C443 /* Binding.swift in Sources */,
+				2FD840352C3D71DD0030C443 /* BiometricStore.swift in Sources */,
+				2FD840362C3D71DD0030C443 /* Color.swift in Sources */,
+				2FD840372C3D71DD0030C443 /* SettingsView.swift in Sources */,
+				2FD840382C3D71DD0030C443 /* BiometricService.swift in Sources */,
+				2FD840392C3D71DD0030C443 /* String.swift in Sources */,
+				2FD8403A2C3D71DD0030C443 /* ContentView.swift in Sources */,
+				2FD8403B2C3D71DD0030C443 /* LoginView.swift in Sources */,
+				2FD8403C2C3D71DD0030C443 /* ItemRowView.swift in Sources */,
+				2FD8403D2C3D71DD0030C443 /* SettingsButton.swift in Sources */,
+				2FD8403E2C3D71DD0030C443 /* Persistence.swift in Sources */,
+				2FD8403F2C3D71DD0030C443 /* SelectAllItemsButton.swift in Sources */,
+				2FD840402C3D71DD0030C443 /* TextEditor.swift in Sources */,
+				2FD840412C3D71DD0030C443 /* ButtonStyle.swift in Sources */,
+				2FD840422C3D71DD0030C443 /* SyncMonitor.swift in Sources */,
+				2FD840432C3D71DD0030C443 /* Character.swift in Sources */,
+				2FD840442C3D71DD0030C443 /* EmojiEditLockButton.swift in Sources */,
+				2FD840452C3D71DD0030C443 /* NoteRowView.swift in Sources */,
+				2FD840462C3D71DD0030C443 /* EditModeButton.swift in Sources */,
+				2FD840472C3D71DD0030C443 /* AuthenticationView.swift in Sources */,
+				2FD840482C3D71DD0030C443 /* ItemStore.swift in Sources */,
+				2FD840492C3D71DD0030C443 /* ItemDetailsView.swift in Sources */,
+				2FD8404A2C3D71DD0030C443 /* RestoreQuantityButton.swift in Sources */,
+				2FD8404B2C3D71DD0030C443 /* ShakeEffect.swift in Sources */,
+				2FD8404C2C3D71DD0030C443 /* NoteDetailsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -577,6 +710,96 @@
 			};
 			name = Release;
 		};
+		2FD840552C3D71DD0030C443 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon2;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PantryPal/Pantry.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"PantryPal/Preview Content\"";
+				DEVELOPMENT_TEAM = L4UU7WP4CE;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PantryPal copy-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Access to Biometric Data is required to use Face ID.";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.4;
+				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.pantryproto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2FD840562C3D71DD0030C443 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon2;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PantryPal/Pantry.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 0;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"PantryPal/Preview Content\"";
+				DEVELOPMENT_TEAM = L4UU7WP4CE;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "PantryPal copy-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Access to Biometric Data is required to use Face ID.";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.4;
+				PRODUCT_BUNDLE_IDENTIFIER = io.plus1xp.pantryproto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -594,6 +817,15 @@
 			buildConfigurations = (
 				2FBD25812AF2878400C26DA3 /* Debug */,
 				2FBD25822AF2878400C26DA3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2FD840542C3D71DD0030C443 /* Build configuration list for PBXNativeTarget "PantryPal Proto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FD840552C3D71DD0030C443 /* Debug */,
+				2FD840562C3D71DD0030C443 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

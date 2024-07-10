@@ -13,6 +13,10 @@ import AppKit
 
 extension String {
     var isBlank: Bool { allSatisfy({ $0.isWhitespace }) }
+    
+    func onlyEmoji() -> String {
+        return self.filter({$0.isEmoji})
+    }
 
     func ToImage(fontSize:CGFloat = 40, bgColor:UIColor = UIColor.clear, imageSize:CGSize? = nil) -> UIImage?
     {

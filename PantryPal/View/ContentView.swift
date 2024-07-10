@@ -17,7 +17,8 @@ struct ContentView: View {
     @State private var isNewItemPopoverPresented: Bool = false
     @State private var isNewNotePopoverPresented: Bool = false
     @State private var isSettingsPopoverPresented: Bool = false
-    @State private var canEditItem: Bool = false
+    @State private var isAnyFieldFocused: Bool = false
+    @State private var canHideKeyboardFocus: Bool = false
     @State private var canEditNote: Bool = false
     @State private var confirmDeletion: Bool = false
     @State private var confirmRestoreQuantity: Bool = false
@@ -32,23 +33,25 @@ struct ContentView: View {
                     ForEach(self.itemStore.searchResults, id: \.self) { item in
                         //MARK: Item Information
                         NavigationLink {
-                            ItemDetailsView(canEditItem: $canEditItem, item: item)
+                            ItemDetailsView(isAnyFieldFocused: $isAnyFieldFocused, canHideKeyboardFocus: $canHideKeyboardFocus, item: item)
                             .navigationBarItems(
                                 trailing:
                                     Button(action: {
                                         withAnimation(.bouncy) {
-                                            self.canEditItem.toggle()
+                                            self.isAnyFieldFocused.toggle()
                                         }
                                     }) {
-                                        Label("Edit Details", systemImage: "applepencil.and.scribble")
-                                            .symbolEffect(.bounce, value: self.canEditItem)
+                                        Label("Edit Details", systemImage: "keyboard.chevron.compact.down")
+                                            .symbolEffect(.bounce, value: self.isAnyFieldFocused)
+                                            .foregroundStyle(self.canHideKeyboardFocus ? .blue : .gray)
                                     }
+                                    .disabled(!self.canHideKeyboardFocus)
                             )
                             .navigationTitle("Item Details")
                             .navigationBarTitleDisplayMode(.inline)
                             .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
                             .onDisappear(perform: {
-                                self.canEditItem = false
+                                self.isAnyFieldFocused = false
                                 self.itemStore.itemSelection.removeAll()
                             })
                         } label: {
@@ -192,7 +195,7 @@ struct ContentView: View {
                                         }
                                     }) {
                                         Label("Edit Details", systemImage: "applepencil.and.scribble")
-                                            .symbolEffect(.bounce, value: self.canEditItem)
+                                            .symbolEffect(.bounce, value: self.isAnyFieldFocused)
                                     }
                             )
                             .navigationTitle("Note Details")
