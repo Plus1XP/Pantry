@@ -63,7 +63,7 @@ struct ContentView: View {
                             Button("Restore") {
                                 let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
                                 feedbackGenerator?.notificationOccurred(.success)
-                                self.itemStore.restoreEntry(entry: item)
+                                self.itemStore.restoreQuantitySingleEntry(entry: item)
                             }
                             .tint(.green)
                         }
@@ -222,7 +222,7 @@ struct ContentView: View {
                                 let selectionFeedback = UISelectionFeedbackGenerator()
                                 selectionFeedback.selectionChanged()
                                 self.noteStore.updatePin(entry: note)
-                                self.noteStore.noteSelection.removeAll()
+//                                self.noteStore.noteSelection.removeAll()
                             }
                             .tint(.orange)
                         }
@@ -231,7 +231,7 @@ struct ContentView: View {
                                 let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
                                 feedbackGenerator?.notificationOccurred(.success)
                                 self.noteStore.deleteEntry(entry: note)
-                                self.noteStore.noteSelection.removeAll()
+//                                self.noteStore.noteSelection.removeAll()
                             }
                         }
                     }
@@ -262,6 +262,7 @@ struct ContentView: View {
                         },
                     trailing:
                         HStack {
+                            NoteUndoButton()
                             EditModeButton(editMode: $editMode)
                             SettingButton(canPresentSettingsPopOver: $isSettingsPopoverPresented)
                         }

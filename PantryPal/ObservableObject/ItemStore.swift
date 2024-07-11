@@ -176,7 +176,18 @@ class ItemStore: ObservableObject {
         }
     }
     
-    func restoreEntry(entry: Item) {
+    func undoDeleteChanges() -> Void {
+        self.hasRestoredItemQuantity = false
+        for entry in itemCache {
+            addNewEntryFromCache(id: entry.id, position: entry.position, name: entry.name, quantity: entry.quantity, total: entry.total, bulkprice: entry.bulkprice, unitprice: entry.unitprice, note: entry.note, created: entry.created, modified: entry.modified)
+        }
+        self.restoreEntryPosition()
+        self.itemCache.removeAll()
+        self.sortEntries()
+        self.saveChanges()
+    }
+    
+    func restoreQuantitySingleEntry(entry: Item) {
         self.hasRestoredItemQuantity = true
         self.itemCache.removeAll()
         self.cacheChanges(entry: entry)
@@ -200,13 +211,28 @@ class ItemStore: ObservableObject {
         self.saveChanges()
     }
     
+    func undoRestoreQuantityChanges() -> Void {
+        self.hasRestoredItemQuantity = false
+        for entry in itemCache {
+//            let unrestoredItems = items.filter { $0.id == entry.id }
+            for item in items {
+                if item.id == entry.id {
+                    item.quantity = entry.quantity ?? 0
+                    item.modified = entry.modified
+                }
+            }
+        }
+        self.itemCache.removeAll()
+        self.saveChanges()
+    }
+    
     func cacheItemPosition() -> Void {
         for entry in items {
             self.itemPositionState[entry.id ?? UUID()] = entry.position
         }
     }
     
-    func restoreItemPosition() -> Void {
+    func restoreEntryPosition() -> Void {
         for entry in items {
             for position in itemPositionState {
                 if entry.id == position.key {
@@ -222,35 +248,9 @@ class ItemStore: ObservableObject {
         self.saveChanges()
     }
     
-    func undoDeleteChanges() -> Void {
-        self.hasRestoredItemQuantity = false
-        for entry in itemCache {
-            addNewEntryFromCache(id: entry.id, position: entry.position, name: entry.name, quantity: entry.quantity, total: entry.total, bulkprice: entry.bulkprice, unitprice: entry.unitprice, note: entry.note, created: entry.created, modified: entry.modified)
-        }
-        self.restoreItemPosition()
-        self.itemCache.removeAll()
-        self.sortEntries()
-        self.saveChanges()
-    }
-    
-    func undoRestoreChanges() -> Void {
-        self.hasRestoredItemQuantity = false
-        for entry in itemCache {
-//            let unrestoredItems = items.filter { $0.id == entry.id }
-            for item in items {
-                if item.id == entry.id {
-                    item.quantity = entry.quantity ?? 0
-                    item.modified = entry.modified
-                }
-            }
-        }
-        self.itemCache.removeAll()
-        self.saveChanges()
-    }
-    
     func validateUndoMethod() -> Void {
         if hasRestoredItemQuantity {
-            undoRestoreChanges()
+            undoRestoreQuantityChanges()
         } else {
             undoDeleteChanges()
         }

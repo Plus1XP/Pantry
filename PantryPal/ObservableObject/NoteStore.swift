@@ -13,6 +13,8 @@ class NoteStore: ObservableObject {
     @Published var searchText: String = ""
     @Published var isPinnedNotesFiltered: Bool = false
     
+    var noteCache: [NoteCache] = []
+    var notePositionState: [UUID:Int64] = [:]
     var searchResults: [Note] {
         guard !self.searchText.isEmpty else { return self.notes }
         return self.notes.filter { $0.name!.localizedCaseInsensitiveContains(self.searchText)
@@ -60,6 +62,20 @@ class NoteStore: ObservableObject {
         self.saveChanges()
     }
     
+    func addNewEntryFromCache(id: UUID?, position: Int64?, name: String?, body: String?, isPinned: Bool?, switchTitle: String?, isSwitchOn: Bool?, created: Date?, modified: Date?) {
+        let cachedNote = Note(context: PersistenceController.shared.container.viewContext)
+        cachedNote.id = id
+        cachedNote.position = ((position ?? Int64(notes.count == 0 ? 0 : notes.count + 1)) - 1)
+        cachedNote.name = name
+        cachedNote.body = body
+        cachedNote.isPinned = isPinned ?? false
+        cachedNote.switchTitle = switchTitle
+        cachedNote.isSwitchOn = isSwitchOn ?? false
+        cachedNote.created = created
+        cachedNote.modified = modified
+        self.saveChanges()
+    }
+    
     func updateEntry(entry: Note) {
 //        entry.updated = Date()
 //        if list.value(forKey: "createdAt") == nil {
@@ -71,6 +87,7 @@ class NoteStore: ObservableObject {
     func updatePin(entry: Note) {
         entry.isPinned.toggle()
 //        entry.modified = Date()
+        self.noteSelection.removeAll()
         self.saveChanges()
     }
     
@@ -97,13 +114,17 @@ class NoteStore: ObservableObject {
     }
     
     func deleteEntry(entry: Note) {
+        self.noteCache.removeAll()
+        self.cacheChanges(entry: entry)
         PersistenceController.shared.container.viewContext.delete(entry)
+        self.noteSelection.removeAll()
         self.sortEntries()
         self.saveChanges()
     }
     
     func deleteEntry(offsets: IndexSet) {
         offsets.map { notes[$0] }.forEach(PersistenceController.shared.container.viewContext.delete)
+        self.noteSelection.removeAll()
         self.sortEntries()
         self.saveChanges()
     }
@@ -112,12 +133,15 @@ class NoteStore: ObservableObject {
         for entry in selection {
             PersistenceController.shared.container.viewContext.delete(entry)
         }
+        self.noteSelection.removeAll()
         self.sortEntries()
         self.saveChanges()
     }
     
     func deleteNoteSelectionEntries() {
+        self.noteCache.removeAll()
         for entry in self.noteSelection {
+            self.cacheChanges(entry: entry)
             PersistenceController.shared.container.viewContext.delete(entry)
         }
         self.noteSelection.removeAll()
@@ -126,9 +150,43 @@ class NoteStore: ObservableObject {
     }
     
     func deleteAll() {
+        self.noteCache.removeAll()
         for note in self.notes {
+            self.cacheChanges(entry: note)
             PersistenceController.shared.container.viewContext.delete(note)
         }
+        self.saveChanges()
+    }
+
+    func cacheEntryPosition() -> Void {
+        for entry in notes {
+            self.notePositionState[entry.id ?? UUID()] = entry.position
+        }
+    }
+    
+    func restoreEntryPosition() -> Void {
+        for entry in notes {
+            for position in notePositionState {
+                if entry.id == position.key {
+                    entry.position = position.value
+                }
+            }
+        }
+    }
+    
+    func cacheChanges(entry: Note) -> Void {
+        self.cacheEntryPosition()
+        noteCache.append(NoteCache(id: entry.id, position: entry.position, name: entry.name, body: entry.body, isPinned: entry.isPinned, switchTitle: entry.switchTitle, isSwitchOn: entry.isSwitchOn, created: entry.created, modified: entry.modified))
+        self.saveChanges()
+    }
+    
+    func undoDeleteChanges() -> Void {
+        for entry in noteCache {
+            addNewEntryFromCache(id: entry.id, position: entry.position, name: entry.name, body: entry.body, isPinned: entry.isPinned, switchTitle: entry.switchTitle, isSwitchOn: entry.isSwitchOn, created: entry.created, modified: entry.modified)
+        }
+        self.restoreEntryPosition()
+        self.noteCache.removeAll()
+        self.sortEntries()
         self.saveChanges()
     }
     
