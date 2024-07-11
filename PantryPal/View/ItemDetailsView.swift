@@ -15,46 +15,45 @@ struct ItemDetailsView: View {
     @EnvironmentObject private var itemStore: ItemStore
     @State private var name: String = "" {
         didSet {
-            self.canSaveChanges = self.checkPendingChanges()
+            self.canSaveChanges = self.hasAnyItemValueChanged()
         }
     }
     @State private var quantity: Int64 = 0 {
         didSet {
-            self.canSaveChanges = self.checkPendingChanges()
+            self.canSaveChanges = self.hasAnyItemValueChanged()
         }
     }
     @State private var total: Int64 = 0 {
         didSet {
-            self.canSaveChanges = self.checkPendingChanges()
+            self.canSaveChanges = self.hasAnyItemValueChanged()
         }
     }
     @State private var bulkPrice: Double = 0 {
         didSet {
-            self.canSaveChanges = self.checkPendingChanges()
+            self.canSaveChanges = self.hasAnyItemValueChanged()
         }
     }
     @State private var unitPrice: Double = 0 {
         didSet {
-            self.canSaveChanges = self.checkPendingChanges()
+            self.canSaveChanges = self.hasAnyItemValueChanged()
         }
     }
     @State private var note: String = "" {
         didSet {
-            self.canSaveChanges = self.checkPendingChanges()
+            self.canSaveChanges = self.hasAnyItemValueChanged()
         }
     }
     @State private var minusAnimation: Bool = false
     @State private var plusAnimation: Bool = false
     @State private var clearAnimation: Bool = false
     @State private var saveAnimation: Bool = false
-//    @State var canEditEmojiField: Bool = false
     @State private var canSaveChanges: Bool = false
     @State private var canHideNamePlaceholderField: Bool = false
     @State private var canHideQuantityField: Bool = false
     @State private var canHidePriceField: Bool = false
     @State private var canHideLastModifiedField: Bool = false
-    @Binding var isAnyFieldFocused: Bool
-    @Binding var canHideKeyboardFocus: Bool
+    @Binding var isHideKeyboardButtonAcitve: Bool
+    @Binding var canResetFocusState: Bool
     @FocusState private var isPlaceholderFieldFocus: Bool
     @FocusState private var isNameFieldFocus: Bool
     @FocusState private var isQuantityFieldFocus: Bool
@@ -64,47 +63,25 @@ struct ItemDetailsView: View {
     @FocusState private var isNoteFocused: Bool
     var item: Item
     private let sectionTitleColor: Color = Color.secondary
-
+    private let bigScale: CGFloat = 1.1
+    private let normalScale: CGFloat = 1
+    private let smallScale: CGFloat = 0.9
+    
     var body: some View {
         VStack {
-            //FIXME: EmojionField icon size
+            //MARK: Item Name
             HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
                     EmojiPicker(emoji: Binding(get: {String(name.onlyEmoji().prefix(1))}, set: {name = $0}), placeholder: "Untitled Item", emojiAlignment: .center, fontSize: 50)
                         .fixedSize(horizontal: true, vertical: true)
                         .focused($isNameFieldFocus)
                         .onChange(of: self.isNameFieldFocus, {
-                            self.hideLastModifiedFieldOnFocusChange(focusState: self.isNameFieldFocus)
+                            self.hideFieldsOnFocusChange(focusState: self.isNameFieldFocus)
                         })
-                
-//                if self.canEditEmojiField {
-//                    EmojiPicker(emoji: Binding(get: {String(item.name?.onlyEmoji().prefix(1) ?? "")}, set: {item.name = $0}), placeholder: "Untitled Item", emojiAlignment: .center, fontSize: 17)
-//                        .fixedSize(horizontal: true, vertical: true)
-//                        .padding(.top, 30)
-//                        .focused($isPlaceholderFieldFocus)
-//                        .onChange(of: isPlaceholderFieldFocus, {
-//                            print("Edit Emoji Focus State: \(isPlaceholderFieldFocus)")
-//                            if !isPlaceholderFieldFocus && item.name != name {
-//                                print("Title Emoji Has Changed")
-//                                self.canEditEmojiField.toggle()
-//                                self.canSaveChanges = true
-//                            } else {
-//                                self.canSaveChanges = false
-//                            }
-//                            print("Edit Emoji Save State: \(canSaveChanges)")
-//                        })
-//                } else {
-//                    EmojiPicker(emoji: Binding(get: {item.name ?? ""}, set: {item.name = $0}), placeholder: "Untitled Item", emojiAlignment: .center, fontSize: 50)
-//                        .fixedSize(horizontal: true, vertical: true)
-//                        .focused($isNameFieldFocus)
-//                        .onChange(of: isNameFieldFocus, {
-//                            print("Title Emoji Focus State: \(isNameFieldFocus)")
-//                            canEditEmojiField.toggle()
-//                            isPlaceholderFieldFocus.toggle()
-//                        })
-//                }
+                        .scaleEffect(isNameFieldFocus ? bigScale: normalScale)
             })
-            .padding(.bottom)
+            .padding(.bottom, isAnyFieldFocused() ? 0 : nil)
             
+            //MARK: Item Quantity
             if !self.canHideQuantityField {
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
                     Text("Quantity Remaining")
@@ -112,6 +89,7 @@ struct ItemDetailsView: View {
                         .textCase(nil)
                         .foregroundStyle(self.sectionTitleColor)
                 })
+
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
                     if self.isQuantityFieldFocus || self.isTotalFieldFocus {
                         VStack(alignment: .center, content: {
@@ -131,12 +109,13 @@ struct ItemDetailsView: View {
                             }) {
                                 Image(systemName: "minus.circle.fill")
                                     .symbolEffect(.bounce, options: .speed(2), value: self.minusAnimation)
+                                    .font(.title)
                             }
                             .padding()
                             .foregroundStyle(.white, .blue)
                         })
-                        .disabled(self.isQuantityFieldFocus ? self.quantity == 0 : self.total == 0)
                     }
+                    
                     VStack {
                         HStack {
                             TextField("Quantity", text: Binding(get: {"\(self.quantity)"}, set: {self.quantity = Int64($0) ?? 0}), prompt: Text("Current"))
@@ -144,8 +123,7 @@ struct ItemDetailsView: View {
                                 .keyboardType(.numberPad)
                                 .focused($isQuantityFieldFocus)
                                 .onChange(of: self.isQuantityFieldFocus, {
-                                    self.hideLastModifiedFieldOnFocusChange(focusState: self.isQuantityFieldFocus)
-
+                                    self.hideFieldsOnFocusChange(focusState: self.isQuantityFieldFocus)
                                 })
                             Text("of")
                             TextField("Total", text: Binding(get: {"\(self.total)"}, set: {self.total = Int64($0) ?? 0}), prompt: Text("Total"))
@@ -153,7 +131,7 @@ struct ItemDetailsView: View {
                                 .keyboardType(.numberPad)
                                 .focused($isTotalFieldFocus)
                                 .onChange(of: self.isTotalFieldFocus, {
-                                    self.hideLastModifiedFieldOnFocusChange(focusState: self.isTotalFieldFocus)
+                                    self.hideFieldsOnFocusChange(focusState: self.isTotalFieldFocus)
                                 })
                         }
                         .padding()
@@ -165,7 +143,12 @@ struct ItemDetailsView: View {
                             )
                             .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
                         )
+                        
+                        .border(isQuantityFieldFocus || isTotalFieldFocus ? colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
+                        .cornerRadius(12)
+                        .shadow(color: isQuantityFieldFocus || isTotalFieldFocus ? colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
                     }
+                    
                     if self.isQuantityFieldFocus || self.isTotalFieldFocus {
                         VStack(alignment: .center, content: {
                             Button(action: {
@@ -184,6 +167,7 @@ struct ItemDetailsView: View {
                             }) {
                                 Image(systemName: "plus.circle.fill")
                                     .symbolEffect(.bounce, options: .speed(2), value: self.plusAnimation)
+                                    .font(.title)
                             }
                             .padding()
                             .foregroundStyle(.white, .blue)
@@ -193,9 +177,10 @@ struct ItemDetailsView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.leading)
                 .padding(.trailing)
-                .padding(.bottom)
+                .padding(.bottom, isAnyFieldFocused() ? 0 : nil)
             }
             
+            //MARK: Item Price
             if !self.canHidePriceField {
                 HStack {
                     VStack {
@@ -212,7 +197,7 @@ struct ItemDetailsView: View {
                             .keyboardType(.decimalPad)
                             .focused($isBulkPriceFieldFocus)
                             .onChange(of: self.isBulkPriceFieldFocus, {
-                                self.hideLastModifiedFieldOnFocusChange(focusState: self.isBulkPriceFieldFocus)
+                                self.hideFieldsOnFocusChange(focusState: self.isBulkPriceFieldFocus)
                             })
                         }
                         .padding()
@@ -225,7 +210,12 @@ struct ItemDetailsView: View {
                             )
                             .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
                         )
+                        
+                        .border(isBulkPriceFieldFocus ? colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
+                        .cornerRadius(12)
+                        .shadow(color: isBulkPriceFieldFocus ? colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
                     }
+
                     VStack {
                         HStack {
                             Text("Price/Unit")
@@ -240,7 +230,7 @@ struct ItemDetailsView: View {
                             .keyboardType(.decimalPad)
                             .focused($isUnitPriceFieldFocus)
                             .onChange(of: self.isUnitPriceFieldFocus, {
-                                self.hideLastModifiedFieldOnFocusChange(focusState: self.isUnitPriceFieldFocus)
+                                self.hideFieldsOnFocusChange(focusState: self.isUnitPriceFieldFocus)
                             })
                         }
                         .padding()
@@ -253,13 +243,18 @@ struct ItemDetailsView: View {
                             )
                             .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
                         )
+                        
+                        .border(isUnitPriceFieldFocus ? colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
+                        .cornerRadius(12)
+                        .shadow(color: isUnitPriceFieldFocus ? colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
                     }
                 }
                 .padding(.leading)
                 .padding(.trailing)
-                .padding(.bottom)
+                .padding(.bottom, isAnyFieldFocused() ? 0 : nil)
             }
-                
+            
+            //MARK: Item Notes
             HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
                 Text("Notes")
                     .font(.footnote)
@@ -275,7 +270,7 @@ struct ItemDetailsView: View {
                         .background(.clear) // To see this
                         .focused($isNoteFocused)
                         .onChange(of: self.isNoteFocused, {
-                            self.hideLastModifiedFieldOnFocusChange(focusState: self.isNoteFocused)
+                            self.hideFieldsOnFocusChange(focusState: self.isNoteFocused)
                         })
                 if !self.isNoteFocused && note == "" {
                     Text("No additional text")
@@ -293,10 +288,14 @@ struct ItemDetailsView: View {
                 )
                 .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
             )
+            .border(isNoteFocused ? colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
+            .cornerRadius(12)
+            .shadow(color: isNoteFocused ? colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
             .padding(.leading)
             .padding(.trailing)
             .padding(.bottom)
             
+            //MARK: Item Lst Modified
             if !self.canHideLastModifiedField {
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
                     Text("Last Modified")
@@ -304,6 +303,7 @@ struct ItemDetailsView: View {
                         .textCase(nil)
                         .foregroundStyle(self.sectionTitleColor)
                 })
+                
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
                     Text(item.modified ?? Date.distantFuture, formatter: Formatter.dateFormatter)
                 })
@@ -322,6 +322,7 @@ struct ItemDetailsView: View {
                 .padding(.bottom)
             }
             
+            //MARK: Item Save Changes
             if self.canSaveChanges {
                 HStack {
                     Spacer()
@@ -398,13 +399,14 @@ struct ItemDetailsView: View {
             self.unitPrice = self.item.unitprice
             self.note = self.item.note ?? ""
         })
-        .onChange(of: self.isAnyFieldFocused, {
+        .onChange(of: self.canResetFocusState, {
             self.resetFocusState()
         })
         .background(Color.setViewBackgroundColor(colorScheme: self.colorScheme))
     }
     
-    private func checkPendingChanges() -> Bool {
+    //MARK: Item Functions
+    private func hasAnyItemValueChanged() -> Bool {
         if name != item.name || quantity != item.quantity || total != item.total || bulkPrice != item.bulkprice || unitPrice != item.unitprice || note != item.note {
             return true
         } else {
@@ -412,25 +414,33 @@ struct ItemDetailsView: View {
         }
     }
     
-    private func hideLastModifiedFieldOnFocusChange(focusState: Bool) -> Void {
+    private func isAnyFieldFocused() -> Bool {
+        if isNameFieldFocus == true || isQuantityFieldFocus == true  || isTotalFieldFocus == true || isBulkPriceFieldFocus == true || isUnitPriceFieldFocus == true || isNoteFocused == true {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    private func hideFieldsOnFocusChange(focusState: Bool) -> Void {
         if focusState {
             // Delay allows else statement to evaluate and fire
             // first in sync before next Fields if statement
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.canHideLastModifiedField = true
-                self.canHideKeyboardFocus = true
-                if focusState == self.isNoteFocused {
-                    self.canHideQuantityField = true
-                    self.canHidePriceField = true
-                }
+                self.isHideKeyboardButtonAcitve = true
+//                if focusState == self.isNoteFocused {
+//                    self.canHideQuantityField = true
+//                    self.canHidePriceField = true
+//                }
             }
         } else {
             self.canHideLastModifiedField = false
-            self.canHideKeyboardFocus = false
-            if focusState == self.isNoteFocused {
-                self.canHideQuantityField = false
-                self.canHidePriceField = false
-            }
+            self.isHideKeyboardButtonAcitve = false
+//            if focusState == self.isNoteFocused {
+//                self.canHideQuantityField = false
+//                self.canHidePriceField = false
+//            }
         }
     }
     
@@ -445,13 +455,13 @@ struct ItemDetailsView: View {
 }
 
 #Preview {
-    ItemDetailsView(isAnyFieldFocused: .constant(false), canHideKeyboardFocus: .constant(false), item: PersistenceController.shared.sampleItem)
+    ItemDetailsView(isHideKeyboardButtonAcitve: .constant(false), canResetFocusState: .constant(false), item: PersistenceController.shared.sampleItem)
         .environmentObject(ItemStore())
         .preferredColorScheme(.light)
 }
 
 #Preview {
-    ItemDetailsView(isAnyFieldFocused: .constant(false), canHideKeyboardFocus: .constant(false), item: PersistenceController.shared.sampleItem)
+    ItemDetailsView(isHideKeyboardButtonAcitve: .constant(false), canResetFocusState: .constant(false), item: PersistenceController.shared.sampleItem)
         .environmentObject(ItemStore())
         .preferredColorScheme(.dark)
 }
