@@ -20,7 +20,8 @@ struct ContentView: View {
     @State private var isAnyFieldFocused: Bool = false
     @State private var canHideKeyboardFocus: Bool = false
     @State private var canEditNote: Bool = false
-    @State private var confirmDeletion: Bool = false
+    @State private var confirmItemDeletion: Bool = false
+    @State private var confirmNoteDeletion: Bool = false
     @State private var confirmRestoreQuantity: Bool = false
     @State private var activeTabSelection: Int = 0
     @State private var previousTabSelection: Int = 0
@@ -95,7 +96,7 @@ struct ContentView: View {
                                 SelectAllItemsButton()
                                     .foregroundStyle(.blue, setFontColor(colorScheme: colorScheme))
                                     .disabled(editMode == .inactive ? true : false)
-                                ItemDeleteButton(confirmDeletion: $confirmDeletion)
+                                ItemDeleteButton(confirmDeletion: $confirmItemDeletion)
                                     .foregroundStyle(self.itemStore.itemSelection.isEmpty ? .gray : .red, .blue)
                                     .disabled(self.itemStore.itemSelection.isEmpty)
                                 RestoreQuantityButton(confirmRestoreQuantity: $confirmRestoreQuantity)
@@ -123,18 +124,18 @@ struct ContentView: View {
                     self.itemStore.fetchEntries()
                 }
                 .searchable(text: $itemStore.searchText, prompt: "Search Items..")
-                .alert("Confirm Deletion", isPresented: $confirmDeletion) {
+                .alert("Confirm Deletion", isPresented: $confirmItemDeletion) {
                     Button("Cancel", role: .cancel) {
                         self.itemStore.itemSelection.removeAll()
                         self.editMode = .inactive
-                        self.confirmDeletion = false
+                        self.confirmItemDeletion = false
                     }
                     Button("Delete", role: .destructive) {
                         let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
                         feedbackGenerator?.notificationOccurred(.success)
                         self.itemStore.deleteItemSelectionEntries()
                         self.editMode = .inactive
-                        self.confirmDeletion = false
+                        self.confirmItemDeletion = false
                     }
                 } message: {
                     Text(deletionAlertText(selection: self.itemStore.itemSelection.count))
@@ -255,7 +256,7 @@ struct ContentView: View {
                                 SelectAllNotesButton()
                                     .foregroundStyle(.blue, setFontColor(colorScheme: colorScheme))
                                     .disabled(editMode == .inactive ? true : false)
-                                NoteDeleteButton( confirmDeletion: $confirmDeletion)
+                                NoteDeleteButton( confirmDeletion: $confirmNoteDeletion)
                                     .foregroundStyle(self.noteStore.noteSelection.isEmpty ? .gray : .red, .blue)
                                     .disabled(self.noteStore.noteSelection.isEmpty)
                             }
@@ -279,18 +280,18 @@ struct ContentView: View {
                     self.noteStore.fetchEntries()
                 }
                 .searchable(text: $noteStore.searchText, prompt: "Search Notes..")
-                .alert("Confirm Deletion", isPresented: $confirmDeletion) {
+                .alert("Confirm Deletion", isPresented: $confirmNoteDeletion) {
                     Button("Cancel", role: .cancel) {
                         self.noteStore.noteSelection.removeAll()
                         self.editMode = .inactive
-                        self.confirmDeletion = false
+                        self.confirmNoteDeletion = false
                     }
                     Button("Delete", role: .destructive) {
                         let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
                         feedbackGenerator?.notificationOccurred(.success)
                         self.noteStore.deleteNoteSelectionEntries()
                         self.editMode = .inactive
-                        self.confirmDeletion = false
+                        self.confirmNoteDeletion = false
                     }
                 } message: {
                     Text(deletionAlertText(selection: self.noteStore.noteSelection.count))
@@ -317,7 +318,11 @@ struct ContentView: View {
             self.canEditEmojis = false
             self.noteStore.isPinnedNotesFiltered = false
         })
-        .onChange(of: self.confirmDeletion, {
+        .onChange(of: self.confirmItemDeletion, {
+            let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+            feedbackGenerator?.notificationOccurred(.warning)
+        })
+        .onChange(of: self.confirmNoteDeletion, {
             let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
             feedbackGenerator?.notificationOccurred(.warning)
         })
