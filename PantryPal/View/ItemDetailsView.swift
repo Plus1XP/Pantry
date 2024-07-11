@@ -275,21 +275,7 @@ struct ItemDetailsView: View {
                         .background(.clear) // To see this
                         .focused($isNoteFocused)
                         .onChange(of: self.isNoteFocused, {
-                            if self.isNoteFocused {
-                                // Delay allows else statement to evaluate and fire
-                                // first in sync before next Fields if statement
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    self.canHideQuantityField = true
-                                    self.canHidePriceField = true
-                                    self.canHideLastModifiedField = true
-                                    self.canHideKeyboardFocus = true
-                                }
-                            } else {
-                                self.canHideQuantityField = false
-                                self.canHidePriceField = false
-                                self.canHideLastModifiedField = false
-                                self.canHideKeyboardFocus = false
-                            }
+                            self.hideLastModifiedFieldOnFocusChange(focusState: self.isNoteFocused)
                         })
                 if !self.isNoteFocused && note == "" {
                     Text("No additional text")
@@ -433,10 +419,18 @@ struct ItemDetailsView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.canHideLastModifiedField = true
                 self.canHideKeyboardFocus = true
+                if focusState == self.isNoteFocused {
+                    self.canHideQuantityField = true
+                    self.canHidePriceField = true
+                }
             }
         } else {
             self.canHideLastModifiedField = false
             self.canHideKeyboardFocus = false
+            if focusState == self.isNoteFocused {
+                self.canHideQuantityField = false
+                self.canHidePriceField = false
+            }
         }
     }
     
@@ -447,7 +441,6 @@ struct ItemDetailsView: View {
         self.isBulkPriceFieldFocus = false
         self.isUnitPriceFieldFocus = false
         self.isNoteFocused = false
-        self.canSaveChanges = false
     }
 }
 
