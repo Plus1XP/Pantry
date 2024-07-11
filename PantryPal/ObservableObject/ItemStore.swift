@@ -14,6 +14,7 @@ class ItemStore: ObservableObject {
     
     var hasRestoredItemQuantity: Bool = false
     var itemCache: [ItemCache] = []
+    var itemPositionState: [UUID:Int64] = [:]
     var searchResults: [Item] {
         guard !self.searchText.isEmpty else { return self.items }
         return self.items.filter { $0.name!.contains(self.searchText)
@@ -199,7 +200,24 @@ class ItemStore: ObservableObject {
         self.saveChanges()
     }
     
+    func cacheItemPosition() -> Void {
+        for entry in items {
+            self.itemPositionState[entry.id ?? UUID()] = entry.position
+        }
+    }
+    
+    func restoreItemPosition() -> Void {
+        for entry in items {
+            for position in itemPositionState {
+                if entry.id == position.key {
+                    entry.position = position.value
+                }
+            }
+        }
+    }
+    
     func cacheChanges(entry: Item) -> Void {
+        self.cacheItemPosition()
         itemCache.append(ItemCache(id: entry.id, position: entry.position, name: entry.name, quantity: entry.quantity, total: entry.total, bulkprice: entry.bulkprice, unitprice: entry.unitprice, note: entry.note, created: entry.created, modified: entry.modified))
         self.saveChanges()
     }
@@ -209,6 +227,7 @@ class ItemStore: ObservableObject {
         for entry in itemCache {
             addNewEntryFromCache(id: entry.id, position: entry.position, name: entry.name, quantity: entry.quantity, total: entry.total, bulkprice: entry.bulkprice, unitprice: entry.unitprice, note: entry.note, created: entry.created, modified: entry.modified)
         }
+        self.restoreItemPosition()
         self.itemCache.removeAll()
         self.sortEntries()
         self.saveChanges()
