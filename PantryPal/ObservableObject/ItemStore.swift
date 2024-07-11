@@ -122,12 +122,14 @@ class ItemStore: ObservableObject {
         self.itemCache.removeAll()
         self.cacheChanges(entry: entry)
         PersistenceController.shared.container.viewContext.delete(entry)
+        self.itemSelection.removeAll()
         self.sortEntries()
         self.saveChanges()
     }
     
     func deleteEntry(offsets: IndexSet) {
         offsets.map { items[$0] }.forEach(PersistenceController.shared.container.viewContext.delete)
+        self.itemSelection.removeAll()
         self.sortEntries()
         self.saveChanges()
     }
@@ -136,6 +138,7 @@ class ItemStore: ObservableObject {
         for entry in selection {
             PersistenceController.shared.container.viewContext.delete(entry)
         }
+        self.itemSelection.removeAll()
         self.sortEntries()
         self.saveChanges()
     }
@@ -170,6 +173,17 @@ class ItemStore: ObservableObject {
                 debugPrint("Core Data delete Fail")
             }
         }
+    }
+    
+    func restoreEntry(entry: Item) {
+        self.hasRestoredItemQuantity = true
+        self.itemCache.removeAll()
+        self.cacheChanges(entry: entry)
+        entry.quantity = entry.total
+        entry.modified = Date()
+        self.itemSelection.removeAll()
+        self.sortEntries()
+        self.saveChanges()
     }
     
     func restoreQuantityItemSelectionEntries() {

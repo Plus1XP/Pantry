@@ -59,12 +59,19 @@ struct ContentView: View {
                             ItemRowView(item: item)
                                 .disabled(!canEditEmojis)
                         }
+                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                            Button("Restore") {
+                                let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+                                feedbackGenerator?.notificationOccurred(.success)
+                                self.itemStore.restoreEntry(entry: item)
+                            }
+                            .tint(.green)
+                        }
                         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                             Button("Delete", role: .destructive) {
                                 let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
                                 feedbackGenerator?.notificationOccurred(.success)
                                 self.itemStore.deleteEntry(entry: item)
-                                self.itemStore.itemSelection.removeAll()
                             }
                         }
                     }
