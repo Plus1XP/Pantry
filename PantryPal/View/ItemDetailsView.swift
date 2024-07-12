@@ -53,14 +53,13 @@ struct ItemDetailsView: View {
     @State private var canHidePriceField: Bool = false
     @State private var canHideLastModifiedField: Bool = false
     @Binding var isHideKeyboardButtonAcitve: Bool
-    @Binding var canResetFocusState: Bool
     @FocusState private var isPlaceholderFieldFocus: Bool
     @FocusState private var isNameFieldFocus: Bool
     @FocusState private var isQuantityFieldFocus: Bool
     @FocusState private var isTotalFieldFocus: Bool
     @FocusState private var isBulkPriceFieldFocus: Bool
     @FocusState private var isUnitPriceFieldFocus: Bool
-    @FocusState private var isNoteFocused: Bool
+    @FocusState private var isNoteFieldFocused: Bool
     var item: Item
     private let sectionTitleColor: Color = Color.secondary
     private let bigScale: CGFloat = 1.1
@@ -71,15 +70,15 @@ struct ItemDetailsView: View {
         VStack {
             //MARK: Item Name
             HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                    EmojiPicker(emoji: Binding(get: {String(name.onlyEmoji().prefix(1))}, set: {name = $0}), placeholder: "Untitled Item", emojiAlignment: .center, fontSize: 50)
+                EmojiPicker(emoji: Binding(get: {String(self.name.onlyEmoji().prefix(1))}, set: {self.name = $0}), placeholder: "Untitled Item", emojiAlignment: .center, fontSize: 50)
                         .fixedSize(horizontal: true, vertical: true)
                         .focused($isNameFieldFocus)
                         .onChange(of: self.isNameFieldFocus, {
-                            self.hideFieldsOnFocusChange(focusState: self.isNameFieldFocus)
+                            self.showDismissKeyboardButtonIfTrue(focusState: self.isNameFieldFocus)
                         })
-                        .scaleEffect(isNameFieldFocus ? bigScale: normalScale)
+                        .scaleEffect(self.isNameFieldFocus ? self.bigScale: self.normalScale)
             })
-            .padding(.bottom, isAnyFieldFocused() ? 0 : nil)
+            .padding(.bottom, self.isAnyFieldFocused() ? 0 : nil)
             
             //MARK: Item Quantity
             if !self.canHideQuantityField {
@@ -123,7 +122,7 @@ struct ItemDetailsView: View {
                                 .keyboardType(.numberPad)
                                 .focused($isQuantityFieldFocus)
                                 .onChange(of: self.isQuantityFieldFocus, {
-                                    self.hideFieldsOnFocusChange(focusState: self.isQuantityFieldFocus)
+                                    self.showDismissKeyboardButtonIfTrue(focusState: self.isQuantityFieldFocus)
                                 })
                             Text("of")
                             TextField("Total", text: Binding(get: {"\(self.total)"}, set: {self.total = Int64($0) ?? 0}), prompt: Text("Total"))
@@ -131,7 +130,7 @@ struct ItemDetailsView: View {
                                 .keyboardType(.numberPad)
                                 .focused($isTotalFieldFocus)
                                 .onChange(of: self.isTotalFieldFocus, {
-                                    self.hideFieldsOnFocusChange(focusState: self.isTotalFieldFocus)
+                                    self.showDismissKeyboardButtonIfTrue(focusState: self.isTotalFieldFocus)
                                 })
                         }
                         .padding()
@@ -143,10 +142,9 @@ struct ItemDetailsView: View {
                             )
                             .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
                         )
-                        
-                        .border(isQuantityFieldFocus || isTotalFieldFocus ? colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
+                        .border(self.isQuantityFieldFocus || self.isTotalFieldFocus ? self.colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
                         .cornerRadius(12)
-                        .shadow(color: isQuantityFieldFocus || isTotalFieldFocus ? colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
+                        .shadow(color: self.isQuantityFieldFocus || self.isTotalFieldFocus ? self.colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
                     }
                     
                     if self.isQuantityFieldFocus || self.isTotalFieldFocus {
@@ -177,7 +175,7 @@ struct ItemDetailsView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.leading)
                 .padding(.trailing)
-                .padding(.bottom, isAnyFieldFocused() ? 0 : nil)
+                .padding(.bottom, self.isAnyFieldFocused() ? 0 : nil)
             }
             
             //MARK: Item Price
@@ -192,12 +190,12 @@ struct ItemDetailsView: View {
                         }
                         HStack {
                             TextField("Amount", value: Binding(get: { self.bulkPrice }, set: { self.bulkPrice = $0 }),
-                                      format: .currency(code: locale.currency?.identifier ?? "USD"))
+                                      format: .currency(code: self.locale.currency?.identifier ?? "USD"))
                             .multilineTextAlignment(.center)
                             .keyboardType(.decimalPad)
                             .focused($isBulkPriceFieldFocus)
                             .onChange(of: self.isBulkPriceFieldFocus, {
-                                self.hideFieldsOnFocusChange(focusState: self.isBulkPriceFieldFocus)
+                                self.showDismissKeyboardButtonIfTrue(focusState: self.isBulkPriceFieldFocus)
                             })
                         }
                         .padding()
@@ -211,9 +209,9 @@ struct ItemDetailsView: View {
                             .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
                         )
                         
-                        .border(isBulkPriceFieldFocus ? colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
+                        .border(self.isBulkPriceFieldFocus ? self.colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
                         .cornerRadius(12)
-                        .shadow(color: isBulkPriceFieldFocus ? colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
+                        .shadow(color: self.isBulkPriceFieldFocus ? self.colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
                     }
 
                     VStack {
@@ -225,12 +223,12 @@ struct ItemDetailsView: View {
                         }
                         HStack {
                             TextField("Amount", value: Binding(get: { self.unitPrice }, set: { self.unitPrice = $0 }),
-                                      format: .currency(code: locale.currency?.identifier ?? "USD"))
+                                      format: .currency(code: self.locale.currency?.identifier ?? "USD"))
                             .multilineTextAlignment(.center)
                             .keyboardType(.decimalPad)
                             .focused($isUnitPriceFieldFocus)
                             .onChange(of: self.isUnitPriceFieldFocus, {
-                                self.hideFieldsOnFocusChange(focusState: self.isUnitPriceFieldFocus)
+                                self.showDismissKeyboardButtonIfTrue(focusState: self.isUnitPriceFieldFocus)
                             })
                         }
                         .padding()
@@ -244,14 +242,14 @@ struct ItemDetailsView: View {
                             .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
                         )
                         
-                        .border(isUnitPriceFieldFocus ? colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
+                        .border(self.isUnitPriceFieldFocus ? self.colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
                         .cornerRadius(12)
-                        .shadow(color: isUnitPriceFieldFocus ? colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
+                        .shadow(color: self.isUnitPriceFieldFocus ? self.colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
                     }
                 }
                 .padding(.leading)
                 .padding(.trailing)
-                .padding(.bottom, isAnyFieldFocused() ? 0 : nil)
+                .padding(.bottom, self.isAnyFieldFocused() ? 0 : nil)
             }
             
             //MARK: Item Notes
@@ -265,14 +263,14 @@ struct ItemDetailsView: View {
             // TextEditor does not have a placeholder Using a
             // ZStack & FocusState as a work around.
             ZStack(alignment: .topLeading, content: {
-                    TextEditor(text: Binding(get: {note}, set: {note = $0}))
+                TextEditor(text: Binding(get: {self.note}, set: {self.note = $0}))
                         .scrollContentBackground(.hidden) // <- Hide it
                         .background(.clear) // To see this
-                        .focused($isNoteFocused)
-                        .onChange(of: self.isNoteFocused, {
-                            self.hideFieldsOnFocusChange(focusState: self.isNoteFocused)
+                        .focused($isNoteFieldFocused)
+                        .onChange(of: self.isNoteFieldFocused, {
+                            self.showDismissKeyboardButtonIfTrue(focusState: self.isNoteFieldFocused)
                         })
-                if !self.isNoteFocused && note == "" {
+                if !self.isNoteFieldFocused && self.note == "" {
                     Text("No additional text")
                         .foregroundColor(Color(uiColor: .placeholderText))
                         .multilineTextAlignment(.leading)
@@ -288,15 +286,15 @@ struct ItemDetailsView: View {
                 )
                 .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
             )
-            .border(isNoteFocused ? colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
+            .border(self.isNoteFieldFocused ? self.colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
             .cornerRadius(12)
-            .shadow(color: isNoteFocused ? colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
+            .shadow(color: self.isNoteFieldFocused ? self.colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
             .padding(.leading)
             .padding(.trailing)
             .padding(.bottom)
             
             //MARK: Item Lst Modified
-            if !self.canHideLastModifiedField {
+            if !self.isHideKeyboardButtonAcitve {
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
                     Text("Last Modified")
                         .font(.footnote)
@@ -305,7 +303,7 @@ struct ItemDetailsView: View {
                 })
                 
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                    Text(item.modified ?? Date.distantFuture, formatter: Formatter.dateFormatter)
+                    Text(self.item.modified ?? Date.distantFuture, formatter: Formatter.dateFormatter)
                 })
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -349,7 +347,7 @@ struct ItemDetailsView: View {
                             .contentTransition(.symbolEffect(.replace))
                             .background(
                                 Circle()
-                                    .fill(Color.setFieldBackgroundColor(colorScheme: colorScheme).opacity(1))
+                                    .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme).opacity(1))
                                     .cornerRadius(25.0)
                             )
                     })
@@ -358,12 +356,12 @@ struct ItemDetailsView: View {
                         self.saveAnimation = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                             self.saveAnimation = false
-                            self.item.name = name
-                            self.item.quantity = quantity
-                            self.item.total = total
-                            self.item.bulkprice = bulkPrice
-                            self.item.unitprice = unitPrice
-                            self.item.note = note
+                            self.item.name = self.name
+                            self.item.quantity = self.quantity
+                            self.item.total = self.total
+                            self.item.bulkprice = self.bulkPrice
+                            self.item.unitprice = self.unitPrice
+                            self.item.note = self.note
                             self.item.modified = Date()
                             self.itemStore.saveChanges()
                             self.canSaveChanges = false
@@ -378,7 +376,7 @@ struct ItemDetailsView: View {
                             .contentTransition(.symbolEffect(.replace))
                             .background(
                                 Circle()
-                                    .fill(Color.setFieldBackgroundColor(colorScheme: colorScheme).opacity(1))
+                                    .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme).opacity(1))
                                     .cornerRadius(25.0)
                             )
                     })
@@ -399,15 +397,17 @@ struct ItemDetailsView: View {
             self.unitPrice = self.item.unitprice
             self.note = self.item.note ?? ""
         })
-        .onChange(of: self.canResetFocusState, {
-            self.resetFocusState()
+        .onChange(of: self.isHideKeyboardButtonAcitve, {
+            if !self.isHideKeyboardButtonAcitve {
+                self.resetFocusState()
+            }
         })
         .background(Color.setViewBackgroundColor(colorScheme: self.colorScheme))
     }
     
     //MARK: Item Functions
     private func hasAnyItemValueChanged() -> Bool {
-        if name != item.name || quantity != item.quantity || total != item.total || bulkPrice != item.bulkprice || unitPrice != item.unitprice || note != item.note {
+        if self.name != self.item.name || self.quantity != self.item.quantity || self.total != self.item.total || self.bulkPrice != self.item.bulkprice || self.unitPrice != self.item.unitprice || self.note != self.item.note {
             return true
         } else {
             return false
@@ -415,32 +415,16 @@ struct ItemDetailsView: View {
     }
     
     private func isAnyFieldFocused() -> Bool {
-        if isNameFieldFocus == true || isQuantityFieldFocus == true  || isTotalFieldFocus == true || isBulkPriceFieldFocus == true || isUnitPriceFieldFocus == true || isNoteFocused == true {
+        if self.isNameFieldFocus == true || self.isQuantityFieldFocus == true  || self.isTotalFieldFocus == true || self.isBulkPriceFieldFocus == true || self.isUnitPriceFieldFocus == true || self.isNoteFieldFocused == true {
             return true
         } else {
             return false
         }
     }
     
-    private func hideFieldsOnFocusChange(focusState: Bool) -> Void {
+    private func showDismissKeyboardButtonIfTrue(focusState: Bool) -> Void {
         if focusState {
-            // Delay allows else statement to evaluate and fire
-            // first in sync before next Fields if statement
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.canHideLastModifiedField = true
-                self.isHideKeyboardButtonAcitve = true
-//                if focusState == self.isNoteFocused {
-//                    self.canHideQuantityField = true
-//                    self.canHidePriceField = true
-//                }
-            }
-        } else {
-            self.canHideLastModifiedField = false
-            self.isHideKeyboardButtonAcitve = false
-//            if focusState == self.isNoteFocused {
-//                self.canHideQuantityField = false
-//                self.canHidePriceField = false
-//            }
+            self.isHideKeyboardButtonAcitve = true
         }
     }
     
@@ -450,18 +434,18 @@ struct ItemDetailsView: View {
         self.isTotalFieldFocus = false
         self.isBulkPriceFieldFocus = false
         self.isUnitPriceFieldFocus = false
-        self.isNoteFocused = false
+        self.isNoteFieldFocused = false
     }
 }
 
 #Preview {
-    ItemDetailsView(isHideKeyboardButtonAcitve: .constant(false), canResetFocusState: .constant(false), item: PersistenceController.shared.sampleItem)
+    ItemDetailsView(isHideKeyboardButtonAcitve: .constant(false), item: PersistenceController.shared.sampleItem)
         .environmentObject(ItemStore())
         .preferredColorScheme(.light)
 }
 
 #Preview {
-    ItemDetailsView(isHideKeyboardButtonAcitve: .constant(false), canResetFocusState: .constant(false), item: PersistenceController.shared.sampleItem)
+    ItemDetailsView(isHideKeyboardButtonAcitve: .constant(false), item: PersistenceController.shared.sampleItem)
         .environmentObject(ItemStore())
         .preferredColorScheme(.dark)
 }

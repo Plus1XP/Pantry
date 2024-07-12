@@ -18,8 +18,6 @@ struct ContentView: View {
     @State private var isNewNotePopoverPresented: Bool = false
     @State private var isSettingsPopoverPresented: Bool = false
     @State private var isHideKeyboardButtonAcitve: Bool = false
-    @State private var canResetFocusState: Bool = false
-    @State private var canEditNote: Bool = false
     @State private var confirmItemDeletion: Bool = false
     @State private var confirmNoteDeletion: Bool = false
     @State private var confirmRestoreQuantity: Bool = false
@@ -27,6 +25,7 @@ struct ContentView: View {
     @State private var previousTabSelection: Int = 0
     
     var body: some View {
+//        let _ = Self._printChanges()
         TabView(selection: $activeTabSelection) {
             //MARK: Item TabView
             NavigationView {
@@ -34,16 +33,16 @@ struct ContentView: View {
                     ForEach(self.itemStore.searchResults, id: \.self) { item in
                         //MARK: Item Information
                         NavigationLink {
-                            ItemDetailsView(isHideKeyboardButtonAcitve: $isHideKeyboardButtonAcitve, canResetFocusState: $canResetFocusState, item: item)
+                            ItemDetailsView(isHideKeyboardButtonAcitve: $isHideKeyboardButtonAcitve, item: item)
                             .navigationBarItems(
                                 trailing:
                                     Button(action: {
                                         withAnimation(.bouncy) {
-                                            self.canResetFocusState.toggle()
+                                            self.isHideKeyboardButtonAcitve = false
                                         }
                                     }) {
                                         Label("Edit Details", systemImage: "keyboard.chevron.compact.down")
-                                            .symbolEffect(.bounce, value: self.canResetFocusState)
+                                            .symbolEffect(.bounce, value: self.isHideKeyboardButtonAcitve)
                                             .foregroundStyle(self.isHideKeyboardButtonAcitve ? .blue : .gray)
                                     }
                                     .disabled(!self.isHideKeyboardButtonAcitve)
@@ -52,7 +51,7 @@ struct ContentView: View {
                             .navigationBarTitleDisplayMode(.inline)
                             .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
                             .onDisappear(perform: {
-                                self.canResetFocusState = false
+                                self.isHideKeyboardButtonAcitve = false
                                 self.itemStore.itemSelection.removeAll()
                             })
                         } label: {
@@ -87,15 +86,15 @@ struct ContentView: View {
                         HStack {
                             if self.editMode == .inactive {
                                 EmojiEditLockButton(canEditEmojis: $canEditEmojis)
-                                    .foregroundStyle(setFontColor(colorScheme: colorScheme), self.canEditEmojis ? .green : .red)
+                                    .foregroundStyle(setFontColor(colorScheme: self.colorScheme), self.canEditEmojis ? .green : .red)
 #if DEBUG
                                 ItemDebugButtons()
 #endif
                             }
                             if self.editMode == .active {
                                 SelectAllItemsButton()
-                                    .foregroundStyle(.blue, setFontColor(colorScheme: colorScheme))
-                                    .disabled(editMode == .inactive ? true : false)
+                                    .foregroundStyle(.blue, setFontColor(colorScheme: self.colorScheme))
+                                    .disabled(self.editMode == .inactive ? true : false)
                                 ItemDeleteButton(confirmDeletion: $confirmItemDeletion)
                                     .foregroundStyle(self.itemStore.itemSelection.isEmpty ? .gray : .red, .blue)
                                     .disabled(self.itemStore.itemSelection.isEmpty)
@@ -112,7 +111,7 @@ struct ContentView: View {
                         }
                 )
                 .environment(\.editMode, $editMode)
-                .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
+                .foregroundStyle(setFontColor(colorScheme: self.colorScheme), .blue)
                 .onAppear(perform: {
                     self.previousTabSelection = 0
 
@@ -195,23 +194,25 @@ struct ContentView: View {
                     ForEach(self.noteStore.combinedResults, id: \.self) { note in
                         //MARK: Note Information
                         NavigationLink {
-                            NoteDetailsView(canEditNote: $canEditNote, note: note)
+                            NoteDetailsView(isHideKeyboardButtonAcitve: $isHideKeyboardButtonAcitve, note: note)
                             .navigationBarItems(
                                 trailing:
                                     Button(action: {
                                         withAnimation(.bouncy) {
-                                            self.canEditNote.toggle()
+                                            self.isHideKeyboardButtonAcitve = false
                                         }
                                     }) {
-                                        Label("Edit Details", systemImage: "applepencil.and.scribble")
-                                            .symbolEffect(.bounce, value: self.canResetFocusState)
+                                        Label("Edit Details", systemImage: "keyboard.chevron.compact.down")
+                                            .symbolEffect(.bounce, value: self.isHideKeyboardButtonAcitve)
+                                            .foregroundStyle(self.isHideKeyboardButtonAcitve ? .blue : .gray)
                                     }
+                                    .disabled(!self.isHideKeyboardButtonAcitve)
                             )
                             .navigationTitle("Note Details")
                             .navigationBarTitleDisplayMode(.inline)
-                            .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
+                            .foregroundStyle(setFontColor(colorScheme: self.colorScheme), .blue)
                             .onDisappear(perform: {
-                                self.canEditNote = false
+                                self.isHideKeyboardButtonAcitve = false
                                 self.noteStore.noteSelection.removeAll()
                             })
                         } label: {
@@ -223,7 +224,6 @@ struct ContentView: View {
                                 let selectionFeedback = UISelectionFeedbackGenerator()
                                 selectionFeedback.selectionChanged()
                                 self.noteStore.updatePin(entry: note)
-//                                self.noteStore.noteSelection.removeAll()
                             }
                             .tint(.orange)
                         }
@@ -232,7 +232,6 @@ struct ContentView: View {
                                 let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
                                 feedbackGenerator?.notificationOccurred(.success)
                                 self.noteStore.deleteEntry(entry: note)
-//                                self.noteStore.noteSelection.removeAll()
                             }
                         }
                     }
@@ -254,8 +253,8 @@ struct ContentView: View {
                             }
                             if self.editMode == .active {
                                 SelectAllNotesButton()
-                                    .foregroundStyle(.blue, setFontColor(colorScheme: colorScheme))
-                                    .disabled(editMode == .inactive ? true : false)
+                                    .foregroundStyle(.blue, setFontColor(colorScheme: self.colorScheme))
+                                    .disabled(self.editMode == .inactive ? true : false)
                                 NoteDeleteButton( confirmDeletion: $confirmNoteDeletion)
                                     .foregroundStyle(self.noteStore.noteSelection.isEmpty ? .gray : .red, .blue)
                                     .disabled(self.noteStore.noteSelection.isEmpty)
@@ -269,7 +268,7 @@ struct ContentView: View {
                         }
                 )
                 .environment(\.editMode, $editMode)
-                .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
+                .foregroundStyle(setFontColor(colorScheme: self.colorScheme), .blue)
                 .onAppear(perform: {
                     self.previousTabSelection = 2
                 })
