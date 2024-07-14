@@ -340,17 +340,8 @@ struct ItemDetailsView: View {
                         }
                     }, label: {
                         Image(systemName: self.clearAnimation ? "xmark.circle" : "xmark.circle.fill")
-                            .font(.largeTitle)
-                            .foregroundStyle(.red)
-                            .symbolEffect(.bounce, options: .speed(2), value: self.clearAnimation)
-                            .symbolEffect(.pulse.wholeSymbol, options: .repeating, value: self.clearAnimation)
-                            .contentTransition(.symbolEffect(.replace))
-                            .background(
-                                Circle()
-                                    .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme).opacity(1))
-                                    .cornerRadius(25.0)
-                            )
                     })
+                    .buttonStyle(CancelButtonStyle(clearAnimation: $clearAnimation))
                     Spacer()
                     Button(action: {
                         self.saveAnimation = true
@@ -369,17 +360,8 @@ struct ItemDetailsView: View {
                         }
                     }, label: {
                         Image(systemName: self.saveAnimation ? "checkmark.circle" : "checkmark.circle.fill")
-                            .font(.largeTitle)
-                            .foregroundStyle(.green)
-                            .symbolEffect(.bounce, options: .speed(2), value: self.saveAnimation)
-                            .symbolEffect(.pulse.wholeSymbol, options: .repeating, value: self.saveAnimation)
-                            .contentTransition(.symbolEffect(.replace))
-                            .background(
-                                Circle()
-                                    .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme).opacity(1))
-                                    .cornerRadius(25.0)
-                            )
                     })
+                    .buttonStyle(SaveButtonStyle(saveAnimation: $saveAnimation))
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
