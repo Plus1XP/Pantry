@@ -64,15 +64,15 @@ struct NoteDetailsView: View {
                         .symbolEffect(.bounce.down, value: self.isPinnedTrigger)
                         .contentTransition(.symbolEffect(.replace))
                 }
-                .foregroundStyle(.orange, .orange)
-                .toggleStyle(.button)
-                .tint(.clear)
                 .font(.title3)
-                .frame(maxWidth: 35, alignment: .trailing)
+                .foregroundStyle(.orange, .orange)
+                .tint(.clear)
+                .toggleStyle(.button)
                 .onChange(of: self.isPinnedTrigger, {
                     self.note.isPinned = self.isPinnedTrigger
                     self.noteStore.saveChanges()
                 })
+                .frame(maxWidth: 25, alignment: .center)
             }
             .padding(.leading)
             .padding(.trailing)
