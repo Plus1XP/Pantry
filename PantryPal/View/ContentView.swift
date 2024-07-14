@@ -160,10 +160,8 @@ struct ContentView: View {
                 Image(systemName: "cart")
                 Text("Items")
             }
-            .popover(isPresented: $isNewItemPopoverPresented, attachmentAnchor: .point(.bottom), arrowEdge: .top) {
+            .sheet(isPresented: $isNewItemPopoverPresented) {
                 NewItemView()
-                    .padding()
-                    .presentationCompactAdaptation(.popover)
             }
             .tag(0)
             //MARK: AddEntry TabView
@@ -300,10 +298,8 @@ struct ContentView: View {
                 Image(systemName: "note.text")
                 Text("Notes")
             }
-            .popover(isPresented: $isNewNotePopoverPresented, attachmentAnchor: .point(.bottom), arrowEdge: .top) {
+            .sheet(isPresented: $isNewNotePopoverPresented) {
                 NewNoteView()
-                    .padding()
-                    .presentationCompactAdaptation(.popover)
             }
             .tag(2)
         }

@@ -8,82 +8,205 @@
 import SwiftUI
 
 struct NewNoteView: View {
-    @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var noteStore: NoteStore
-    @State var name: String = ""
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var noteStore: NoteStore
+    @State private var name: String = "" {
+        didSet {
+            self.canSaveChanges = self.hasAnyNoteValueChanged()
+        }
+    }
+    @State private var noteBody: String = "" {
+        didSet {
+            self.canSaveChanges = self.hasAnyNoteValueChanged()
+        }
+    }
+    @State private var switchTitle: String = "" {
+        didSet {
+            self.canSaveChanges = self.hasAnyNoteValueChanged()
+        }
+    }
     @State var isPinned: Bool = false
-    @State var noteBody: String = ""
-    @State var switchTitle: String = ""
     @State var isSwitchOn: Bool = false
-    @FocusState private var isNoteFocused: Bool
+    @State private var clearAnimation: Bool = false
+    @State private var saveAnimation: Bool = false
+    @State private var canSaveChanges: Bool = false
+    @FocusState private var isNameFieldFocus: Bool
+    @FocusState private var isBodyFieldFocus: Bool
+    @FocusState private var isSwitchTitleFieldFocus: Bool
+    private let sectionTitleColor: Color = Color.secondary
+    private let bigScale: CGFloat = 1.1
+    private let normalScale: CGFloat = 1
+    private let smallScale: CGFloat = 0.9
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Add Note")
-                .font(.title3)
-                .padding(.horizontal)
-            Divider()
-            Group {
-                HStack {
-                    TextField("Name Note", text: $name)
-                        .multilineTextAlignment(.leading)
-                        .disableAutocorrection(false)
-                }
-                HStack {
-                    // TextEditor does not have a placeholder
-                    // Using a ZStack & FocusState as a work around.
-                    ZStack(alignment: .topLeading) {
-                        TextEditor(text: $noteBody)
-                            .focused($isNoteFocused)
-                            .multilineTextAlignment(.leading)
-                            .disableAutocorrection(false)
-                        if !isNoteFocused && noteBody.isEmpty {
-                            Text("Enter Contents")
-                                .multilineTextAlignment(.leading)
-                                .disableAutocorrection(false)
-                                .foregroundColor(Color(uiColor: .placeholderText))
-                                .padding(.top, 10)
-                                .allowsHitTesting(false)
-                        }
-                    }
-                }
-                HStack {
-                    Toggle(isOn: $isSwitchOn) {
-                        TextField("Name Switch", text: $switchTitle)
-                            .multilineTextAlignment(.leading)
-                            .disableAutocorrection(false)
-                    }
-                }
-                HStack {
-                    Toggle(isOn: $isPinned) {
-                        Image(systemName: self.isPinned ? "pin.fill" : "pin")
-                            .symbolEffect(.bounce.down, value: self.isPinned)
-                            .contentTransition(.symbolEffect(.replace))
-                    }
+        VStack {
+            HStack {
+                TextField("Untitled Note", text: Binding(get: {self.name}, set: {self.name = $0}))
                     .font(.title2)
-                    .foregroundStyle(.orange, .orange)
-                    .toggleStyle(.button)
-                    .tint(.clear)
+                    .multilineTextAlignment(.leading)
+                    .textCase(nil)
+                    .disableAutocorrection(false)
+                    .focused($isNameFieldFocus)
+                    .scaleEffect(self.isNameFieldFocus ? self.bigScale: self.normalScale)
+                    .padding(.leading, 20)
+                    .padding(EdgeInsets(top: 0, leading: self.isNameFieldFocus ? 15: 0, bottom: 0, trailing: self.isNameFieldFocus ? 15: 0))
+                    .frame(maxWidth: .infinity, alignment: .center)
+                
+                Toggle(isOn: $isPinned) {
+                    Image(systemName: self.isPinned ? "pin.fill" : "pin")
+                        .symbolEffect(.bounce.down, value: self.isPinned)
+                        .contentTransition(.symbolEffect(.replace))
                 }
-                .frame(maxWidth: .infinity, alignment: .center)
-            }
-            Divider()
-            HStack{
-                Spacer()
-                Button("Add", systemImage: "plus.circle.fill", action: {
-                    noteStore.addNewEntry(name: self.name, body: self.noteBody, switchTitle: self.switchTitle, isSwitchOn: self.isSwitchOn, isPinned: self.isPinned)
-                    isNoteFocused = false
-                    dismiss()
+                .font(.title3)
+                .foregroundStyle(.orange, .orange)
+                .tint(.clear)
+                .toggleStyle(.button)
+                .onChange(of: self.isPinned, {
+                    self.canSaveChanges = self.hasAnyNoteValueChanged()
                 })
-                .padding(.top)
-                .buttonStyle(.borderedProminent)
-                Spacer()
+                .frame(maxWidth: 25, alignment: .center)
+            }
+            .padding(.leading)
+            .padding(.trailing)
+            .padding(.bottom)
+            
+            // TextEditor does not have a placeholder Using a
+            // ZStack & FocusState as a work around.
+            ZStack(alignment: .topLeading) {
+                TextEditor(text: Binding(get: {self.noteBody}, set: {self.noteBody = $0}))
+                    .scrollContentBackground(.hidden) // <- Hide it
+                    .background(.clear) // To see this
+                    .focused($isBodyFieldFocus)
+                if !self.isBodyFieldFocus && (self.noteBody == "") {
+                    Text("No additional text")
+                        .foregroundColor(Color(uiColor: .placeholderText))
+                        .multilineTextAlignment(.leading)
+                        .allowsHitTesting(false)
+                }
+            }
+            .padding()
+            .foregroundColor(.primary)
+            .background(
+                RoundedRectangle(
+                    cornerRadius: 12,
+                    style: .continuous
+                )
+                .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
+            )
+            .border(self.isBodyFieldFocus ? self.colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
+            .cornerRadius(12)
+            .shadow(color: self.isBodyFieldFocus ? self.colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
+            .padding(.leading)
+            .padding(.trailing)
+            .padding(.bottom)
+            
+            HStack {
+                Toggle(isOn: $isSwitchOn) {
+                    TextField("Untitled Switch", text: Binding(get: {self.switchTitle}, set: {self.switchTitle = $0}))
+                        .multilineTextAlignment(.leading)
+                        .textCase(nil)
+                        .disableAutocorrection(false)
+                        .padding(EdgeInsets(top: 0, leading: self.isSwitchTitleFieldFocus ? 15: 0, bottom: 0, trailing: self.isSwitchTitleFieldFocus ? 15: 0))
+                        .focused($isSwitchTitleFieldFocus)
+                        .scaleEffect(self.isSwitchTitleFieldFocus ? self.bigScale: self.normalScale)
+                }
+                .padding([.leading, .trailing], 20)
+                .onChange(of: self.isSwitchOn, {
+                    self.canSaveChanges = self.hasAnyNoteValueChanged()
+                })
+            }
+            .padding(.leading)
+            .padding(.trailing)
+            .padding(.bottom)
+            
+            if self.canSaveChanges {
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        self.clearAnimation = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                            self.clearAnimation = false
+                            self.noteStore.discardChanges()
+                            self.canSaveChanges = false
+                            self.resetFocusState()
+                            self.dismiss()
+                        }
+                    }, label: {
+                        Image(systemName: self.clearAnimation ? "xmark.circle" : "xmark.circle.fill")
+                            .font(.largeTitle)
+                            .foregroundStyle(.red)
+                            .symbolEffect(.bounce, options: .speed(2), value: self.clearAnimation)
+                            .symbolEffect(.pulse.wholeSymbol, options: .repeating, value: self.clearAnimation)
+                            .contentTransition(.symbolEffect(.replace))
+                            .background(
+                                Circle()
+                                    .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme).opacity(1))
+                                    .cornerRadius(25.0)
+                            )
+                    })
+                    Spacer()
+                    Button(action: {
+                        self.saveAnimation = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                            self.saveAnimation = false
+                            self.noteStore.addNewEntry(name: self.name, body: self.noteBody, switchTitle: self.switchTitle, isSwitchOn: self.isSwitchOn, isPinned: self.isPinned)
+                            self.noteStore.saveChanges()
+                            self.canSaveChanges = false
+                            self.dismiss()
+                        }
+                    }, label: {
+                        Image(systemName: self.saveAnimation ? "checkmark.circle" : "checkmark.circle.fill")
+                            .font(.largeTitle)
+                            .foregroundStyle(.green)
+                            .symbolEffect(.bounce, options: .speed(2), value: self.saveAnimation)
+                            .symbolEffect(.pulse.wholeSymbol, options: .repeating, value: self.saveAnimation)
+                            .contentTransition(.symbolEffect(.replace))
+                            .background(
+                                Circle()
+                                    .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme).opacity(1))
+                                    .cornerRadius(25.0)
+                            )
+                    })
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.leading)
+                .padding(.trailing)
+                .padding(.bottom)
+                .disabled(!self.canSaveChanges)
             }
         }
-        .padding()
+        .padding(.top)
+        .presentationDragIndicator(.visible)
+        .background(Color.setViewBackgroundColor(colorScheme: self.colorScheme))
+    }
+    
+    private func hasAnyNoteValueChanged() -> Bool {
+        if self.name != "" || self.noteBody != "" || self.switchTitle != "" || self.isSwitchOn != false || self.isPinned != false {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    private func isAnyFieldFocused() -> Bool {
+        if self.isNameFieldFocus == true || self.isBodyFieldFocus == true  || self.isSwitchTitleFieldFocus == true {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    private func resetFocusState() -> Void {
+        self.isNameFieldFocus = false
+        self.isBodyFieldFocus = false
+        self.isSwitchTitleFieldFocus = false
     }
 }
 
 #Preview {
     NewNoteView()
+        .environmentObject(ItemStore())
+        .preferredColorScheme(.light)
 }
