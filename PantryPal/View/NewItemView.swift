@@ -295,7 +295,7 @@ struct NewItemView: View {
                         self.saveAnimation = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                             self.saveAnimation = false
-                            self.itemStore.addNewEntry(name: self.name, quantity: self.total, total: self.total, bulkPrice: self.bulkPrice, unitPrice: self.unitPrice, note: self.note)
+                            self.itemStore.addNewEntry(name: self.name, quantity: self.quantity, total: self.total, bulkPrice: self.bulkPrice, unitPrice: self.unitPrice, note: self.note)
                             self.itemStore.saveChanges()
                             self.canSaveChanges = false
                             self.dismiss()
