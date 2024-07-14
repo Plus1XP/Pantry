@@ -30,54 +30,58 @@ struct ContentView: View {
             //MARK: Item TabView
             NavigationView {
                 List(selection: $itemStore.itemSelection) {
-                    ForEach(self.itemStore.searchResults, id: \.self) { item in
-                        //MARK: Item Information
-                        NavigationLink {
-                            ItemDetailsView(isHideKeyboardButtonAcitve: $isHideKeyboardButtonAcitve, item: item)
-                            .navigationBarItems(
-                                trailing:
-                                    Button(action: {
-                                        withAnimation(.bouncy) {
-                                            self.isHideKeyboardButtonAcitve = false
-                                        }
-                                    }) {
-                                        Label("Edit Details", systemImage: "keyboard.chevron.compact.down")
-                                            .symbolEffect(.bounce, value: self.isHideKeyboardButtonAcitve)
-                                            .foregroundStyle(self.isHideKeyboardButtonAcitve ? .blue : .gray)
-                                    }
-                                    .disabled(!self.isHideKeyboardButtonAcitve)
-                            )
-                            .navigationTitle("Item Details")
-                            .navigationBarTitleDisplayMode(.inline)
-                            .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
-                            .onDisappear(perform: {
-                                self.isHideKeyboardButtonAcitve = false
-                                self.itemStore.itemSelection.removeAll()
-                            })
-                        } label: {
-                            //MARK: Item List
-                            ItemRowView(item: item)
-                                .disabled(!canEditEmojis)
-                        }
-                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                            Button("Restore") {
-                                let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-                                feedbackGenerator?.notificationOccurred(.success)
-                                self.itemStore.restoreQuantitySingleEntry(entry: item)
+                    if self.itemStore.items.isEmpty {
+                        ContentUnavailableView("What's in your pantry?...", systemImage: "cart")
+                    } else {
+                        ForEach(self.itemStore.searchResults, id: \.self) { item in
+                            //MARK: Item Information
+                            NavigationLink {
+                                ItemDetailsView(isHideKeyboardButtonAcitve: $isHideKeyboardButtonAcitve, item: item)
+                                    .navigationBarItems(
+                                        trailing:
+                                            Button(action: {
+                                                withAnimation(.bouncy) {
+                                                    self.isHideKeyboardButtonAcitve = false
+                                                }
+                                            }) {
+                                                Label("Edit Details", systemImage: "keyboard.chevron.compact.down")
+                                                    .symbolEffect(.bounce, value: self.isHideKeyboardButtonAcitve)
+                                                    .foregroundStyle(self.isHideKeyboardButtonAcitve ? .blue : .gray)
+                                            }
+                                            .disabled(!self.isHideKeyboardButtonAcitve)
+                                    )
+                                    .navigationTitle("Item Details")
+                                    .navigationBarTitleDisplayMode(.inline)
+                                    .foregroundStyle(setFontColor(colorScheme: colorScheme), .blue)
+                                    .onDisappear(perform: {
+                                        self.isHideKeyboardButtonAcitve = false
+                                        self.itemStore.itemSelection.removeAll()
+                                    })
+                            } label: {
+                                //MARK: Item List
+                                ItemRowView(item: item)
+                                    .disabled(!canEditEmojis)
                             }
-                            .tint(.green)
-                        }
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                            Button("Delete", role: .destructive) {
-                                let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-                                feedbackGenerator?.notificationOccurred(.success)
-                                self.itemStore.deleteEntry(entry: item)
+                            .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                Button("Restore") {
+                                    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+                                    feedbackGenerator?.notificationOccurred(.success)
+                                    self.itemStore.restoreQuantitySingleEntry(entry: item)
+                                }
+                                .tint(.green)
+                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button("Delete", role: .destructive) {
+                                    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+                                    feedbackGenerator?.notificationOccurred(.success)
+                                    self.itemStore.deleteEntry(entry: item)
+                                }
                             }
                         }
+                        .onMove(perform: { indices, newOffset in
+                            self.itemStore.moveEntry(from: indices, to: newOffset)
+                        })
                     }
-                    .onMove(perform: { indices, newOffset in
-                        self.itemStore.moveEntry(from: indices, to: newOffset)
-                    })
                 }
                 //MARK: Item Navigation
                 .navigationTitle("Items")
@@ -189,53 +193,57 @@ struct ContentView: View {
             //MARK: Note TabView
             NavigationView {
                 List(selection: $noteStore.noteSelection) {
-                    ForEach(self.noteStore.combinedResults, id: \.self) { note in
-                        //MARK: Note Information
-                        NavigationLink {
-                            NoteDetailsView(isHideKeyboardButtonAcitve: $isHideKeyboardButtonAcitve, note: note)
-                            .navigationBarItems(
-                                trailing:
-                                    Button(action: {
-                                        withAnimation(.bouncy) {
-                                            self.isHideKeyboardButtonAcitve = false
-                                        }
-                                    }) {
-                                        Label("Edit Details", systemImage: "keyboard.chevron.compact.down")
-                                            .symbolEffect(.bounce, value: self.isHideKeyboardButtonAcitve)
-                                            .foregroundStyle(self.isHideKeyboardButtonAcitve ? .blue : .gray)
-                                    }
-                                    .disabled(!self.isHideKeyboardButtonAcitve)
-                            )
-                            .navigationTitle("Note Details")
-                            .navigationBarTitleDisplayMode(.inline)
-                            .foregroundStyle(setFontColor(colorScheme: self.colorScheme), .blue)
-                            .onDisappear(perform: {
-                                self.isHideKeyboardButtonAcitve = false
-                                self.noteStore.noteSelection.removeAll()
-                            })
-                        } label: {
-                            //MARK: Note List
-                            NoteRowView(note: Binding(get: {note}, set: {_ in}))
-                        }
-                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                            Button("Pin") {
-                                let selectionFeedback = UISelectionFeedbackGenerator()
-                                selectionFeedback.selectionChanged()
-                                self.noteStore.updatePin(entry: note)
+                    if self.noteStore.notes.isEmpty {
+                        ContentUnavailableView("What would you like to jot down?...", systemImage: "note.text")
+                    } else {
+                        ForEach(self.noteStore.combinedResults, id: \.self) { note in
+                            //MARK: Note Information
+                            NavigationLink {
+                                NoteDetailsView(isHideKeyboardButtonAcitve: $isHideKeyboardButtonAcitve, note: note)
+                                    .navigationBarItems(
+                                        trailing:
+                                            Button(action: {
+                                                withAnimation(.bouncy) {
+                                                    self.isHideKeyboardButtonAcitve = false
+                                                }
+                                            }) {
+                                                Label("Edit Details", systemImage: "keyboard.chevron.compact.down")
+                                                    .symbolEffect(.bounce, value: self.isHideKeyboardButtonAcitve)
+                                                    .foregroundStyle(self.isHideKeyboardButtonAcitve ? .blue : .gray)
+                                            }
+                                            .disabled(!self.isHideKeyboardButtonAcitve)
+                                    )
+                                    .navigationTitle("Note Details")
+                                    .navigationBarTitleDisplayMode(.inline)
+                                    .foregroundStyle(setFontColor(colorScheme: self.colorScheme), .blue)
+                                    .onDisappear(perform: {
+                                        self.isHideKeyboardButtonAcitve = false
+                                        self.noteStore.noteSelection.removeAll()
+                                    })
+                            } label: {
+                                //MARK: Note List
+                                NoteRowView(note: Binding(get: {note}, set: {_ in}))
                             }
-                            .tint(.orange)
-                        }
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                            Button("Delete", role: .destructive) {
-                                let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-                                feedbackGenerator?.notificationOccurred(.success)
-                                self.noteStore.deleteEntry(entry: note)
+                            .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                Button("Pin") {
+                                    let selectionFeedback = UISelectionFeedbackGenerator()
+                                    selectionFeedback.selectionChanged()
+                                    self.noteStore.updatePin(entry: note)
+                                }
+                                .tint(.orange)
+                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button("Delete", role: .destructive) {
+                                    let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+                                    feedbackGenerator?.notificationOccurred(.success)
+                                    self.noteStore.deleteEntry(entry: note)
+                                }
                             }
                         }
+                        .onMove(perform: { indices, newOffset in
+                            self.noteStore.moveEntry(from: indices, to: newOffset)
+                        })
                     }
-                    .onMove(perform: { indices, newOffset in
-                        self.noteStore.moveEntry(from: indices, to: newOffset)
-                    })
                 }
                 //MARK: Note Navigation
                 .navigationTitle("Notes")
