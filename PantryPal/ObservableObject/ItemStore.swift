@@ -245,6 +245,7 @@ class ItemStore: ObservableObject {
     func cacheChanges(entry: Item) -> Void {
         self.cacheItemPosition()
         itemCache.append(ItemCache(id: entry.id, position: entry.position, name: entry.name, quantity: entry.quantity, total: entry.total, bulkprice: entry.bulkprice, unitprice: entry.unitprice, note: entry.note, created: entry.created, modified: entry.modified))
+//        dump(itemCache)
         self.saveChanges()
     }
     
