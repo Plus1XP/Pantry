@@ -37,13 +37,15 @@ struct ItemDetailsView: View {
     var body: some View {
         VStack {
             //MARK: Item Name
-            HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                EmojiPicker(emoji: Binding(get: {String(self.name.onlyEmoji().prefix(1))}, set: {self.name = $0}), placeholder: "Untitled Item", emojiAlignment: .center, fontSize: 50)
-                    .fixedSize(horizontal: true, vertical: true)
-                    .focused($isFocus, equals: .name)
-                    .scaleEffect(self.isFocus == .name ? self.bigScale: self.normalScale)
-            })
-            .padding(.bottom, (self.isFocus != nil) ? 0 : nil)
+            if !self.canHideNamePlaceholderField {
+                HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
+                    EmojiPicker(emoji: Binding(get: {String(self.name.onlyEmoji().prefix(1))}, set: {self.name = $0}), placeholder: "Untitled Item", emojiAlignment: .center, fontSize: 50)
+                        .fixedSize(horizontal: true, vertical: true)
+                        .focused($isFocus, equals: .name)
+                        .scaleEffect(self.isFocus == .name ? self.bigScale: self.normalScale)
+                })
+                .padding(.bottom, (self.isFocus != nil) ? 0 : nil)
+            }
             
             //MARK: Item Quantity
             if !self.canHideQuantityField {
@@ -145,6 +147,21 @@ struct ItemDetailsView: View {
                     .scrollContentBackground(.hidden) // <- Hide it
                     .background(.clear) // To see this
                     .focused($isFocus, equals: .note)
+                    .onChange(of: self.isFocus, {
+                        if self.isFocus == .note {
+                            withAnimation(.bouncy) {
+//                                canHideNamePlaceholderField = true
+                                canHideQuantityField = true
+                                canHidePriceField = true
+                            }
+                        } else {
+                            withAnimation(.bouncy) {
+//                                canHideNamePlaceholderField = false
+                                canHideQuantityField = false
+                                canHidePriceField = false
+                            }
+                        }
+                    })
                 
                 if (self.isFocus != .note ) && self.note == "" {
                     Text("No additional text")
@@ -158,7 +175,7 @@ struct ItemDetailsView: View {
             .padding(.trailing)
             .padding(.bottom)
             
-            //MARK: Item Lst Modified
+            //MARK: Item Last Modified
             if !self.isHideKeyboardButtonAcitve {
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
                     Text("Last Modified")
@@ -201,7 +218,7 @@ struct ItemDetailsView: View {
                     }, label: {
                         Image(systemName: self.cancelAnimation ? "xmark.circle" : "xmark.circle.fill")
                     })
-                    .buttonStyle(CancelButtonStyle(clearAnimation: $cancelAnimation))
+                    .buttonStyle(CancelButtonStyle(cancelAnimation: $cancelAnimation))
                     Spacer()
                     Button(action: {
                         self.saveAnimation = true
@@ -233,7 +250,9 @@ struct ItemDetailsView: View {
             }
         })
         .onChange(of: self.hasAnyItemValueChanged(), {
-            self.canSaveChanges = self.hasAnyItemValueChanged()
+            withAnimation(.bouncy, {
+                self.canSaveChanges = self.hasAnyItemValueChanged()
+            })
         })
         .onChange(of: self.isHideKeyboardButtonAcitve, {
             if !self.isHideKeyboardButtonAcitve {

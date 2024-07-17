@@ -9,14 +9,14 @@ import SwiftUI
 
 struct CancelButtonStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
-    @Binding var clearAnimation: Bool
+    @Binding var cancelAnimation: Bool
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.largeTitle)
             .foregroundStyle(.red)
-            .symbolEffect(.bounce, options: .speed(2), value: self.clearAnimation)
-            .symbolEffect(.pulse.wholeSymbol, options: .repeating, value: self.clearAnimation)
+            .symbolEffect(.bounce, options: .speed(2), value: self.cancelAnimation)
+            .symbolEffect(.pulse.wholeSymbol, options: .repeating, value: self.cancelAnimation)
             .contentTransition(.symbolEffect(.replace))
             .background(
                 Circle()

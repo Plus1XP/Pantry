@@ -165,7 +165,7 @@ struct ContentView: View {
                 Text("Items")
             }
             .sheet(isPresented: $isNewItemPopoverPresented) {
-                NewItemView()
+                NewItemView(isHideKeyboardButtonAcitve: $isHideKeyboardButtonAcitve)
             }
             .tag(0)
             //MARK: AddEntry TabView
@@ -307,7 +307,7 @@ struct ContentView: View {
                 Text("Notes")
             }
             .sheet(isPresented: $isNewNotePopoverPresented) {
-                NewNoteView()
+                NewNoteView(isHideKeyboardButtonAcitve: $isHideKeyboardButtonAcitve)
             }
             .tag(2)
         }

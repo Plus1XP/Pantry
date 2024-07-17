@@ -11,29 +11,16 @@ struct NewNoteView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var noteStore: NoteStore
-    @State private var name: String = "" {
-        didSet {
-            self.canSaveChanges = self.hasAnyNoteValueChanged()
-        }
-    }
-    @State private var noteBody: String = "" {
-        didSet {
-            self.canSaveChanges = self.hasAnyNoteValueChanged()
-        }
-    }
-    @State private var switchTitle: String = "" {
-        didSet {
-            self.canSaveChanges = self.hasAnyNoteValueChanged()
-        }
-    }
+    @State private var name: String = ""
+    @State private var noteBody: String = ""
+    @State private var switchTitle: String = ""
     @State var isPinned: Bool = false
     @State var isSwitchOn: Bool = false
-    @State private var clearAnimation: Bool = false
+    @State private var cancelAnimation: Bool = false
     @State private var saveAnimation: Bool = false
     @State private var canSaveChanges: Bool = false
-    @FocusState private var isNameFieldFocus: Bool
-    @FocusState private var isBodyFieldFocus: Bool
-    @FocusState private var isSwitchTitleFieldFocus: Bool
+    @Binding var isHideKeyboardButtonAcitve: Bool
+    @FocusState private var isFocus: NoteField?
     private let sectionTitleColor: Color = Color.secondary
     private let bigScale: CGFloat = 1.1
     private let normalScale: CGFloat = 1
@@ -42,17 +29,7 @@ struct NewNoteView: View {
     var body: some View {
         VStack {
             HStack {
-                TextField("Untitled Note", text: Binding(get: {self.name}, set: {self.name = $0}))
-                    .font(.title2)
-                    .multilineTextAlignment(.leading)
-                    .textCase(nil)
-                    .disableAutocorrection(false)
-                    .focused($isNameFieldFocus)
-                    .scaleEffect(self.isNameFieldFocus ? self.bigScale: self.normalScale)
-                    .padding(.leading, 20)
-                    .padding(EdgeInsets(top: 0, leading: self.isNameFieldFocus ? 15: 0, bottom: 0, trailing: self.isNameFieldFocus ? 15: 0))
-                    .frame(maxWidth: .infinity, alignment: .center)
-                
+                // Dummy Toggle to center note Title
                 Toggle(isOn: $isPinned) {
                     Image(systemName: self.isPinned ? "pin.fill" : "pin")
                         .symbolEffect(.bounce.down, value: self.isPinned)
@@ -62,14 +39,31 @@ struct NewNoteView: View {
                 .foregroundStyle(.orange, .orange)
                 .tint(.clear)
                 .toggleStyle(.button)
-                .onChange(of: self.isPinned, {
-                    self.canSaveChanges = self.hasAnyNoteValueChanged()
-                })
+                .frame(maxWidth: 25, alignment: .center)
+                .hidden()
+                Spacer()
+                TextField("Untitled Note", text: Binding(get: {self.name}, set: {self.name = $0}))
+                    .font(.title2)
+                    .multilineTextAlignment(.center)
+                    .textCase(nil)
+                    .disableAutocorrection(false)
+                    .focused($isFocus, equals: .name)
+                    .scaleEffect(self.isFocus == .name ? self.bigScale: self.normalScale)
+                Spacer()
+                Toggle(isOn: $isPinned) {
+                    Image(systemName: self.isPinned ? "pin.fill" : "pin")
+                        .symbolEffect(.bounce.down, value: self.isPinned)
+                        .contentTransition(.symbolEffect(.replace))
+                }
+                .font(.title3)
+                .foregroundStyle(.orange, .orange)
+                .tint(.clear)
+                .toggleStyle(.button)
                 .frame(maxWidth: 25, alignment: .center)
             }
             .padding(.leading)
             .padding(.trailing)
-            .padding(.bottom)
+            .padding(.bottom, (self.isFocus != nil) ? 0 : nil)
             
             // TextEditor does not have a placeholder Using a
             // ZStack & FocusState as a work around.
@@ -77,29 +71,19 @@ struct NewNoteView: View {
                 TextEditor(text: Binding(get: {self.noteBody}, set: {self.noteBody = $0}))
                     .scrollContentBackground(.hidden) // <- Hide it
                     .background(.clear) // To see this
-                    .focused($isBodyFieldFocus)
-                if !self.isBodyFieldFocus && (self.noteBody == "") {
+                    .focused($isFocus, equals: .noteBody)
+
+                if (self.isFocus != .noteBody ) && (self.noteBody == "") {
                     Text("No additional text")
                         .foregroundColor(Color(uiColor: .placeholderText))
                         .multilineTextAlignment(.leading)
                         .allowsHitTesting(false)
                 }
             }
-            .padding()
-            .foregroundColor(.primary)
-            .background(
-                RoundedRectangle(
-                    cornerRadius: 12,
-                    style: .continuous
-                )
-                .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
-            )
-            .border(self.isBodyFieldFocus ? self.colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
-            .cornerRadius(12)
-            .shadow(color: self.isBodyFieldFocus ? self.colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
+            .withFocusFieldStyle(colorScheme: self.colorScheme, focusState: self.isFocus == .noteBody)
             .padding(.leading)
             .padding(.trailing)
-            .padding(.bottom)
+            .padding(.bottom, (self.isFocus != nil) ? 0 : nil)
             
             HStack {
                 Toggle(isOn: $isSwitchOn) {
@@ -107,14 +91,11 @@ struct NewNoteView: View {
                         .multilineTextAlignment(.leading)
                         .textCase(nil)
                         .disableAutocorrection(false)
-                        .padding(EdgeInsets(top: 0, leading: self.isSwitchTitleFieldFocus ? 15: 0, bottom: 0, trailing: self.isSwitchTitleFieldFocus ? 15: 0))
-                        .focused($isSwitchTitleFieldFocus)
-                        .scaleEffect(self.isSwitchTitleFieldFocus ? self.bigScale: self.normalScale)
+                        .padding(EdgeInsets(top: 0, leading: self.isFocus == .switchTitle ? 15: 0, bottom: 0, trailing: self.isFocus == .switchTitle ? 15: 0))
+                        .focused($isFocus, equals: .switchTitle)
+                        .scaleEffect(self.isFocus == .switchTitle ? self.bigScale: self.normalScale)
                 }
                 .padding([.leading, .trailing], 20)
-                .onChange(of: self.isSwitchOn, {
-                    self.canSaveChanges = self.hasAnyNoteValueChanged()
-                })
             }
             .padding(.leading)
             .padding(.trailing)
@@ -124,25 +105,25 @@ struct NewNoteView: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        self.clearAnimation = true
+                        self.cancelAnimation = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                            self.clearAnimation = false
+                            self.cancelAnimation = false
                             self.noteStore.discardChanges()
                             self.canSaveChanges = false
-                            self.resetFocusState()
+                            self.isHideKeyboardButtonAcitve = false
+                            self.hideKeyboard()
                             self.dismiss()
                         }
                     }, label: {
-                        Image(systemName: self.clearAnimation ? "xmark.circle" : "xmark.circle.fill")
+                        Image(systemName: self.cancelAnimation ? "xmark.circle" : "xmark.circle.fill")
                     })
-                    .buttonStyle(CancelButtonStyle(clearAnimation: $clearAnimation))
+                    .buttonStyle(CancelButtonStyle(cancelAnimation: $cancelAnimation))
                     Spacer()
                     Button(action: {
                         self.saveAnimation = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                             self.saveAnimation = false
-                            self.noteStore.addNewEntry(name: self.name, body: self.noteBody, switchTitle: self.switchTitle, isSwitchOn: self.isSwitchOn, isPinned: self.isPinned)
-                            self.noteStore.saveChanges()
+                            self.saveNoteToStore()
                             self.canSaveChanges = false
                             self.dismiss()
                         }
@@ -161,6 +142,19 @@ struct NewNoteView: View {
         }
         .padding(.top)
         .presentationDragIndicator(.visible)
+        .onChange(of: self.isFocus, {
+            if (self.isFocus != nil) {
+                self.isHideKeyboardButtonAcitve = true
+            }
+        })
+        .onChange(of: self.hasAnyNoteValueChanged(), {
+            self.canSaveChanges = self.hasAnyNoteValueChanged()
+        })
+        .onChange(of: self.isHideKeyboardButtonAcitve, {
+            if !self.isHideKeyboardButtonAcitve {
+                self.hideKeyboard()
+            }
+        })
         .background(Color.setViewBackgroundColor(colorScheme: self.colorScheme))
     }
     
@@ -172,23 +166,14 @@ struct NewNoteView: View {
         }
     }
     
-    private func isAnyFieldFocused() -> Bool {
-        if self.isNameFieldFocus == true || self.isBodyFieldFocus == true  || self.isSwitchTitleFieldFocus == true {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    private func resetFocusState() -> Void {
-        self.isNameFieldFocus = false
-        self.isBodyFieldFocus = false
-        self.isSwitchTitleFieldFocus = false
+    private func saveNoteToStore() -> Void {
+        self.noteStore.addNewEntry(name: self.name, body: self.noteBody, switchTitle: self.switchTitle, isSwitchOn: self.isSwitchOn, isPinned: self.isPinned)
+        self.noteStore.saveChanges()
     }
 }
 
 #Preview {
-    NewNoteView()
+    NewNoteView(isHideKeyboardButtonAcitve: .constant(false))
         .environmentObject(ItemStore())
         .preferredColorScheme(.light)
 }

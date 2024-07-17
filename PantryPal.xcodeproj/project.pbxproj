@@ -108,7 +108,6 @@
 		2FE1834F2B03E35000F7CEF7 /* BiometricStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */; };
 		2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */; };
 		2FE30D632B04309E00927FC6 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE30D622B04309E00927FC6 /* LoginView.swift */; };
-		2FE3F4782C47E64200609F0C /* EditNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE3F4772C47E64200609F0C /* EditNoteView.swift */; };
 		2FEF11182B44B7B40066DE69 /* AppLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEF11172B44B7B40066DE69 /* AppLogoView.swift */; };
 		2FEF111A2B44B9340066DE69 /* basket.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FEF11192B44B9340066DE69 /* basket.png */; };
 		2FEF111D2B44BB340066DE69 /* app-store-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FEF111B2B44BB340066DE69 /* app-store-2.png */; };
@@ -174,7 +173,6 @@
 		2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		2FE183522B03E96700F7CEF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2FE30D622B04309E00927FC6 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		2FE3F4772C47E64200609F0C /* EditNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteView.swift; sourceTree = "<group>"; };
 		2FEF11172B44B7B40066DE69 /* AppLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoView.swift; sourceTree = "<group>"; };
 		2FEF11192B44B9340066DE69 /* basket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = basket.png; sourceTree = "<group>"; };
 		2FEF111B2B44BB340066DE69 /* app-store-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-store-2.png"; sourceTree = "<group>"; };
@@ -225,7 +223,6 @@
 				2FBD25762AF2878300C26DA3 /* ContentView.swift */,
 				2F1B6D152AFFCBA600377207 /* ItemRowView.swift */,
 				2F1B6D112AFD445A00377207 /* ItemDetailsView.swift */,
-				2FE3F4772C47E64200609F0C /* EditNoteView.swift */,
 				2F66E15B2AF3F7DC00A007F4 /* NewItemView.swift */,
 				2F7F0E272AF98BC900979951 /* SettingsView.swift */,
 				2F1B6D192B01370100377207 /* NoteRowView.swift */,
@@ -503,7 +500,6 @@
 				2F7561542C44B2AA008D7BE5 /* ZStack.swift in Sources */,
 				2FE30D632B04309E00927FC6 /* LoginView.swift in Sources */,
 				2F7561562C451BD5008D7BE5 /* FocusField.swift in Sources */,
-				2FE3F4782C47E64200609F0C /* EditNoteView.swift in Sources */,
 				2F1B6D162AFFCBA600377207 /* ItemRowView.swift in Sources */,
 				2FCEF36A2B1E1F3700E5DCCA /* SettingsButton.swift in Sources */,
 				2FBD25722AF2878300C26DA3 /* Persistence.swift in Sources */,
