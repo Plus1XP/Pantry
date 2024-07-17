@@ -71,6 +71,9 @@ struct EmojiPicker: UIViewRepresentable {
         emojiTextField.font = UIFont.preferredFont(forTextStyle: fontStyle)
         emojiTextField.font = UIFont.systemFont(ofSize: fontSize)
         emojiTextField.tintColor = .clear
+        
+        // Changes the size of the place holder text to 17, equal to default body size.
+//        emojiTextField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)])
         return emojiTextField
     }
     

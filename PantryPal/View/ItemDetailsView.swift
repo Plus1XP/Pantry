@@ -13,39 +13,13 @@ struct ItemDetailsView: View {
     @Environment(\.locale) private var locale
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var itemStore: ItemStore
-    @State private var name: String = "" {
-        didSet {
-            self.canSaveChanges = self.hasAnyItemValueChanged()
-        }
-    }
-    @State private var quantity: Int64 = 0 {
-        didSet {
-            self.canSaveChanges = self.hasAnyItemValueChanged()
-        }
-    }
-    @State private var total: Int64 = 0 {
-        didSet {
-            self.canSaveChanges = self.hasAnyItemValueChanged()
-        }
-    }
-    @State private var bulkPrice: Double = 0 {
-        didSet {
-            self.canSaveChanges = self.hasAnyItemValueChanged()
-        }
-    }
-    @State private var unitPrice: Double = 0 {
-        didSet {
-            self.canSaveChanges = self.hasAnyItemValueChanged()
-        }
-    }
-    @State private var note: String = "" {
-        didSet {
-            self.canSaveChanges = self.hasAnyItemValueChanged()
-        }
-    }
-    @State private var minusAnimation: Bool = false
-    @State private var plusAnimation: Bool = false
-    @State private var clearAnimation: Bool = false
+    @State private var name: String = ""
+    @State private var quantity: Int64 = 0
+    @State private var total: Int64 = 0
+    @State private var bulkPrice: Double = 0
+    @State private var unitPrice: Double = 0
+    @State private var note: String = ""
+    @State private var cancelAnimation: Bool = false
     @State private var saveAnimation: Bool = false
     @State private var canSaveChanges: Bool = false
     @State private var canHideNamePlaceholderField: Bool = false
@@ -53,13 +27,7 @@ struct ItemDetailsView: View {
     @State private var canHidePriceField: Bool = false
     @State private var canHideLastModifiedField: Bool = false
     @Binding var isHideKeyboardButtonAcitve: Bool
-    @FocusState private var isPlaceholderFieldFocus: Bool
-    @FocusState private var isNameFieldFocus: Bool
-    @FocusState private var isQuantityFieldFocus: Bool
-    @FocusState private var isTotalFieldFocus: Bool
-    @FocusState private var isBulkPriceFieldFocus: Bool
-    @FocusState private var isUnitPriceFieldFocus: Bool
-    @FocusState private var isNoteFieldFocused: Bool
+    @FocusState private var isFocus: ItemField?
     var item: Item
     private let sectionTitleColor: Color = Color.secondary
     private let bigScale: CGFloat = 1.1
@@ -71,14 +39,11 @@ struct ItemDetailsView: View {
             //MARK: Item Name
             HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
                 EmojiPicker(emoji: Binding(get: {String(self.name.onlyEmoji().prefix(1))}, set: {self.name = $0}), placeholder: "Untitled Item", emojiAlignment: .center, fontSize: 50)
-                        .fixedSize(horizontal: true, vertical: true)
-                        .focused($isNameFieldFocus)
-                        .onChange(of: self.isNameFieldFocus, {
-                            self.showDismissKeyboardButtonIfTrue(focusState: self.isNameFieldFocus)
-                        })
-                        .scaleEffect(self.isNameFieldFocus ? self.bigScale: self.normalScale)
+                    .fixedSize(horizontal: true, vertical: true)
+                    .focused($isFocus, equals: .name)
+                    .scaleEffect(self.isFocus == .name ? self.bigScale: self.normalScale)
             })
-            .padding(.bottom, self.isAnyFieldFocused() ? 0 : nil)
+            .padding(.bottom, (self.isFocus != nil) ? 0 : nil)
             
             //MARK: Item Quantity
             if !self.canHideQuantityField {
@@ -88,30 +53,11 @@ struct ItemDetailsView: View {
                         .textCase(nil)
                         .foregroundStyle(self.sectionTitleColor)
                 })
-
+                
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                    if self.isQuantityFieldFocus || self.isTotalFieldFocus {
+                    if self.isFocus == .quantity || self.isFocus == .total {
                         VStack(alignment: .center, content: {
-                            Button(action: {
-                                self.minusAnimation.toggle()
-                                if self.isQuantityFieldFocus && self.quantity > 0 {
-                                    self.quantity -= 1
-                                }
-                                else if self.isTotalFieldFocus && self.total > 0 {
-                                    if self.quantity == self.total {
-                                        self.quantity -= 1
-                                        self.total -= 1
-                                    } else {
-                                        self.total -= 1
-                                    }
-                                }
-                            }) {
-                                Image(systemName: "minus.circle.fill")
-                                    .symbolEffect(.bounce, options: .speed(2), value: self.minusAnimation)
-                                    .font(.title)
-                            }
-                            .padding()
-                            .foregroundStyle(.white, .blue)
+                            MinusButtonComponent(quantity: $quantity, total: $total, isFocus: self.isFocus)
                         })
                     }
                     
@@ -120,62 +66,26 @@ struct ItemDetailsView: View {
                             TextField("Quantity", text: Binding(get: {"\(self.quantity)"}, set: {self.quantity = Int64($0) ?? 0}), prompt: Text("Current"))
                                 .multilineTextAlignment(.trailing)
                                 .keyboardType(.numberPad)
-                                .focused($isQuantityFieldFocus)
-                                .onChange(of: self.isQuantityFieldFocus, {
-                                    self.showDismissKeyboardButtonIfTrue(focusState: self.isQuantityFieldFocus)
-                                })
+                                .focused($isFocus, equals: .quantity)
                             Text("of")
                             TextField("Total", text: Binding(get: {"\(self.total)"}, set: {self.total = Int64($0) ?? 0}), prompt: Text("Total"))
                                 .multilineTextAlignment(.leading)
                                 .keyboardType(.numberPad)
-                                .focused($isTotalFieldFocus)
-                                .onChange(of: self.isTotalFieldFocus, {
-                                    self.showDismissKeyboardButtonIfTrue(focusState: self.isTotalFieldFocus)
-                                })
+                                .focused($isFocus, equals: .total)
                         }
-                        .padding()
-                        .foregroundColor(.primary)
-                        .background(
-                            RoundedRectangle(
-                                cornerRadius: 12,
-                                style: .continuous
-                            )
-                            .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
-                        )
-                        .border(self.isQuantityFieldFocus || self.isTotalFieldFocus ? self.colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
-                        .cornerRadius(12)
-                        .shadow(color: self.isQuantityFieldFocus || self.isTotalFieldFocus ? self.colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
+                        .withFocusFieldStyle(colorScheme: self.colorScheme, focusState: self.isFocus == .quantity || self.isFocus == .total)
                     }
                     
-                    if self.isQuantityFieldFocus || self.isTotalFieldFocus {
+                    if self.isFocus == .quantity || self.isFocus == .total {
                         VStack(alignment: .center, content: {
-                            Button(action: {
-                                self.plusAnimation.toggle()
-                                if self.isQuantityFieldFocus {
-                                    if self.quantity == self.total {
-                                        self.quantity += 1
-                                        self.total += 1
-                                    } else {
-                                        self.quantity += 1
-                                    }
-                                }
-                                else if self.isTotalFieldFocus {
-                                    self.total += 1
-                                }
-                            }) {
-                                Image(systemName: "plus.circle.fill")
-                                    .symbolEffect(.bounce, options: .speed(2), value: self.plusAnimation)
-                                    .font(.title)
-                            }
-                            .padding()
-                            .foregroundStyle(.white, .blue)
+                            PlusButtonComponent(quantity: $quantity, total: $total, isFocus: self.isFocus)
                         })
                     }
                 })
                 .frame(maxWidth: .infinity)
                 .padding(.leading)
                 .padding(.trailing)
-                .padding(.bottom, self.isAnyFieldFocused() ? 0 : nil)
+                .padding(.bottom, (self.isFocus != nil) ? 0 : nil)
             }
             
             //MARK: Item Price
@@ -193,27 +103,11 @@ struct ItemDetailsView: View {
                                       format: .currency(code: self.locale.currency?.identifier ?? "USD"))
                             .multilineTextAlignment(.center)
                             .keyboardType(.decimalPad)
-                            .focused($isBulkPriceFieldFocus)
-                            .onChange(of: self.isBulkPriceFieldFocus, {
-                                self.showDismissKeyboardButtonIfTrue(focusState: self.isBulkPriceFieldFocus)
-                            })
+                            .focused($isFocus, equals: .bulkPrice)
                         }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.primary)
-                        .background(
-                            RoundedRectangle(
-                                cornerRadius: 12,
-                                style: .continuous
-                            )
-                            .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
-                        )
-                        
-                        .border(self.isBulkPriceFieldFocus ? self.colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
-                        .cornerRadius(12)
-                        .shadow(color: self.isBulkPriceFieldFocus ? self.colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
+                        .withFocusFieldStyle(colorScheme: self.colorScheme, focusState: self.isFocus == .bulkPrice)
                     }
-
+                    
                     VStack {
                         HStack {
                             Text("Price/Unit")
@@ -226,30 +120,14 @@ struct ItemDetailsView: View {
                                       format: .currency(code: self.locale.currency?.identifier ?? "USD"))
                             .multilineTextAlignment(.center)
                             .keyboardType(.decimalPad)
-                            .focused($isUnitPriceFieldFocus)
-                            .onChange(of: self.isUnitPriceFieldFocus, {
-                                self.showDismissKeyboardButtonIfTrue(focusState: self.isUnitPriceFieldFocus)
-                            })
+                            .focused($isFocus, equals: .unitPrice)
                         }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.primary)
-                        .background(
-                            RoundedRectangle(
-                                cornerRadius: 12,
-                                style: .continuous
-                            )
-                            .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
-                        )
-                        
-                        .border(self.isUnitPriceFieldFocus ? self.colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
-                        .cornerRadius(12)
-                        .shadow(color: self.isUnitPriceFieldFocus ? self.colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
+                        .withFocusFieldStyle(colorScheme: self.colorScheme, focusState: self.isFocus == .unitPrice)
                     }
                 }
                 .padding(.leading)
                 .padding(.trailing)
-                .padding(.bottom, self.isAnyFieldFocused() ? 0 : nil)
+                .padding(.bottom, (self.isFocus != nil) ? 0 : nil)
             }
             
             //MARK: Item Notes
@@ -264,31 +142,18 @@ struct ItemDetailsView: View {
             // ZStack & FocusState as a work around.
             ZStack(alignment: .topLeading, content: {
                 TextEditor(text: Binding(get: {self.note}, set: {self.note = $0}))
-                        .scrollContentBackground(.hidden) // <- Hide it
-                        .background(.clear) // To see this
-                        .focused($isNoteFieldFocused)
-                        .onChange(of: self.isNoteFieldFocused, {
-                            self.showDismissKeyboardButtonIfTrue(focusState: self.isNoteFieldFocused)
-                        })
-                if !self.isNoteFieldFocused && self.note == "" {
+                    .scrollContentBackground(.hidden) // <- Hide it
+                    .background(.clear) // To see this
+                    .focused($isFocus, equals: .note)
+                
+                if (self.isFocus != .note ) && self.note == "" {
                     Text("No additional text")
                         .foregroundColor(Color(uiColor: .placeholderText))
                         .multilineTextAlignment(.leading)
                         .allowsHitTesting(false)
                 }
             })
-            .padding()
-            .foregroundColor(.primary)
-            .background(
-                RoundedRectangle(
-                    cornerRadius: 12,
-                    style: .continuous
-                )
-                .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
-            )
-            .border(self.isNoteFieldFocused ? self.colorScheme == .light ? .white : Color(UIColor.secondarySystemBackground) : .clear)
-            .cornerRadius(12)
-            .shadow(color: self.isNoteFieldFocused ? self.colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.4) : .clear, radius: 2)
+            .withFocusFieldStyle(colorScheme: self.colorScheme, focusState: self.isFocus == .note)
             .padding(.leading)
             .padding(.trailing)
             .padding(.bottom)
@@ -325,36 +190,24 @@ struct ItemDetailsView: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        self.clearAnimation = true
+                        self.cancelAnimation = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                            self.clearAnimation = false
-                            self.name = self.item.name ?? ""
-                            self.quantity = self.item.quantity
-                            self.total = self.item.total
-                            self.bulkPrice = self.item.bulkprice
-                            self.unitPrice = self.item.unitprice
-                            self.note = self.item.note ?? ""
-                            self.itemStore.discardChanges()
+                            self.cancelAnimation = false
+                            self.loadItemFromStore()
                             self.canSaveChanges = false
-                            self.resetFocusState()
+                            self.isHideKeyboardButtonAcitve = false
+                            self.hideKeyboard()
                         }
                     }, label: {
-                        Image(systemName: self.clearAnimation ? "xmark.circle" : "xmark.circle.fill")
+                        Image(systemName: self.cancelAnimation ? "xmark.circle" : "xmark.circle.fill")
                     })
-                    .buttonStyle(CancelButtonStyle(clearAnimation: $clearAnimation))
+                    .buttonStyle(CancelButtonStyle(clearAnimation: $cancelAnimation))
                     Spacer()
                     Button(action: {
                         self.saveAnimation = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                             self.saveAnimation = false
-                            self.item.name = self.name
-                            self.item.quantity = self.quantity
-                            self.item.total = self.total
-                            self.item.bulkprice = self.bulkPrice
-                            self.item.unitprice = self.unitPrice
-                            self.item.note = self.note
-                            self.item.modified = Date()
-                            self.itemStore.saveChanges()
+                            self.saveItemToStore()
                             self.canSaveChanges = false
                             self.dismiss()
                         }
@@ -372,16 +225,19 @@ struct ItemDetailsView: View {
             }
         }
         .onAppear(perform: {
-            self.name = self.item.name ?? ""
-            self.quantity = self.item.quantity
-            self.total = self.item.total
-            self.bulkPrice = self.item.bulkprice
-            self.unitPrice = self.item.unitprice
-            self.note = self.item.note ?? ""
+            self.loadItemFromStore()
+        })
+        .onChange(of: self.isFocus, {
+            if (self.isFocus != nil) {
+                self.isHideKeyboardButtonAcitve = true
+            }
+        })
+        .onChange(of: self.hasAnyItemValueChanged(), {
+            self.canSaveChanges = self.hasAnyItemValueChanged()
         })
         .onChange(of: self.isHideKeyboardButtonAcitve, {
             if !self.isHideKeyboardButtonAcitve {
-                self.resetFocusState()
+                self.hideKeyboard()
             }
         })
         .background(Color.setViewBackgroundColor(colorScheme: self.colorScheme))
@@ -396,27 +252,25 @@ struct ItemDetailsView: View {
         }
     }
     
-    private func isAnyFieldFocused() -> Bool {
-        if self.isNameFieldFocus == true || self.isQuantityFieldFocus == true  || self.isTotalFieldFocus == true || self.isBulkPriceFieldFocus == true || self.isUnitPriceFieldFocus == true || self.isNoteFieldFocused == true {
-            return true
-        } else {
-            return false
-        }
+    private func loadItemFromStore() -> Void {
+        self.name = self.item.name ?? ""
+        self.quantity = self.item.quantity
+        self.total = self.item.total
+        self.bulkPrice = self.item.bulkprice
+        self.unitPrice = self.item.unitprice
+        self.note = self.item.note ?? ""
+        self.itemStore.discardChanges()
     }
     
-    private func showDismissKeyboardButtonIfTrue(focusState: Bool) -> Void {
-        if focusState {
-            self.isHideKeyboardButtonAcitve = true
-        }
-    }
-    
-    private func resetFocusState() -> Void {
-        self.isNameFieldFocus = false
-        self.isQuantityFieldFocus = false
-        self.isTotalFieldFocus = false
-        self.isBulkPriceFieldFocus = false
-        self.isUnitPriceFieldFocus = false
-        self.isNoteFieldFocused = false
+    private func saveItemToStore() -> Void {
+        self.item.name = self.name
+        self.item.quantity = self.quantity
+        self.item.total = self.total
+        self.item.bulkprice = self.bulkPrice
+        self.item.unitprice = self.unitPrice
+        self.item.note = self.note
+        self.item.modified = Date()
+        self.itemStore.saveChanges()
     }
 }
 

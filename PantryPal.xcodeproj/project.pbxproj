@@ -26,9 +26,13 @@
 		2F66E1612AF3FA2300A007F4 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */; };
 		2F66E1672AF5671C00A007F4 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1662AF5671C00A007F4 /* PersistenceController.swift */; };
 		2F7561472C4484BA008D7BE5 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561462C4484BA008D7BE5 /* View.swift */; };
-		2F75614B2C44913C008D7BE5 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F75614A2C44913C008D7BE5 /* TextFieldView.swift */; };
 		2F75614D2C4493D0008D7BE5 /* CancelButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F75614C2C4493D0008D7BE5 /* CancelButtonStyle.swift */; };
 		2F7561502C449564008D7BE5 /* SaveButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F75614F2C449564008D7BE5 /* SaveButtonStyle.swift */; };
+		2F7561522C449944008D7BE5 /* HStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561512C449944008D7BE5 /* HStack.swift */; };
+		2F7561542C44B2AA008D7BE5 /* ZStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561532C44B2AA008D7BE5 /* ZStack.swift */; };
+		2F7561562C451BD5008D7BE5 /* FocusField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561552C451BD5008D7BE5 /* FocusField.swift */; };
+		2F7561582C455C1C008D7BE5 /* MinusButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561572C455C1C008D7BE5 /* MinusButtonComponent.swift */; };
+		2F75615A2C455E0E008D7BE5 /* PlusButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561592C455E0E008D7BE5 /* PlusButtonComponent.swift */; };
 		2F7F0E262AF96EF700979951 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F0E252AF96EF700979951 /* Color.swift */; };
 		2F7F0E282AF98BC900979951 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F0E272AF98BC900979951 /* SettingsView.swift */; };
 		2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */; };
@@ -104,6 +108,7 @@
 		2FE1834F2B03E35000F7CEF7 /* BiometricStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */; };
 		2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */; };
 		2FE30D632B04309E00927FC6 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE30D622B04309E00927FC6 /* LoginView.swift */; };
+		2FE3F4782C47E64200609F0C /* EditNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE3F4772C47E64200609F0C /* EditNoteView.swift */; };
 		2FEF11182B44B7B40066DE69 /* AppLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEF11172B44B7B40066DE69 /* AppLogoView.swift */; };
 		2FEF111A2B44B9340066DE69 /* basket.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FEF11192B44B9340066DE69 /* basket.png */; };
 		2FEF111D2B44BB340066DE69 /* app-store-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FEF111B2B44BB340066DE69 /* app-store-2.png */; };
@@ -127,9 +132,13 @@
 		2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		2F66E1662AF5671C00A007F4 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		2F7561462C4484BA008D7BE5 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
-		2F75614A2C44913C008D7BE5 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 		2F75614C2C4493D0008D7BE5 /* CancelButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelButtonStyle.swift; sourceTree = "<group>"; };
 		2F75614F2C449564008D7BE5 /* SaveButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButtonStyle.swift; sourceTree = "<group>"; };
+		2F7561512C449944008D7BE5 /* HStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HStack.swift; sourceTree = "<group>"; };
+		2F7561532C44B2AA008D7BE5 /* ZStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZStack.swift; sourceTree = "<group>"; };
+		2F7561552C451BD5008D7BE5 /* FocusField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusField.swift; sourceTree = "<group>"; };
+		2F7561572C455C1C008D7BE5 /* MinusButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinusButtonComponent.swift; sourceTree = "<group>"; };
+		2F7561592C455E0E008D7BE5 /* PlusButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusButtonComponent.swift; sourceTree = "<group>"; };
 		2F7F0E252AF96EF700979951 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2F7F0E272AF98BC900979951 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreQuantityButton.swift; sourceTree = "<group>"; };
@@ -165,6 +174,7 @@
 		2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		2FE183522B03E96700F7CEF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2FE30D622B04309E00927FC6 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		2FE3F4772C47E64200609F0C /* EditNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteView.swift; sourceTree = "<group>"; };
 		2FEF11172B44B7B40066DE69 /* AppLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoView.swift; sourceTree = "<group>"; };
 		2FEF11192B44B9340066DE69 /* basket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = basket.png; sourceTree = "<group>"; };
 		2FEF111B2B44BB340066DE69 /* app-store-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-store-2.png"; sourceTree = "<group>"; };
@@ -200,6 +210,8 @@
 				2FBD25832AF290AE00C26DA3 /* String.swift */,
 				2F66E1662AF5671C00A007F4 /* PersistenceController.swift */,
 				2F7561462C4484BA008D7BE5 /* View.swift */,
+				2F7561512C449944008D7BE5 /* HStack.swift */,
+				2F7561532C44B2AA008D7BE5 /* ZStack.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -213,6 +225,7 @@
 				2FBD25762AF2878300C26DA3 /* ContentView.swift */,
 				2F1B6D152AFFCBA600377207 /* ItemRowView.swift */,
 				2F1B6D112AFD445A00377207 /* ItemDetailsView.swift */,
+				2FE3F4772C47E64200609F0C /* EditNoteView.swift */,
 				2F66E15B2AF3F7DC00A007F4 /* NewItemView.swift */,
 				2F7F0E272AF98BC900979951 /* SettingsView.swift */,
 				2F1B6D192B01370100377207 /* NoteRowView.swift */,
@@ -249,6 +262,7 @@
 				2FBD25712AF2878300C26DA3 /* Persistence.swift */,
 				2F11E04B2C3F1ABC00A3629C /* ItemCache.swift */,
 				2F11E04E2C3FF4F500A3629C /* NoteCache.swift */,
+				2F7561552C451BD5008D7BE5 /* FocusField.swift */,
 				2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */,
 				2FBD25732AF2878300C26DA3 /* Pantry.xcdatamodeld */,
 			);
@@ -286,6 +300,8 @@
 				2FCEF37E2B1E70D900E5DCCA /* ItemDeleteButton.swift */,
 				2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */,
 				2FD840592C3F0D780030C443 /* ItemUndoButton.swift */,
+				2F7561572C455C1C008D7BE5 /* MinusButtonComponent.swift */,
+				2F7561592C455E0E008D7BE5 /* PlusButtonComponent.swift */,
 				2FCEF36D2B1E59A100E5DCCA /* EditModeButton.swift */,
 				2FCEF3692B1E1F3700E5DCCA /* SettingsButton.swift */,
 				2FCEF3802B1E730C00E5DCCA /* PinnedNotesButton.swift */,
@@ -300,7 +316,6 @@
 		2F7561492C449118008D7BE5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2F75614A2C44913C008D7BE5 /* TextFieldView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -471,7 +486,6 @@
 				2FBD25702AF2878300C26DA3 /* PantryApp.swift in Sources */,
 				2F1B6CF02AFBD9C500377207 /* NewNoteView.swift in Sources */,
 				2FCEF3722B1E601900E5DCCA /* SelectAllNotesButtonView.swift in Sources */,
-				2F75614B2C44913C008D7BE5 /* TextFieldView.swift in Sources */,
 				2FCEF3812B1E730C00E5DCCA /* PinnedNotesButton.swift in Sources */,
 				2F7561502C449564008D7BE5 /* SaveButtonStyle.swift in Sources */,
 				2FBD25752AF2878300C26DA3 /* Pantry.xcdatamodeld in Sources */,
@@ -486,11 +500,15 @@
 				2FE1834D2B03E2E000F7CEF7 /* BiometricService.swift in Sources */,
 				2FBD25842AF290AE00C26DA3 /* String.swift in Sources */,
 				2FBD25772AF2878300C26DA3 /* ContentView.swift in Sources */,
+				2F7561542C44B2AA008D7BE5 /* ZStack.swift in Sources */,
 				2FE30D632B04309E00927FC6 /* LoginView.swift in Sources */,
+				2F7561562C451BD5008D7BE5 /* FocusField.swift in Sources */,
+				2FE3F4782C47E64200609F0C /* EditNoteView.swift in Sources */,
 				2F1B6D162AFFCBA600377207 /* ItemRowView.swift in Sources */,
 				2FCEF36A2B1E1F3700E5DCCA /* SettingsButton.swift in Sources */,
 				2FBD25722AF2878300C26DA3 /* Persistence.swift in Sources */,
 				2F11E0522C402FA800A3629C /* NoteUndoButton.swift in Sources */,
+				2F75615A2C455E0E008D7BE5 /* PlusButtonComponent.swift in Sources */,
 				2FCEF37D2B1E70CD00E5DCCA /* SelectAllItemsButton.swift in Sources */,
 				2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */,
 				2F66E1612AF3FA2300A007F4 /* ButtonStyle.swift in Sources */,
@@ -505,7 +523,9 @@
 				2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */,
 				2F1B6D142AFD94FA00377207 /* ItemStore.swift in Sources */,
 				2F1B6D122AFD445A00377207 /* ItemDetailsView.swift in Sources */,
+				2F7561582C455C1C008D7BE5 /* MinusButtonComponent.swift in Sources */,
 				2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */,
+				2F7561522C449944008D7BE5 /* HStack.swift in Sources */,
 				2FA93C022B38555F00A1F994 /* ShakeEffect.swift in Sources */,
 				2F75614D2C4493D0008D7BE5 /* CancelButtonStyle.swift in Sources */,
 				2F1B6D1C2B01371900377207 /* NoteDetailsView.swift in Sources */,
