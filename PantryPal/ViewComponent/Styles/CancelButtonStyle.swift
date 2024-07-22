@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CancelButtonStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
-    @Binding var cancelAnimation: Bool
+    var cancelAnimation: Bool
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

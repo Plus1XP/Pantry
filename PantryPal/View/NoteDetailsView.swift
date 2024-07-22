@@ -152,7 +152,7 @@ struct NoteDetailsView: View {
                     }, label: {
                         Image(systemName: self.cancelAnimation ? "xmark.circle" : "xmark.circle.fill")
                     })
-                    .buttonStyle(CancelButtonStyle(cancelAnimation: $cancelAnimation))
+                    .buttonStyle(CancelButtonStyle(cancelAnimation: self.cancelAnimation))
                     Spacer()
                     Button(action: {
                         self.saveAnimation = true
@@ -165,7 +165,7 @@ struct NoteDetailsView: View {
                     }, label: {
                         Image(systemName: self.saveAnimation ? "checkmark.circle" : "checkmark.circle.fill")
                     })
-                    .buttonStyle(SaveButtonStyle(saveAnimation: $saveAnimation))
+                    .buttonStyle(SaveButtonStyle(saveAnimation: self.saveAnimation))
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
@@ -183,15 +183,15 @@ struct NoteDetailsView: View {
                 self.isHideKeyboardButtonAcitve = true
             }
         })
-        .onChange(of: self.hasAnyNoteValueChanged(), {
-            withAnimation(.bouncy, {
-                self.canSaveChanges = self.hasAnyNoteValueChanged()
-            })
-        })
         .onChange(of: self.isHideKeyboardButtonAcitve, {
             if !self.isHideKeyboardButtonAcitve {
                 self.hideKeyboard()
             }
+        })
+        .onChange(of: self.hasAnyNoteValueChanged(), {
+            withAnimation(.bouncy, {
+                self.canSaveChanges = self.hasAnyNoteValueChanged()
+            })
         })
         .background(Color.setViewBackgroundColor(colorScheme: self.colorScheme))
     }

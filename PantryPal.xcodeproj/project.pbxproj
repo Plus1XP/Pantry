@@ -108,6 +108,14 @@
 		2FE1834F2B03E35000F7CEF7 /* BiometricStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */; };
 		2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */; };
 		2FE30D632B04309E00927FC6 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE30D622B04309E00927FC6 /* LoginView.swift */; };
+		2FE3F4792C486A9800609F0C /* FocusField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561552C451BD5008D7BE5 /* FocusField.swift */; };
+		2FE3F47A2C486AA700609F0C /* PlusButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561592C455E0E008D7BE5 /* PlusButtonComponent.swift */; };
+		2FE3F47B2C486AAA00609F0C /* MinusButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561572C455C1C008D7BE5 /* MinusButtonComponent.swift */; };
+		2FE3F47C2C486AB500609F0C /* CancelButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F75614C2C4493D0008D7BE5 /* CancelButtonStyle.swift */; };
+		2FE3F47D2C486AB800609F0C /* SaveButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F75614F2C449564008D7BE5 /* SaveButtonStyle.swift */; };
+		2FE3F47E2C486AC100609F0C /* ZStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561532C44B2AA008D7BE5 /* ZStack.swift */; };
+		2FE3F47F2C486AC400609F0C /* HStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561512C449944008D7BE5 /* HStack.swift */; };
+		2FE3F4812C486AD000609F0C /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561462C4484BA008D7BE5 /* View.swift */; };
 		2FEF11182B44B7B40066DE69 /* AppLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEF11172B44B7B40066DE69 /* AppLogoView.swift */; };
 		2FEF111A2B44B9340066DE69 /* basket.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FEF11192B44B9340066DE69 /* basket.png */; };
 		2FEF111D2B44BB340066DE69 /* app-store-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FEF111B2B44BB340066DE69 /* app-store-2.png */; };
@@ -532,6 +540,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FE3F4812C486AD000609F0C /* View.swift in Sources */,
 				2FD840242C3D71DD0030C443 /* PersistenceController.swift in Sources */,
 				2FD840252C3D71DD0030C443 /* AppLogoView.swift in Sources */,
 				2FD840262C3D71DD0030C443 /* NoteDebugButtons.swift in Sources */,
@@ -545,21 +554,28 @@
 				2FD8402F2C3D71DD0030C443 /* PinnedNotesButton.swift in Sources */,
 				2FD840302C3D71DD0030C443 /* Pantry.xcdatamodeld in Sources */,
 				2FD840312C3D71DD0030C443 /* NoteDeleteButton.swift in Sources */,
+				2FE3F47E2C486AC100609F0C /* ZStack.swift in Sources */,
 				2FD840322C3D71DD0030C443 /* NoteStore.swift in Sources */,
+				2FE3F47B2C486AAA00609F0C /* MinusButtonComponent.swift in Sources */,
 				2FD840332C3D71DD0030C443 /* ItemDeleteButton.swift in Sources */,
 				2F11E04A2C3F10E300A3629C /* ItemUndoButton.swift in Sources */,
 				2FD840342C3D71DD0030C443 /* Binding.swift in Sources */,
 				2FD840352C3D71DD0030C443 /* BiometricStore.swift in Sources */,
 				2FD840362C3D71DD0030C443 /* Color.swift in Sources */,
 				2FD840372C3D71DD0030C443 /* SettingsView.swift in Sources */,
+				2FE3F47C2C486AB500609F0C /* CancelButtonStyle.swift in Sources */,
 				2FD840382C3D71DD0030C443 /* BiometricService.swift in Sources */,
 				2FD840392C3D71DD0030C443 /* String.swift in Sources */,
 				2FD8403A2C3D71DD0030C443 /* ContentView.swift in Sources */,
 				2FD8403B2C3D71DD0030C443 /* LoginView.swift in Sources */,
+				2FE3F47F2C486AC400609F0C /* HStack.swift in Sources */,
+				2FE3F4792C486A9800609F0C /* FocusField.swift in Sources */,
 				2FD8403C2C3D71DD0030C443 /* ItemRowView.swift in Sources */,
 				2FD8403D2C3D71DD0030C443 /* SettingsButton.swift in Sources */,
+				2FE3F47D2C486AB800609F0C /* SaveButtonStyle.swift in Sources */,
 				2FD8403E2C3D71DD0030C443 /* Persistence.swift in Sources */,
 				2F11E0532C402FA800A3629C /* NoteUndoButton.swift in Sources */,
+				2FE3F47A2C486AA700609F0C /* PlusButtonComponent.swift in Sources */,
 				2FD8403F2C3D71DD0030C443 /* SelectAllItemsButton.swift in Sources */,
 				2FD840402C3D71DD0030C443 /* TextEditor.swift in Sources */,
 				2FD840412C3D71DD0030C443 /* ButtonStyle.swift in Sources */,

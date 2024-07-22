@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SaveButtonStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
-    @Binding var saveAnimation: Bool
+    var saveAnimation: Bool
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

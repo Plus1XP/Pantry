@@ -216,7 +216,7 @@ struct NewItemView: View {
                     }, label: {
                         Image(systemName: self.cancelAnimation ? "xmark.circle" : "xmark.circle.fill")
                     })
-                    .buttonStyle(CancelButtonStyle(cancelAnimation: $cancelAnimation))
+                    .buttonStyle(CancelButtonStyle(cancelAnimation: self.cancelAnimation))
                     Spacer()
                     Button(action: {
                         self.saveAnimation = true
@@ -230,7 +230,7 @@ struct NewItemView: View {
                     }, label: {
                         Image(systemName: self.saveAnimation ? "checkmark.circle" : "checkmark.circle.fill")
                     })
-                    .buttonStyle(SaveButtonStyle(saveAnimation: $saveAnimation))
+                    .buttonStyle(SaveButtonStyle(saveAnimation: self.saveAnimation))
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
@@ -242,18 +242,24 @@ struct NewItemView: View {
         }
         .padding(.top)
         .presentationDragIndicator(.visible)
+        // Added else as selecting an emoji is set to 1 character,
+        // This hides the keyboard while the button is active.
         .onChange(of: self.isFocus, {
             if (self.isFocus != nil) {
                 self.isHideKeyboardButtonAcitve = true
+            } else {
+                self.isHideKeyboardButtonAcitve = false
             }
-        })
-        .onChange(of: self.hasAnyItemValueChanged(), {
-            self.canSaveChanges = self.hasAnyItemValueChanged()
         })
         .onChange(of: self.isHideKeyboardButtonAcitve, {
             if !self.isHideKeyboardButtonAcitve {
                 self.hideKeyboard()
             }
+        })
+        .onChange(of: self.hasAnyItemValueChanged(), {
+            withAnimation(.bouncy, {
+                self.canSaveChanges = self.hasAnyItemValueChanged()
+            })
         })
         .background(Color.setViewBackgroundColor(colorScheme: self.colorScheme))
     }
