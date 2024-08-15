@@ -50,7 +50,7 @@ struct NewItemView: View {
                     }
                     .hidden()
                     Spacer()
-                    EmojiPicker(emoji: Binding(get: {String(self.name.onlyEmoji().prefix(1))}, set: {self.name = $0}), placeholder: "Untitled Item", emojiAlignment: .center, fontSize: 50)
+                    EmojiPicker(emoji: Binding(get: {String(self.name)}, set: {self.name = String($0.onlyEmoji().prefix(1))}), placeholder: "Untitled Item", emojiAlignment: .center, fontSize: 40)
                         .fixedSize(horizontal: true, vertical: true)
                         .focused($isFocus, equals: .name)
                         .scaleEffect(self.isFocus == .name ? self.bigScale: self.normalScale)

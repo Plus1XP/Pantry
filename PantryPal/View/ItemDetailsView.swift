@@ -39,7 +39,7 @@ struct ItemDetailsView: View {
             //MARK: Item Name
             if !self.canHideNamePlaceholderField {
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                    EmojiPicker(emoji: Binding(get: {String(self.name.onlyEmoji().prefix(1))}, set: {self.name = $0}), placeholder: "Untitled Item", emojiAlignment: .center, fontSize: 50)
+                    EmojiPicker(emoji: Binding(get: {String(self.name)}, set: {self.name = String($0.onlyEmoji().prefix(1))}), placeholder: "Untitled Item", emojiAlignment: .center, fontSize: 50)
                         .fixedSize(horizontal: true, vertical: true)
                         .focused($isFocus, equals: .name)
                         .scaleEffect(self.isFocus == .name ? self.bigScale: self.normalScale)
