@@ -197,8 +197,8 @@ struct NewItemView: View {
             .withFocusFieldStyle(colorScheme: self.colorScheme, focusState: self.isFocus == .note)
             .padding(.leading)
             .padding(.trailing)
-            .padding(.bottom)
-            
+            .padding(.bottom, (self.isFocus != nil) ? 0 : nil)
+
             //MARK: Item Save Changes
             if self.canSaveChanges {
                 HStack {
@@ -234,9 +234,10 @@ struct NewItemView: View {
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
+                .scaleEffect(self.smallScale)
                 .padding(.leading)
                 .padding(.trailing)
-                .padding(.bottom)
+                .padding(.bottom, (self.isFocus != nil) ? 5 : nil)
                 .disabled(!self.canSaveChanges)
             }
         }

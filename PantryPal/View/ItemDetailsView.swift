@@ -173,8 +173,8 @@ struct ItemDetailsView: View {
             .withFocusFieldStyle(colorScheme: self.colorScheme, focusState: self.isFocus == .note)
             .padding(.leading)
             .padding(.trailing)
-            .padding(.bottom)
-            
+            .padding(.bottom, (self.isFocus != nil) ? 0 : nil)
+
             //MARK: Item Last Modified
             if !self.isHideKeyboardButtonAcitve {
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
@@ -237,7 +237,7 @@ struct ItemDetailsView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.leading)
                 .padding(.trailing)
-                .padding(.bottom)
+                .padding(.bottom, (self.isFocus != nil) ? 5 : nil)
                 .disabled(!self.canSaveChanges)
             }
         }
