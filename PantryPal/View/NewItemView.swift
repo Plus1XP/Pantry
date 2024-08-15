@@ -223,7 +223,6 @@ struct NewItemView: View {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                             self.saveAnimation = false
                             self.saveItemToStore()
-//                            self.itemStore.saveChanges()
                             self.canSaveChanges = false
                             self.dismiss()
                         }

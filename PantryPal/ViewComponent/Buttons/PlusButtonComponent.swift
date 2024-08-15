@@ -34,6 +34,7 @@ struct PlusButtonComponent: View {
         }
         .padding()
         .foregroundStyle(.white, .blue)
+        .buttonRepeatBehavior(.enabled)
     }
 }
 
