@@ -13,8 +13,25 @@ struct NewItemView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var itemStore: ItemStore
     @State private var name: String = ""
-    @State private var quantity: Int64 = 0
-    @State private var total: Int64 = 0
+    @State private var quantity: Int64 = 0 {
+        didSet {
+            if quantity > itemStore.maxItemQuantity {
+                quantity = itemStore.maxItemQuantity
+                confirmMaximumItemsAlert = true
+            }
+            if quantity > total {
+                total = quantity
+            }
+        }
+    }
+    @State private var total: Int64 = 0 {
+        didSet {
+            if total > itemStore.maxItemQuantity {
+                total = itemStore.maxItemQuantity
+                confirmMaximumItemsAlert = true
+            }
+        }
+    }
     @State private var bulkPrice: Double = 0
     @State private var unitPrice: Double = 0
     @State private var note: String = ""
@@ -24,6 +41,7 @@ struct NewItemView: View {
     @State private var canHideNamePlaceholderField: Bool = false
     @State private var canHideQuantityField: Bool = false
     @State private var canHidePriceField: Bool = false
+    @State private var confirmMaximumItemsAlert: Bool = false
     @Binding var isHideKeyboardButtonAcitve: Bool
     @FocusState private var isFocus: ItemField?
     private let sectionTitleColor: Color = Color.secondary
@@ -83,7 +101,7 @@ struct NewItemView: View {
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
                     if self.isFocus == .quantity || self.isFocus == .total {
                         VStack(alignment: .center, content: {
-                            MinusButtonComponent(quantity: $quantity, total: $total, isFocus: self.isFocus)
+                            MinusButtonComponent(quantity: $quantity, total: $total, minimumCount: self.itemStore.minItemQuantity, isFocus: self.isFocus)
                         })
                     }
                     
@@ -104,7 +122,7 @@ struct NewItemView: View {
                     
                     if self.isFocus == .quantity || self.isFocus == .total {
                         VStack(alignment: .center, content: {
-                            PlusButtonComponent(quantity: $quantity, total: $total, isFocus: self.isFocus)
+                            PlusButtonComponent(quantity: $quantity, total: $total, maximumCount: self.itemStore.maxItemQuantity, isFocus: self.isFocus)
                         })
                     }
                 })
@@ -261,6 +279,15 @@ struct NewItemView: View {
                 self.canSaveChanges = self.hasAnyItemValueChanged()
             })
         })
+        .alert("Maximum Number of Items (20)", isPresented: $confirmMaximumItemsAlert) {
+            Button("OK", role: .cancel) {
+               
+            }
+            .onAppear(perform: {
+                let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
+                feedbackGenerator?.notificationOccurred(.warning)
+            })
+        }
         .background(Color.setViewBackgroundColor(colorScheme: self.colorScheme))
     }
     

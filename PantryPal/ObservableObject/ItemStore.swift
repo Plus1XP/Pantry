@@ -20,6 +20,8 @@ class ItemStore: ObservableObject {
         return self.items.filter { $0.name!.contains(self.searchText)
         }
     }
+    var minItemQuantity: Int64 = 0
+    var maxItemQuantity: Int64 = 20
     
     init() {
         fetchEntries()

@@ -14,8 +14,23 @@ struct ItemDetailsView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var itemStore: ItemStore
     @State private var name: String = ""
-    @State private var quantity: Int64 = 0
-    @State private var total: Int64 = 0
+    @State private var quantity: Int64 = 0 {
+        didSet {
+            if quantity > itemStore.maxItemQuantity {
+                quantity = itemStore.maxItemQuantity
+            }
+            if quantity > total {
+                total = quantity
+            }
+        }
+    }
+    @State private var total: Int64 = 0 {
+        didSet {
+            if total > itemStore.maxItemQuantity {
+                total = itemStore.maxItemQuantity
+            }
+        }
+    }
     @State private var bulkPrice: Double = 0
     @State private var unitPrice: Double = 0
     @State private var note: String = ""
@@ -59,7 +74,7 @@ struct ItemDetailsView: View {
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
                     if self.isFocus == .quantity || self.isFocus == .total {
                         VStack(alignment: .center, content: {
-                            MinusButtonComponent(quantity: $quantity, total: $total, isFocus: self.isFocus)
+                            MinusButtonComponent(quantity: $quantity, total: $total, minimumCount: self.itemStore.minItemQuantity, isFocus: self.isFocus)
                         })
                     }
                     
@@ -80,7 +95,7 @@ struct ItemDetailsView: View {
                     
                     if self.isFocus == .quantity || self.isFocus == .total {
                         VStack(alignment: .center, content: {
-                            PlusButtonComponent(quantity: $quantity, total: $total, isFocus: self.isFocus)
+                            PlusButtonComponent(quantity: $quantity, total: $total, maximumCount: self.itemStore.maxItemQuantity, isFocus: self.isFocus)
                         })
                     }
                 })
