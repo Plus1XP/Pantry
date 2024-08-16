@@ -35,6 +35,7 @@
 		2F75615A2C455E0E008D7BE5 /* PlusButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561592C455E0E008D7BE5 /* PlusButtonComponent.swift */; };
 		2F7F0E262AF96EF700979951 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F0E252AF96EF700979951 /* Color.swift */; };
 		2F7F0E282AF98BC900979951 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F0E272AF98BC900979951 /* SettingsView.swift */; };
+		2F81BB402C6EC216009397DB /* EmojiTouchComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB3F2C6EC216009397DB /* EmojiTouchComponent.swift */; };
 		2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */; };
 		2FA93C022B38555F00A1F994 /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93C012B38555F00A1F994 /* ShakeEffect.swift */; };
 		2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB558EB2AF3D77F002362AB /* TextEditor.swift */; };
@@ -148,6 +149,7 @@
 		2F7561592C455E0E008D7BE5 /* PlusButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusButtonComponent.swift; sourceTree = "<group>"; };
 		2F7F0E252AF96EF700979951 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2F7F0E272AF98BC900979951 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		2F81BB3F2C6EC216009397DB /* EmojiTouchComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTouchComponent.swift; sourceTree = "<group>"; };
 		2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreQuantityButton.swift; sourceTree = "<group>"; };
 		2FA93C012B38555F00A1F994 /* ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffect.swift; sourceTree = "<group>"; };
 		2FB558EB2AF3D77F002362AB /* TextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 		2F7561492C449118008D7BE5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2F81BB3F2C6EC216009397DB /* EmojiTouchComponent.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 			files = (
 				2F66E1672AF5671C00A007F4 /* PersistenceController.swift in Sources */,
 				2FEF11182B44B7B40066DE69 /* AppLogoView.swift in Sources */,
+				2F81BB402C6EC216009397DB /* EmojiTouchComponent.swift in Sources */,
 				2FCEF3832B1E739900E5DCCA /* NoteDebugButtons.swift in Sources */,
 				2FCEF3662B168F4700E5DCCA /* UITextField.swift in Sources */,
 				2F66E15C2AF3F7DC00A007F4 /* NewItemView.swift in Sources */,
