@@ -111,7 +111,7 @@ struct NoteDetailsView: View {
             }
             .padding(.leading)
             .padding(.trailing)
-            .padding(.bottom)
+            .padding(.bottom, (self.isFocus != nil) ? 5 : nil)
             
             if !self.isHideKeyboardButtonAcitve {
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
@@ -171,7 +171,7 @@ struct NoteDetailsView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.leading)
                 .padding(.trailing)
-                .padding(.bottom)
+                .padding(.bottom, (self.isFocus != nil) ? 5 : nil)
                 .disabled(!self.canSaveChanges)
             }
         }

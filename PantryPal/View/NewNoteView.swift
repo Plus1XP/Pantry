@@ -99,7 +99,7 @@ struct NewNoteView: View {
             }
             .padding(.leading)
             .padding(.trailing)
-            .padding(.bottom)
+            .padding(.bottom, (self.isFocus != nil) ? 5 : nil)
             
             if self.canSaveChanges {
                 HStack {
@@ -136,7 +136,7 @@ struct NewNoteView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.leading)
                 .padding(.trailing)
-                .padding(.bottom)
+                .padding(.bottom, (self.isFocus != nil) ? 5 : nil)
                 .disabled(!self.canSaveChanges)
             }
         }
