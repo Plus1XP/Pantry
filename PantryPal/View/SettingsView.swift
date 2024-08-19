@@ -12,6 +12,7 @@ struct SettingsView: View {
     @EnvironmentObject var biometricStore: BiometricStore
     @ObservedObject var syncMonitor: SyncMonitor = SyncMonitor.shared
     @State var canShowSyncError: Bool = false
+    @State var showConfetti: Bool = false
     // Fill in App ID when app is added to appstore connect!
     let appName: String = "Pantry App"
     let appID: String = "6473959298"
@@ -218,6 +219,22 @@ struct SettingsView: View {
                         }
                     }
                 }
+                
+                if checkTodayIsSpecialDay(day: 16, month: 4) {
+                    HStack {
+                        Spacer()
+                        Button("🎁", action: {
+                            self.showConfetti = true
+                        })
+                        .buttonStyle(GrowingButtonClearBackground())
+                        Spacer()
+                    }
+                    // Needed to fix bug of section acting as a big button.
+                    .buttonStyle(BorderlessButtonStyle())
+                    // Removes white form section backgroung
+                    .listRowBackground(Color.clear)
+
+                }
             }
             .navigationBarItems(
                 leading:
@@ -232,6 +249,7 @@ struct SettingsView: View {
                             .foregroundStyle(.white, .red)
                     }
             )
+            .displayConfetti(isActive: $showConfetti)
         }
     }
 }

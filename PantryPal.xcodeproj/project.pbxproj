@@ -36,6 +36,14 @@
 		2F7F0E262AF96EF700979951 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F0E252AF96EF700979951 /* Color.swift */; };
 		2F7F0E282AF98BC900979951 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7F0E272AF98BC900979951 /* SettingsView.swift */; };
 		2F81BB402C6EC216009397DB /* EmojiTouchComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB3F2C6EC216009397DB /* EmojiTouchComponent.swift */; };
+		2F81BB422C6FCDE1009397DB /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB412C6FCDE1009397DB /* ConfettiView.swift */; };
+		2F81BB432C6FCDE1009397DB /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB412C6FCDE1009397DB /* ConfettiView.swift */; };
+		2F81BB452C6FCE59009397DB /* ConfettiContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB442C6FCE59009397DB /* ConfettiContainerView.swift */; };
+		2F81BB462C6FCE59009397DB /* ConfettiContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB442C6FCE59009397DB /* ConfettiContainerView.swift */; };
+		2F81BB482C6FCED9009397DB /* DisplayConfettiModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB472C6FCED9009397DB /* DisplayConfettiModifier.swift */; };
+		2F81BB492C6FCED9009397DB /* DisplayConfettiModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB472C6FCED9009397DB /* DisplayConfettiModifier.swift */; };
+		2F81BB4B2C738889009397DB /* CalendarComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB4A2C738889009397DB /* CalendarComponents.swift */; };
+		2F81BB4C2C738889009397DB /* CalendarComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB4A2C738889009397DB /* CalendarComponents.swift */; };
 		2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */; };
 		2FA93C022B38555F00A1F994 /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93C012B38555F00A1F994 /* ShakeEffect.swift */; };
 		2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB558EB2AF3D77F002362AB /* TextEditor.swift */; };
@@ -150,6 +158,10 @@
 		2F7F0E252AF96EF700979951 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2F7F0E272AF98BC900979951 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2F81BB3F2C6EC216009397DB /* EmojiTouchComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTouchComponent.swift; sourceTree = "<group>"; };
+		2F81BB412C6FCDE1009397DB /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
+		2F81BB442C6FCE59009397DB /* ConfettiContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiContainerView.swift; sourceTree = "<group>"; };
+		2F81BB472C6FCED9009397DB /* DisplayConfettiModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayConfettiModifier.swift; sourceTree = "<group>"; };
+		2F81BB4A2C738889009397DB /* CalendarComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarComponents.swift; sourceTree = "<group>"; };
 		2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreQuantityButton.swift; sourceTree = "<group>"; };
 		2FA93C012B38555F00A1F994 /* ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffect.swift; sourceTree = "<group>"; };
 		2FB558EB2AF3D77F002362AB /* TextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
@@ -238,6 +250,7 @@
 				2F1B6D192B01370100377207 /* NoteRowView.swift */,
 				2F1B6D1B2B01371900377207 /* NoteDetailsView.swift */,
 				2F1B6CEF2AFBD9C500377207 /* NewNoteView.swift */,
+				2F81BB442C6FCE59009397DB /* ConfettiContainerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -294,6 +307,8 @@
 				2FA93C012B38555F00A1F994 /* ShakeEffect.swift */,
 				2FB558EB2AF3D77F002362AB /* TextEditor.swift */,
 				2FCEF3642B168F4700E5DCCA /* UITextField.swift */,
+				2F81BB472C6FCED9009397DB /* DisplayConfettiModifier.swift */,
+				2F81BB4A2C738889009397DB /* CalendarComponents.swift */,
 			);
 			path = Utilies;
 			sourceTree = "<group>";
@@ -324,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				2F81BB3F2C6EC216009397DB /* EmojiTouchComponent.swift */,
+				2F81BB412C6FCDE1009397DB /* ConfettiView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -485,6 +501,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F66E1672AF5671C00A007F4 /* PersistenceController.swift in Sources */,
+				2F81BB482C6FCED9009397DB /* DisplayConfettiModifier.swift in Sources */,
+				2F81BB452C6FCE59009397DB /* ConfettiContainerView.swift in Sources */,
 				2FEF11182B44B7B40066DE69 /* AppLogoView.swift in Sources */,
 				2F81BB402C6EC216009397DB /* EmojiTouchComponent.swift in Sources */,
 				2FCEF3832B1E739900E5DCCA /* NoteDebugButtons.swift in Sources */,
@@ -526,6 +544,7 @@
 				2F216D582C333E43008CA3D4 /* Character.swift in Sources */,
 				2FCEF3792B1E657800E5DCCA /* EmojiEditLockButton.swift in Sources */,
 				2F11E04C2C3F1ABC00A3629C /* ItemCache.swift in Sources */,
+				2F81BB422C6FCDE1009397DB /* ConfettiView.swift in Sources */,
 				2F1B6D1A2B01370100377207 /* NoteRowView.swift in Sources */,
 				2FCEF36E2B1E59A100E5DCCA /* EditModeButton.swift in Sources */,
 				2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */,
@@ -535,6 +554,7 @@
 				2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */,
 				2F7561522C449944008D7BE5 /* HStack.swift in Sources */,
 				2FA93C022B38555F00A1F994 /* ShakeEffect.swift in Sources */,
+				2F81BB4B2C738889009397DB /* CalendarComponents.swift in Sources */,
 				2F75614D2C4493D0008D7BE5 /* CancelButtonStyle.swift in Sources */,
 				2F1B6D1C2B01371900377207 /* NoteDetailsView.swift in Sources */,
 			);
@@ -555,6 +575,7 @@
 				2FD8402B2C3D71DD0030C443 /* PantryApp.swift in Sources */,
 				2FD8402C2C3D71DD0030C443 /* NewNoteView.swift in Sources */,
 				2FD8402D2C3D71DD0030C443 /* SelectAllNotesButtonView.swift in Sources */,
+				2F81BB4C2C738889009397DB /* CalendarComponents.swift in Sources */,
 				2FD8402F2C3D71DD0030C443 /* PinnedNotesButton.swift in Sources */,
 				2FD840302C3D71DD0030C443 /* Pantry.xcdatamodeld in Sources */,
 				2FD840312C3D71DD0030C443 /* NoteDeleteButton.swift in Sources */,
@@ -583,6 +604,7 @@
 				2FD8403F2C3D71DD0030C443 /* SelectAllItemsButton.swift in Sources */,
 				2FD840402C3D71DD0030C443 /* TextEditor.swift in Sources */,
 				2FD840412C3D71DD0030C443 /* ButtonStyle.swift in Sources */,
+				2F81BB492C6FCED9009397DB /* DisplayConfettiModifier.swift in Sources */,
 				2FD840422C3D71DD0030C443 /* SyncMonitor.swift in Sources */,
 				2F11E0502C3FF4F500A3629C /* NoteCache.swift in Sources */,
 				2FD840432C3D71DD0030C443 /* Character.swift in Sources */,
@@ -594,8 +616,10 @@
 				2FD840482C3D71DD0030C443 /* ItemStore.swift in Sources */,
 				2FD840492C3D71DD0030C443 /* ItemDetailsView.swift in Sources */,
 				2FD8404A2C3D71DD0030C443 /* RestoreQuantityButton.swift in Sources */,
+				2F81BB462C6FCE59009397DB /* ConfettiContainerView.swift in Sources */,
 				2FD8404B2C3D71DD0030C443 /* ShakeEffect.swift in Sources */,
 				2FD8404C2C3D71DD0030C443 /* NoteDetailsView.swift in Sources */,
+				2F81BB432C6FCDE1009397DB /* ConfettiView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
