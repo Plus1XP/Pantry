@@ -254,9 +254,10 @@ struct NewItemView: View {
                 .scaleEffect(self.smallScale)
                 .padding(.leading)
                 .padding(.trailing)
-                .padding(.bottom, (self.isFocus != nil) ? 5 : nil)
+                .padding(.bottom, (self.isFocus != nil) ? 0 : nil)
                 .disabled(!self.canSaveChanges)
             }
+            Spacer()
         }
         .padding(.top)
         .presentationDragIndicator(.visible)
