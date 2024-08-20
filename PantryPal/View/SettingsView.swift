@@ -226,7 +226,7 @@ struct SettingsView: View {
                         Button("🎁", action: {
                             self.showConfetti = true
                         })
-                        .buttonStyle(GrowingButtonClearBackground())
+                        .buttonStyle(GrowingIconButtonStyle())
                         Spacer()
                     }
                     // Needed to fix bug of section acting as a big button.

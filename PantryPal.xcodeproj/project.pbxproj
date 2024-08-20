@@ -19,7 +19,6 @@
 		2F1B6D1C2B01371900377207 /* NoteDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B6D1B2B01371900377207 /* NoteDetailsView.swift */; };
 		2F216D582C333E43008CA3D4 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F216D572C333E43008CA3D4 /* Character.swift */; };
 		2F66E15C2AF3F7DC00A007F4 /* NewItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E15B2AF3F7DC00A007F4 /* NewItemView.swift */; };
-		2F66E1612AF3FA2300A007F4 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */; };
 		2F66E1672AF5671C00A007F4 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F66E1662AF5671C00A007F4 /* PersistenceController.swift */; };
 		2F7561472C4484BA008D7BE5 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7561462C4484BA008D7BE5 /* View.swift */; };
 		2F75614D2C4493D0008D7BE5 /* CancelButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F75614C2C4493D0008D7BE5 /* CancelButtonStyle.swift */; };
@@ -36,6 +35,8 @@
 		2F81BB452C6FCE59009397DB /* ConfettiContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB442C6FCE59009397DB /* ConfettiContainerView.swift */; };
 		2F81BB482C6FCED9009397DB /* DisplayConfettiModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB472C6FCED9009397DB /* DisplayConfettiModifier.swift */; };
 		2F81BB4B2C738889009397DB /* CalendarComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB4A2C738889009397DB /* CalendarComponents.swift */; };
+		2F81BB602C74B3EB009397DB /* GrowingButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB5F2C74B3EB009397DB /* GrowingButtonStyle.swift */; };
+		2F81BB622C74B40B009397DB /* GrowningButtonIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB612C74B40B009397DB /* GrowningButtonIconStyle.swift */; };
 		2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */; };
 		2FA93C022B38555F00A1F994 /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93C012B38555F00A1F994 /* ShakeEffect.swift */; };
 		2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB558EB2AF3D77F002362AB /* TextEditor.swift */; };
@@ -84,7 +85,6 @@
 		2F1B6D1B2B01371900377207 /* NoteDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailsView.swift; sourceTree = "<group>"; };
 		2F216D572C333E43008CA3D4 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		2F66E15B2AF3F7DC00A007F4 /* NewItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewItemView.swift; sourceTree = "<group>"; };
-		2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		2F66E1662AF5671C00A007F4 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		2F7561462C4484BA008D7BE5 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		2F75614C2C4493D0008D7BE5 /* CancelButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelButtonStyle.swift; sourceTree = "<group>"; };
@@ -101,6 +101,8 @@
 		2F81BB442C6FCE59009397DB /* ConfettiContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiContainerView.swift; sourceTree = "<group>"; };
 		2F81BB472C6FCED9009397DB /* DisplayConfettiModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayConfettiModifier.swift; sourceTree = "<group>"; };
 		2F81BB4A2C738889009397DB /* CalendarComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarComponents.swift; sourceTree = "<group>"; };
+		2F81BB5F2C74B3EB009397DB /* GrowingButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowingButtonStyle.swift; sourceTree = "<group>"; };
+		2F81BB612C74B40B009397DB /* GrowningButtonIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowningButtonIconStyle.swift; sourceTree = "<group>"; };
 		2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreQuantityButton.swift; sourceTree = "<group>"; };
 		2FA93C012B38555F00A1F994 /* ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffect.swift; sourceTree = "<group>"; };
 		2FB558EB2AF3D77F002362AB /* TextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
@@ -234,7 +236,6 @@
 		2F66E15F2AF3F9EE00A007F4 /* Utilies */ = {
 			isa = PBXGroup;
 			children = (
-				2F66E1602AF3FA2300A007F4 /* ButtonStyle.swift */,
 				2FA93C012B38555F00A1F994 /* ShakeEffect.swift */,
 				2FB558EB2AF3D77F002362AB /* TextEditor.swift */,
 				2FCEF3642B168F4700E5DCCA /* UITextField.swift */,
@@ -280,6 +281,8 @@
 			children = (
 				2F75614C2C4493D0008D7BE5 /* CancelButtonStyle.swift */,
 				2F75614F2C449564008D7BE5 /* SaveButtonStyle.swift */,
+				2F81BB5F2C74B3EB009397DB /* GrowingButtonStyle.swift */,
+				2F81BB612C74B40B009397DB /* GrowningButtonIconStyle.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -433,14 +436,15 @@
 				2F1B6D162AFFCBA600377207 /* ItemRowView.swift in Sources */,
 				2FCEF36A2B1E1F3700E5DCCA /* SettingsButton.swift in Sources */,
 				2FBD25722AF2878300C26DA3 /* Persistence.swift in Sources */,
+				2F81BB602C74B3EB009397DB /* GrowingButtonStyle.swift in Sources */,
 				2F11E0522C402FA800A3629C /* NoteUndoButton.swift in Sources */,
 				2F75615A2C455E0E008D7BE5 /* PlusButtonComponent.swift in Sources */,
 				2FCEF37D2B1E70CD00E5DCCA /* SelectAllItemsButton.swift in Sources */,
 				2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */,
-				2F66E1612AF3FA2300A007F4 /* ButtonStyle.swift in Sources */,
 				2FF4C2B72B04408800D7700E /* SyncMonitor.swift in Sources */,
 				2F7561472C4484BA008D7BE5 /* View.swift in Sources */,
 				2F11E04F2C3FF4F500A3629C /* NoteCache.swift in Sources */,
+				2F81BB622C74B40B009397DB /* GrowningButtonIconStyle.swift in Sources */,
 				2F216D582C333E43008CA3D4 /* Character.swift in Sources */,
 				2FCEF3792B1E657800E5DCCA /* EmojiEditLockButton.swift in Sources */,
 				2F11E04C2C3F1ABC00A3629C /* ItemCache.swift in Sources */,
