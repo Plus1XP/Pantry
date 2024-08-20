@@ -37,6 +37,8 @@
 		2F81BB4B2C738889009397DB /* CalendarComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB4A2C738889009397DB /* CalendarComponents.swift */; };
 		2F81BB602C74B3EB009397DB /* GrowingButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB5F2C74B3EB009397DB /* GrowingButtonStyle.swift */; };
 		2F81BB622C74B40B009397DB /* GrowningButtonIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB612C74B40B009397DB /* GrowningButtonIconStyle.swift */; };
+		2F81BB7C2C75137C009397DB /* DeleteItemDetailsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB7B2C75137C009397DB /* DeleteItemDetailsButton.swift */; };
+		2F81BB7E2C7513C2009397DB /* DeleteNoteDetailsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81BB7D2C7513C2009397DB /* DeleteNoteDetailsButton.swift */; };
 		2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */; };
 		2FA93C022B38555F00A1F994 /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA93C012B38555F00A1F994 /* ShakeEffect.swift */; };
 		2FB558EC2AF3D77F002362AB /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB558EB2AF3D77F002362AB /* TextEditor.swift */; };
@@ -103,6 +105,8 @@
 		2F81BB4A2C738889009397DB /* CalendarComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarComponents.swift; sourceTree = "<group>"; };
 		2F81BB5F2C74B3EB009397DB /* GrowingButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowingButtonStyle.swift; sourceTree = "<group>"; };
 		2F81BB612C74B40B009397DB /* GrowningButtonIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowningButtonIconStyle.swift; sourceTree = "<group>"; };
+		2F81BB7B2C75137C009397DB /* DeleteItemDetailsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteItemDetailsButton.swift; sourceTree = "<group>"; };
+		2F81BB7D2C7513C2009397DB /* DeleteNoteDetailsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNoteDetailsButton.swift; sourceTree = "<group>"; };
 		2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreQuantityButton.swift; sourceTree = "<group>"; };
 		2FA93C012B38555F00A1F994 /* ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffect.swift; sourceTree = "<group>"; };
 		2FB558EB2AF3D77F002362AB /* TextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
@@ -254,6 +258,7 @@
 				2FCEF37E2B1E70D900E5DCCA /* ItemDeleteButton.swift */,
 				2FA93BFF2B37496500A1F994 /* RestoreQuantityButton.swift */,
 				2FD840592C3F0D780030C443 /* ItemUndoButton.swift */,
+				2F81BB7B2C75137C009397DB /* DeleteItemDetailsButton.swift */,
 				2F7561572C455C1C008D7BE5 /* MinusButtonComponent.swift */,
 				2F7561592C455E0E008D7BE5 /* PlusButtonComponent.swift */,
 				2FCEF36D2B1E59A100E5DCCA /* EditModeButton.swift */,
@@ -263,6 +268,7 @@
 				2FCEF3712B1E601900E5DCCA /* SelectAllNotesButtonView.swift */,
 				2FCEF3732B1E614300E5DCCA /* NoteDeleteButton.swift */,
 				2F11E0512C402FA800A3629C /* NoteUndoButton.swift */,
+				2F81BB7D2C7513C2009397DB /* DeleteNoteDetailsButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -458,9 +464,11 @@
 				2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */,
 				2F7561522C449944008D7BE5 /* HStack.swift in Sources */,
 				2FA93C022B38555F00A1F994 /* ShakeEffect.swift in Sources */,
+				2F81BB7E2C7513C2009397DB /* DeleteNoteDetailsButton.swift in Sources */,
 				2F81BB4B2C738889009397DB /* CalendarComponents.swift in Sources */,
 				2F75614D2C4493D0008D7BE5 /* CancelButtonStyle.swift in Sources */,
 				2F1B6D1C2B01371900377207 /* NoteDetailsView.swift in Sources */,
+				2F81BB7C2C75137C009397DB /* DeleteItemDetailsButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

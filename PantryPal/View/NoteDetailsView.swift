@@ -120,19 +120,32 @@ struct NoteDetailsView: View {
                         .textCase(nil)
                         .foregroundStyle(self.sectionTitleColor)
                 })
-                HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                    Text(self.note.modified!, formatter: Formatter.dateFormatter)
-                })
-                .padding()
-                .frame(maxWidth: .infinity)
-                .foregroundColor(.primary)
-                .background(
-                    RoundedRectangle(
-                        cornerRadius: 12,
-                        style: .continuous
+                HStack {
+                    HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
+                        if let date = self.note.modified {
+                            Text(date, formatter: Formatter.dateFormatter)
+                        }
+                    })
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(.primary)
+                    .background(
+                        RoundedRectangle(
+                            cornerRadius: 12,
+                            style: .continuous
+                        )
+                        .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
                     )
-                    .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
-                )
+                    HStack {
+                        DeleteNoteDetailsButton(note: note)
+                    }
+                    .padding()
+                    .background(
+                        Rectangle()
+                            .fill(Color.setFieldBackgroundColor(colorScheme: colorScheme).opacity(1))
+                            .cornerRadius(10.0)
+                    )
+                }
                 .padding(.leading)
                 .padding(.trailing)
                 .padding(.bottom)

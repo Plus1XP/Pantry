@@ -198,20 +198,32 @@ struct ItemDetailsView: View {
                         .textCase(nil)
                         .foregroundStyle(self.sectionTitleColor)
                 })
-                
-                HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                    Text(self.item.modified ?? Date.distantFuture, formatter: Formatter.dateFormatter)
-                })
-                .padding()
-                .frame(maxWidth: .infinity)
-                .foregroundColor(.primary)
-                .background(
-                    RoundedRectangle(
-                        cornerRadius: 12,
-                        style: .continuous
+                HStack {
+                    HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
+                        if let date = self.item.modified {
+                            Text(date, formatter: Formatter.dateFormatter)
+                        }
+                    })
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(.primary)
+                    .background(
+                        RoundedRectangle(
+                            cornerRadius: 12,
+                            style: .continuous
+                        )
+                        .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
                     )
-                    .fill(Color.setFieldBackgroundColor(colorScheme: self.colorScheme))
-                )
+                    HStack {
+                        DeleteItemDetailsButton(item: item)
+                    }
+                    .padding()
+                    .background(
+                        Rectangle()
+                            .fill(Color.setFieldBackgroundColor(colorScheme: colorScheme).opacity(1))
+                            .cornerRadius(10.0)
+                    )
+                }
                 .padding(.leading)
                 .padding(.trailing)
                 .padding(.bottom)
