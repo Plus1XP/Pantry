@@ -63,6 +63,7 @@
 		2FCEF3812B1E730C00E5DCCA /* PinnedNotesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3802B1E730C00E5DCCA /* PinnedNotesButton.swift */; };
 		2FCEF3832B1E739900E5DCCA /* NoteDebugButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEF3822B1E739900E5DCCA /* NoteDebugButtons.swift */; };
 		2FD8405A2C3F0D780030C443 /* ItemUndoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD840592C3F0D780030C443 /* ItemUndoButton.swift */; };
+		2FDEEC4A2C80E611009BB9E3 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDEEC492C80E611009BB9E3 /* ToastView.swift */; };
 		2FE1834D2B03E2E000F7CEF7 /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */; };
 		2FE1834F2B03E35000F7CEF7 /* BiometricStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */; };
 		2FE183512B03E38C00F7CEF7 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */; };
@@ -134,6 +135,7 @@
 		2FCEF3822B1E739900E5DCCA /* NoteDebugButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDebugButtons.swift; sourceTree = "<group>"; };
 		2FD840582C3D71DD0030C443 /* PantryPal copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PantryPal copy-Info.plist"; path = "/Users/nabbit/Library/CloudStorage/OneDrive-Personal/Development/Repositories/PantryPal/PantryPal copy-Info.plist"; sourceTree = "<absolute>"; };
 		2FD840592C3F0D780030C443 /* ItemUndoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemUndoButton.swift; sourceTree = "<group>"; };
+		2FDEEC492C80E611009BB9E3 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		2FE1834C2B03E2E000F7CEF7 /* BiometricService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricService.swift; sourceTree = "<group>"; };
 		2FE1834E2B03E35000F7CEF7 /* BiometricStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStore.swift; sourceTree = "<group>"; };
 		2FE183502B03E38C00F7CEF7 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 			children = (
 				2F81BB3F2C6EC216009397DB /* EmojiTouchComponent.swift */,
 				2F81BB412C6FCDE1009397DB /* ConfettiView.swift */,
+				2FDEEC492C80E611009BB9E3 /* ToastView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				2F7561582C455C1C008D7BE5 /* MinusButtonComponent.swift in Sources */,
 				2FA93C002B37496500A1F994 /* RestoreQuantityButton.swift in Sources */,
 				2F7561522C449944008D7BE5 /* HStack.swift in Sources */,
+				2FDEEC4A2C80E611009BB9E3 /* ToastView.swift in Sources */,
 				2FA93C022B38555F00A1F994 /* ShakeEffect.swift in Sources */,
 				2F81BB7E2C7513C2009397DB /* DeleteNoteDetailsButton.swift in Sources */,
 				2F81BB4B2C738889009397DB /* CalendarComponents.swift in Sources */,

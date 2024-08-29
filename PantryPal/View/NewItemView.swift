@@ -280,15 +280,9 @@ struct NewItemView: View {
                 self.canSaveChanges = self.hasAnyItemValueChanged()
             })
         })
-        .alert("Maximum Number of Items (20)", isPresented: $confirmMaximumItemsAlert) {
-            Button("OK", role: .cancel) {
-               
-            }
-            .onAppear(perform: {
-                let feedbackGenerator: UINotificationFeedbackGenerator? = UINotificationFeedbackGenerator()
-                feedbackGenerator?.notificationOccurred(.warning)
-            })
-        }
+        .toast(message: "Maximum number of items reached. (20)",
+                     isShowing: $confirmMaximumItemsAlert,
+                     duration: Toast.short)
         .background(Color.setViewBackgroundColor(colorScheme: self.colorScheme))
     }
     

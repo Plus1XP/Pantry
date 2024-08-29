@@ -18,6 +18,7 @@ struct ItemDetailsView: View {
         didSet {
             if quantity > itemStore.maxItemQuantity {
                 quantity = itemStore.maxItemQuantity
+                confirmMaximumItemsAlert = true
             }
             if quantity > total {
                 total = quantity
@@ -28,6 +29,7 @@ struct ItemDetailsView: View {
         didSet {
             if total > itemStore.maxItemQuantity {
                 total = itemStore.maxItemQuantity
+                confirmMaximumItemsAlert = true
             }
         }
     }
@@ -41,6 +43,7 @@ struct ItemDetailsView: View {
     @State private var canHideQuantityField: Bool = false
     @State private var canHidePriceField: Bool = false
     @State private var canHideLastModifiedField: Bool = false
+    @State private var confirmMaximumItemsAlert: Bool = false
     @Binding var isHideKeyboardButtonAcitve: Bool
     @FocusState private var isFocus: ItemField?
     var item: Item
@@ -290,6 +293,9 @@ struct ItemDetailsView: View {
                 self.canSaveChanges = self.hasAnyItemValueChanged()
             })
         })
+        .toast(message: "Maximum number of items reached. (20)",
+                     isShowing: $confirmMaximumItemsAlert,
+                     duration: Toast.short)
         .background(Color.setViewBackgroundColor(colorScheme: self.colorScheme))
     }
     
